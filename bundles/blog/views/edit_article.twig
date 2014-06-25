@@ -1,0 +1,68 @@
+{% extends 'includes/blog_layout.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2.css') }}">
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
+{% endblock %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <ol class="breadcrumb">
+        <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
+        <li><a href="{{ url('manage', 'blog') }}">{{ lang('ADMIN_BLOG') }}</a></li>
+        <li class="active">{{ lang('ADMIN_BLOG_EDIT') }}</li>
+      </ol>
+      {% if article is not empty %}
+      <img src="{{ article.image }}" class="img-responsive" alt="picture">
+      <hr>
+      <div class="form-group">
+        <label for="article-image">{{ lang('IMAGE_URL') }}</label>
+        <input type="url" name="article-image" id="article-img" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="article-image-upload">{{ lang('OR_UPLOAD_IMAGE') }}</label>
+        <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
+        <input type="file" id="article-image-upload">
+        <p class="help-block">{{ lang('ARTICLE_IMAGE_RECOMMENDED_SIZE', 940, 400) }}</p>
+      </div>
+      <form role="form" method="post" action="{{ url('action', 'blog', 'edit-article') }}-{{ article.id }}">
+        <div class="form-group">
+          <label for="article-title">{{ lang('TITLE') }}</label>
+          <input type="text" name="article-title" id="article-title" class="form-control" value="{{ article.title }}">
+        </div>
+        <div class="form-group">
+          <label for="article-body">{{ lang('BODY') }}</label>
+          <textarea name="article-body" id="article-body" class="form-control" rows="10" cols="80">
+            {{ article.body }}
+          </textarea>
+        </div>
+        <div class="form-group">
+          <label for="article-category">{{ lang('CATEGORY') }}</label>
+          <select name="article-category" id="article-category" class="form-control">
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if category.id == article.category.id %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_SAVE') }}</button>
+        </div>
+      </form>
+      {% else %}
+      <p>{{ lang('NO_ARTICLE') }}</p>
+      {% endif %}
+    </div>  <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ url('assets', 'js/ckeditor/ckeditor.js') }}"></script>
+<script>CKEDITOR.replace('article-body', {language: '{{ config.language }}'});</script>
+<script src="{{ url('assets', 'js/select2/select2.js') }}"></script>
+<script src="{{ url('assets', 'js/select2/select2_locale_' ~ config.language ~ '.js') }}"></script>
+<script>$(document).ready(function() { $("#article-category").select2({placeholder:"{{ lang('SELECT_CATEGORY') }}"}); });</script>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'includes/global_layout.twig' %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  <div class="row">
+    <section class="col-md-12">
+      {% include 'includes/flash.twig' %}
+      {% if manager is not empty %}
+      {% for server in manager.servers %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ server.name  }}</h3>
+        </div>
+        <div class="panel-body">
+          <p><code>{{ server.ip  }}</code></p>
+          {% if server.motd is not empty %}
+          <p class="text-success">Online</p>
+          {% else %}
+          <p class="text-danger">Offline</p>
+          {% endif %}
+          {% if server.infos.players is not empty %}
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ server.infos.players|length  }}" aria-valuemin="0" aria-valuemax="{{ server.infos.maxPlayers  }}" style="width: {{ (server.infos.players|length/server.infos.maxPlayers)*100  }}%;">
+              <span class="sr-only">{{ server.infos.players|length  }} players online</span>
+            </div>
+          </div>
+        {% else %}
+        No player online
+        {% endif %}
+      </div>
+      <div class="panel-footer"><a href="{{ url('action', 'servers', 'edit-server-' ~ server.id) }}" class="btn btn-default">{{ lang('EDIT') }}</a></div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p><a href="{{ url('action', 'servers', 'add') }}" class="btn btn-block btn-lg btn-primary">Add a Server</a></p>
+      {% endif %}
+      <ul class="nav nav-pills nav-justified">
+        <li><a href="{{ url('manage', 'blog') }}">Manage blog</a></li>
+        <li><a href="{{ url('manage', 'store') }}">Manage store</a></li>
+        <li><a href="{{ url('manage', 'users') }}">Manage users</a></li>
+        <li><a href="{{ url('manage', 'ranks') }}">Manage ranks</a></li>
+        <li><a href="{{ url('manage', 'theme') }}">Manage theme</a></li>
+        <li><a href="{{ url('manage', 'servers') }}">Manage servers</a></li>
+        <li><a href="{{ url('manage', 'votes') }}">Manage votes</a></li>
+      </ul>
+    </section>  <!-- /.col-md-12 -->
+  </div> <!-- /.row -->
+</div> <!-- /.container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
+<script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script> 
+{% endblock %}

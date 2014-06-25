@@ -1,0 +1,22 @@
+DirectoryIndex index.php index.html index.htm
+
+Options -Indexes
+
+<FilesMatch '\.(twig|dist|db)$'>
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine on
+  RewriteRule cache/ - [F]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} !=/favicon.png
+  RewriteRule ^ ./index.php [L,QSA]
+</IfModule>

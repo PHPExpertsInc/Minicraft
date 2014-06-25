@@ -1,0 +1,77 @@
+{% extends 'includes/store_layout.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2.css') }}">
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
+{% endblock %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
+        <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
+        <li class="active">{{ lang('ADD_ITEM') }}</li>
+      </ol>
+      <form role="form" method="post" action="{{ url('action', 'store', 'add-item') }}">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ lang('MINECRAFT_ITEM') }}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="item-minecraft">{{ lang('MINECRAFT_ITEM') }}</label>
+              <select name="item-minecraft" id="item-minecraft" class="form-control">
+                {% for item in minecraftItems %}
+                <option value="{{ item.id }};{{ item.meta }};{{ item.name }}" data-id="{{ item.id }}" data-meta="{{ item.meta }}">{{ item.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="item-quantity">{{ lang('QUANTITY') }}</label>
+              <input type="number" name="item-quantity" id="item-quantity" class="form-control">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ lang('CUSTOM_ITEM') }}</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <label for="item-id">{{ lang('ITEM_ID') }}</label>
+              <input type="number" name="item-id" id="item-id" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="item-meta">{{ lang('METADATA') }}</label>
+              <input type="number" name="item-meta" id="item-meta" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="item-name">{{ lang('NAME') }}</label>
+              <input type="text" name="item-name" id="item-name" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="item-icon">{{ lang('ICON_URL') }}</label>
+              <input type="url" name="item-icon" id="item-icon" class="form-control">
+            </div>
+            <div class="form-group">
+              <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div> <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ url('assets', 'js/select2/select2.js') }}"></script>
+<script src="{{ url('assets', 'js/select2/select2_locale_' ~ config.language ~ '.js') }}"></script>
+<script>function format(e){var t=e.element;return"<img class='flag' src='//cdn.ticraft.fr/items?id="+$(t).data("id")+"&meta="+$(t).data("meta")+"' height='16'>"+e.text}$("#item-minecraft").select2({formatResult:format,formatSelection:format,minimumInputLength:2,escapeMarkup:function(e){return e}})</script>
+{% endblock %}

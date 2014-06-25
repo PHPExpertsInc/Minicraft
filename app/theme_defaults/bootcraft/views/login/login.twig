@@ -1,0 +1,40 @@
+{% extends 'includes/global_layout.twig' %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      {% include 'includes/flash.twig' %}  
+      {% if handler.registerErrors is not empty %}
+      <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {% if handler.registerErrors|length > 1 %}
+        <h4>{{ lang('THERE_ARE_ERRORS') }}</h4>
+        <ul>
+          {% for error in handler.registerErrors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          {{ handler.registerErrors.0 }}
+        {% endif %}
+      </div>
+      {% endif %}
+      <form method="post" action="{{ url('login') }}" role="form">
+        <div class="form-group{% if handler.loginErrorUsername %} has-error{% endif %}">
+          <label class="control-label" for="login-username">{{ lang('USERNAME') }}</label>
+          <input type="text" name="login[username]" class="form-control" id="login-username"{% if handler.loginErrorUsername == false %} value="{{ handler.loginSavedUsername }}" {% endif %}{% if handler.loginFocusUsername %} autofocus{% endif %}>
+        </div>
+        <div class="form-group{% if handler.loginErrorPassword %} has-error{% elseif handler.loginErrorUsername or handler.loginErrorEmail %} has-warning{% endif %}">
+          <label class="control-label" for="login-password">{{ lang('PASSWORD') }}</label>
+          <input type="password" name="login[password]" class="form-control" id="login-password"{% if handler.loginFocusPassword %} autofocus{% endif %}>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" name="login[cookie]">{{ lang('STAY_LOGGED_IN') }}</label>
+        </div>
+        <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_LOGIN') }}</button>
+      </form>
+    </div> <!-- .col-md-6 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}

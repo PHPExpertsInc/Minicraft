@@ -1,0 +1,128 @@
+{% extends 'includes/global_layout.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2.css') }}">
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
+{% endblock %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">  
+      {% include 'includes/flash.twig' %}  
+      {% if handler.registerErrors is not empty %}
+      <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {% if handler.registerErrors|length > 1 %}
+        <h4>{{ lang('THERE_ARE_ERRORS') }}</h4>
+        <ul>
+          {% for error in handler.registerErrors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          {{ handler.registerErrors.0 }}
+        {% endif %}
+      </div>
+      {% endif %}
+      <div class="text-center profile-header">
+        <img src="//minotar.net/avatar/{{ user.minecraftUsername }}/32" width="256" class="blur-fix" alt="{{ user.minecraftUsername }}" />
+        <h1 class="fancy-username">{{ user.username }}</h1>
+        <hr>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ lang('USER_INFOS') }}</h3>
+        </div>
+        <div class="panel-body">
+          <dl class="dl-horizontal">
+            <dt>{{ config.currencyName.plural|capitalize }}</dt>
+            <dd>{{ user.money }}</dd>
+            <dt>{{ lang('VOTES_THIS_WEEK') }}</dt>
+            <dd>{{ user.votes }}</dd>
+            <dt>{{ lang('TOTAL_VOTES') }}</dt>
+            <dd>{{ user.totalVotes }}</dd>
+            <dt>{{ lang('RANK') }}</dt>
+            <dd>{{ user.rank.name }}</dd>
+            <dt>{{ lang('REGISTER_DATE') }}</dt>
+            <dd>{{ user.registerDate|date('d-m-Y') }}</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ lang('ACCOUNT_INFOS') }}</h3>
+        </div>
+        <div class="panel-body">
+          <form method="post" action="{{ url('profile') }}">
+            <div class="form-group{% if handler.profileErrorUsername %} has-error{% endif %}">
+              <label class="control-label" for="username">{{ lang('USERNAME') }}</label>
+              <input type="text" name="profile[username]" class="form-control" id="username" value="{{ user.username }}"{% if user.confirmed == false %} disabled{% endif %}>
+              {% if user.confirmed == false %}<span class="help-block">{{ lang('CONFIRM_EMAIL_EDIT_USERNAME') }}</span>{% endif %}
+            </div>
+            <div class="form-group">
+              <label for="password">{{ lang('PASSWORD') }}</label>
+              <input type="password" name="profile[password]" class="form-control" id="password"{% if user.confirmed == false %} disabled{% endif %}>
+              {% if user.confirmed == false %}<span class="help-block">{{ lang('CONFIRM_EMAIL_EDIT_PASSWORD') }}</span>{% else %}<span class="help-block">{{ lang('LEAVE_EMPTY_NO_CHANGE_PASSWORD') }}</span>{% endif %}
+            </div>
+            <div class="form-group">
+              <label for="email">{{ lang('EMAIL') }}</label>
+              <input type="email" name="profile[email]" class="form-control" id="email" value="{{ user.email }}">
+            </div>
+            <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+          </form>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">{{ lang('GENERAL_INFOS') }}</h3>
+        </div>
+        <div class="panel-body">
+          <form method="post" action="{{ url('profile') }}">
+            <div class="form-group">
+              <label for="genre">{{ lang('GENRE') }}</label>
+              <select name="profile[genre]" id="genre" class="form-control">
+                <option value="unspecified"{% if user.genre == 'unspecified' %} selected{% endif %}>{{ lang('UNSPECIFIED') }}</option>
+                <option value="female"{% if user.genre == 'female' %} selected{% endif %}>{{ lang('FEMALE') }}</option>
+                <option value="male"{% if user.genre == 'male' %} selected{% endif %}>{{ lang('MALE') }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="birthdate">{{ lang('BIRTHDATE') }}</label>
+              <input type="date" name="profile[birthdate]" id="birthdate" class="form-control" placeholder="jj-mm-aaaa"{% if user.birthdate is not empty %} value="{{ user.birthdate|date('d-m-Y') }}"{% endif %}>
+            </div>
+            <div class="form-group">
+              <label for="country">{{ lang('COUNTRY') }}</label>
+              <select name="profile[country]" id="country" class="form-control">
+                <optgroup>
+                  {% for country_code, country_name in config.topCountries %}
+                  <option value="{{ country_code }}"{% if user.country == country_code %} selected{% endif %}>{{ country_name }}</option>
+                  {% endfor %}
+                </optgroup>
+                <optgroup>
+                  {% for country_code, country_name in countries %}
+                  <option value="{{ country_code }}"{% if user.country == country_code %} selected{% endif %}>{{ country_name }}</option>
+                  {% endfor %}
+                </optgroup>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="city">{{ lang('CITY') }}</label>
+              <input type="text" name="profile[city]" id="city" class="form-control"{% if user.city is not empty %} value="{{ user.city }}"{% endif %}>
+            </div>
+            <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+          </form>
+        </div>
+      </div>
+    </div> <!-- .col-md-6 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ url('assets', 'js/select2/select2.js') }}"></script>
+<script src="{{ url('assets', 'js/select2/select2_locale_' ~ config.language ~ '.js') }}"></script>
+<script>function format(e){if(!e.id)return e.text;return'<img class="flag" src="//cdn.ticraft.fr/flag?cc='+e.id.toLowerCase()+'&retina" height="17">'+e.text}$("#country").select2({width:"resolve",formatResult:format,formatSelection:format,escapeMarkup:function(e){return e}})</script>
+<script>$(document).ready(function() { $("#genre").select2(); });</script>
+<script>$(function(){$("#birthdate").datepicker({defaultDate:"-14Y",maxDate:"-2Y",dateFormat:"dd-mm-yy",changeMonth:true,changeYear:true})})</script>
+{% endblock %}

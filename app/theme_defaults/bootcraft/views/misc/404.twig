@@ -1,0 +1,35 @@
+{% extends 'includes/global_layout.twig' %}
+{% block fonts %}
+{{ parent() }}
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Special+Elite">
+{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<style>
+  body {
+    background: #f5f5f5 url(//i.imgur.com/0h2UiZf.gif) repeat;
+    text-align: center;
+    color: #ccff00;
+  }
+  
+  h1,
+  h4 {
+    font-family: "Special Elite", cursive;
+  }
+  
+  h1 {
+    font-size: 3em;
+  }
+</style>
+{% endblock %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+</div> <!-- .container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
+<script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script>
+{% endblock %}

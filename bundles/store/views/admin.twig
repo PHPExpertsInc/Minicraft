@@ -1,0 +1,153 @@
+{% extends 'includes/store_layout.twig' %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
+        <li class="active">{{ lang('ADMIN_STORE') }}</li>
+      </ol>
+      <h2>{{ lang('PACKS') }}</h2>
+      {% if store.storePacks is not empty %}
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered">
+          <tr>
+            <th>{{ lang('IMAGE') }}</th>
+            <th>{{ lang('NAME') }}</th>
+            <th>{{ lang('CATEGORY') }}</th>
+            <th>{{ lang('PRICE') }}</th>
+            <th>{{ lang('EDIT') }}</th>
+            <th>{{ lang('REMOVE') }}</th>
+          </tr>
+          {% for pack in store.storePacks|sort %}
+          <tr>
+            <td class="text-center"><img src="{{ pack.image }}" width="100" alt="Image"></td>
+            <td>{{ pack.name }}</td>
+            <td>{{ pack.category.name }}</td>
+            <td>{{ pack.price }}</td>
+            <td><a href="{{ url('action', 'store', 'edit-pack') ~ '-' ~ pack.id }}" class="btn btn-default">{{ lang('EDIT') }}</a></td>
+            <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-pack-{{ pack.id }}">{{ lang('REMOVE') }}</button></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% else %}
+      <p>{{ lang('NO_PACK') }}</p>
+      {% endif %}      
+      {% for pack in store.storePacks %}
+      <div id="{{ 'modal-pack-' ~ pack.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-pack-' ~ pack.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="{{ 'label-pack-' ~ pack.id }}">{{ lang('REMOVE_PACK') }}</h4>
+            </div>
+            <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', pack.name)|raw }}</div>
+            <div class="modal-footer">
+              <form method="post" action="{{ url('manage', 'store') }}" class="form-inline">
+                <input type="hidden" name="remove-pack" value="{{ pack.id }}">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
+                <button type="submit" class="btn btn-danger">{{ lang('BTN_REMOVE') }}</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <a href="{{ url('action', 'store', 'create-pack') }}" class="btn btn-block btn-primary">{{ lang('BTN_CREATE_PACK') }}</a>
+      <h2>{{ lang('ITEMS') }}</h2>
+      {% if items is not empty %}
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered">
+          <tr>
+            <th>{{ lang('ICON') }}</th>
+            <th>{{ lang('NAME') }}</th>
+            <th>{{ lang('QUANTITY') }}</th>
+            <th>{{ lang('EDIT') }}</th>
+            <th>{{ lang('REMOVE') }}</th>
+          </tr>
+          {% for item in items %}
+          <tr>
+            <td class="text-center"><img src="{{ item.icon }}" width="32" alt="{{ item.minecraftName }}"></td>
+            <td>{{ item.minecraftName }}</td>
+            <td>{{ item.quantity }}</td>
+            <td><a href="{{ url('action', 'store', 'edit-item') ~ '-' ~ item.id }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
+            <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-item-{{ item.id }}">{{ lang('BTN_REMOVE') }}</button></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% else %}
+      <p>{{ lang('NO_ITEM') }}</p>
+      {% endif %}
+      {% for item in items %}
+      <div id="{{ 'modal-item-' ~ item.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-item-' ~ item.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="{{ 'label-item-' ~ item.id }}">{{ lang('REMOVE_ITEM') }}</h4>
+            </div>
+            <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', item.minecraftName)|raw }}</div>
+            <div class="modal-footer">
+              <form method="post" action="{{ url('manage', 'store') }}" class="form-inline">
+                <input type="hidden" name="remove-item" value="{{ item.id }}">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
+                <button type="submit" class="btn btn-danger">{{ lang('BTN_REMOVE') }}</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <a href="{{ url('action', 'store', 'add-item') }}" class="btn btn-block btn-primary">{{ lang('BTN_ADD_ITEM') }}</a>
+      <h2>{{ lang('COMMANDS') }}</h2>
+      {% if commands is not empty %}
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered">
+          <tr>
+            <th>{{ lang('COMMAND') }}</th>
+            <th>{{ lang('DESCRIPTION') }}</th>
+            <th>{{ lang('EDIT') }}</th>
+            <th>{{ lang('REMOVE') }}</th>
+          </tr>
+          {% for command in commands %}
+          <tr>
+            <td>{{ command.command }}</td>
+            <td>{{ command.description }}</td>
+            <td><a href="{{ url('action', 'store', 'edit-command') ~ '-' ~ command.id }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
+            <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-command-{{ command.id }}">{{ lang('BTN_REMOVE') }}</button></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+      {% else %}
+      <p>{{ lang('BTN_REMOVE') }}</p>
+      {% endif %}
+      {% for command in commands %}
+      <div id="{{ 'modal-command-' ~ command.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-command-' ~ command.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="{{ 'label-command-' ~ command.id }}">{{ lang('REMOVE_COMMAND') }}</h4>
+            </div>
+            <div class="modal-body">{{ lang('REMOVE_CONFIRMATION_NEUTRAL')|raw }}</div>
+            <div class="modal-footer">
+              <form method="post" action="{{ url('manage', 'store') }}" class="form-inline">
+                <input type="hidden" name="remove-command" value="{{ command.id }}">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
+                <button type="submit" class="btn btn-danger">{{ lang('BTN_REMOVE') }}</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <a href="{{ url('action', 'store', 'add-command') }}" class="btn btn-block btn-primary">{{ lang('BTN_ADD_COMMAND') }}</a>
+    </div> <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}

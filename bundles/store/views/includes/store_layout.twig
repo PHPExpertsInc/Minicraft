@@ -1,0 +1,9 @@
+{% extends 'includes/base.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/store.css') }}">
+{% endblock %}
+{% block wrap %}
+{{ parent() }}
+{% block content %}{% endblock %}
+{% endblock %}

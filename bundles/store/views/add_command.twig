@@ -1,0 +1,41 @@
+{% extends 'includes/store_layout.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2.css') }}">
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
+{% endblock %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
+        <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
+        <li class="active">{{ lang('ADD_COMMAND') }}</li>
+      </ol>
+      <div class="alert alert-info">
+        <ul>
+          <li><a href="http://wiki.bukkit.org/CraftBukkit_commands">{{ lang('LIST_BUKKIT_COMMANDS') }}</a></li>
+          <li>{{ lang('REPLACE_USERNAME', '%player_minecraft_username%')|raw }}</li>
+          <li>{{ lang('REPLACE_IP', '%player_ip_address%')|raw }}</li>
+        </ul>
+      </div>
+      <form role="form" method="post" action="{{ url('action', 'store', 'add-command') }}">
+        <div class="form-group">
+          <label for="command-command">{{ lang('CONSOLE_COMMAND') }}</label>
+          <input type="text" name="command-command" id="command-command" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="command-description">{{ lang('DESCRIPTION') }}</label>
+          <input type="text" name="command-description" id="command-description" class="form-control">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+        </div>
+      </form>
+    </div> <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}

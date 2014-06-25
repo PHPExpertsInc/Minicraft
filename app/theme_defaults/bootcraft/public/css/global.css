@@ -1,0 +1,285 @@
+html,
+body {
+  -webkit-font-smoothing: antialiased !important;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: "Open Sans", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+input,
+select {
+  box-shadow: none !important;
+  outline: none !important;
+  -webkit-appearance: none;
+}
+
+
+input:focus,
+select:focus {
+  box-shadow: none !important;
+  border-color: #52bad5 !important;
+}
+
+
+
+
+
+
+
+
+
+.flag {
+  margin-right: 5px;
+  vertical-align: text-top;
+}
+
+
+
+
+
+
+#search-dropdown {
+	min-width: 300px;
+	padding: 15px;
+}
+
+
+
+
+
+
+
+a.fancy-link,
+a.fancy-link:hover,
+p a,
+p a:hover {
+  color: #52bad5;
+  text-decoration: none;
+}
+
+a.fancy-link:hover,
+p a:hover {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.blog-article {
+  padding-bottom: 4%;
+}
+
+.blog-article-title {
+  margin-top: 0;
+  font-size: 2.5em;
+  font-weight: 700;
+  color: #333;
+}
+
+.blog-article-title a {
+  color: #333;
+}
+
+.blog-article-title a:hover {
+  color: #52bad5;
+}
+
+.blog-article-image {
+  margin-bottom: 6%;
+}
+
+.blog-article-content {
+  font-size: 1.2em;
+  line-height: 1.5;
+  color: #555;
+  font-family: "Noto Serif", Georgia, "Times New Roman", Times, serif;
+}
+
+.blog-article-meta {
+  margin-bottom: 2%;
+  color: #999;
+  font-size: 1.250em;
+}
+
+.read-more {
+  margin-top: 2%;
+  font-size: 1.2em;
+}
+
+.read-more:after {
+  display: inline-block;
+  content: "\2192";
+  margin-left: .5em;
+}
+
+
+
+
+
+
+
+.author-avatar {
+  border-radius: 2px;
+  margin-top: -2px;
+  margin-right: 5px;
+}
+
+
+
+
+
+
+
+
+
+.img-center {
+  margin: 0 auto;
+}
+
+
+
+
+
+.blur-fix {
+  image-rendering: optimizeSpeed;             /* Legal fallback */
+  image-rendering: -moz-crisp-edges;          /* Firefox        */
+  image-rendering: -o-crisp-edges;            /* Opera          */
+  image-rendering: -webkit-optimize-contrast; /* Safari         */
+  image-rendering: optimize-contrast;         /* CSS3 Proposed  */
+  image-rendering: crisp-edges;               /* CSS4 Proposed  */
+  image-rendering: pixelated;                 /* CSS4 Proposed  */
+  -ms-interpolation-mode: nearest-neighbor;   /* IE8+           */
+}
+
+
+
+
+
+
+
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  padding-bottom: 20px;
+  margin: 0 auto -140px;
+}
+
+#push,
+#footer {
+  height: 140px;
+}
+
+#footer {
+  padding: 40px 0;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e5e5e5;
+}
+
+
+
+
+
+
+.server-status {
+  font-family: monospace;
+}
+
+
+
+
+
+
+.server-ip {
+  font-size: 1.5em;
+}
+
+
+
+
+
+
+
+.box {
+  min-height: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+
+
+
+
+
+.flexslider {
+    margin: -20px 0 60px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.flex-direction-nav {
+  display: none;
+}
+
+
+
+@font-face {
+  font-family: "Minecrafter";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Minecrafter"), url("../fonts/minecrafter.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Stonecraft";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Stonecraft"), url("../fonts/stonecraft.woff") format("woff");
+}
+
+.fancy-username {
+  margin-top: 6%;
+  font-family: "Minecrafter", "Stonecraft", Arial;
+  font-size: 3em;
+  text-shadow: 0px 1px 0px #ccc, 0px 2px 0px #ccc, 0px 3px 0px #ccc, 0px 4px 0px #ccc, 0px 5px 0px #ccc, 0px 6px 0px #ccc, 0px 7px 0px #ccc;
+}

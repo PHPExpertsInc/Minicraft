@@ -1,0 +1,81 @@
+{% extends 'includes/store_layout.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2.css') }}">
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
+{% endblock %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <ol class="breadcrumb">
+        <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
+        <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
+        <li class="active">{{ lang('EDIT_PACK') }}</li>
+      </ol>
+      <form role="form" method="post" action="{{ url('action', 'packs', 'edit-pack') }}-{{ pack.id }}">
+        <div class="form-group">
+          <label for="pack-name">Name</label>
+          <input type="text" name="pack-name" id="pack-name" class="form-control" placeholder="Enter title" value="{{ pack.name }}">
+        </div>
+        <div class="form-group">
+          <label for="pack-image">pack image</label>
+          <input type="url" name="pack-image" id="pack-image" class="form-control" placeholder="Enter url" value="{{ pack.image }}">
+        </div>
+        <div class="form-group">
+          <label for="pack-description">pack desc</label>
+          <input type="text" name="pack-description" id="pack-description" class="form-control" placeholder="Enter desc" value="{{ pack.description }}">
+        </div>
+        <div class="form-group">
+          <label for="pack-price">pack price</label>
+          <input type="number" name="pack-price" id="pack-price" class="form-control" placeholder="Enter price" value="{{ pack.price }}">
+        </div>
+        <div class="form-group">
+          <label for="pack-category">pack category</label>
+          <select name="pack-category" id="pack-category" class="form-control">
+            {% for category in categories %}
+            <option value="{{ category.id }}" {% if category.id == pack.category.id %}selected{% endif %}>{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pack-items">pack items</label>
+          <select name="pack-items" id="pack-items" class="form-control" multiple>
+            {% for item in items %}
+            <option value="{{ item.id }}"{% if item.id in pack.storeItems %} selected{% endif %}>{{ item.minecraftName }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pack-commands">pack command</label>
+          <select name="pack-commands" id="pack-commands" class="form-control" multiple>
+            {% for command in commands %}
+            <option value="{{ command.id }}"{% if command.id in pack.storeCommands %} selected{% endif %}>{{ command.command }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pack-ranks">pack ranks</label>
+          <select name="pack-ranks" id="pack-ranks" class="form-control" multiple>
+            {% for rank in ranks %}
+            <option value="{{ rank.id }}"{% if rank.id in pack.ranks %} selected{% endif %}>{{ rank.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">Save</button>
+        </div>
+      </form>
+    </div> <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ url('assets', 'js/select2/select2.js') }}"></script>
+<script src="{{ url('assets', 'js/select2/select2_locale_' ~ config.language ~ '.js') }}"></script>
+<script>$(document).ready(function(){$("#pack-category").select2();$("#pack-items").select2();$("#pack-commands").select2();$("#pack-ranks").select2();$("#pack-server").select2()})</script>
+{% endblock %}

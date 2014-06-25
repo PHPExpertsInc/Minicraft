@@ -1,0 +1,60 @@
+{% extends 'includes/store_layout.twig' %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+  <div class="row">
+    <div class="col-md-12">
+      {% if user %}<h2>{{ lang('SHOW_MONEY', user.money, user.money > 1 ? config.currencyName.plural : config.currencyName.singular) }}{% if user.vaultItems is not empty %}<br><small><a href="{{ url('vault') }}">{% if user.vaultItems|length > 1 %}{{ lang('NB_ITEMS_IN_VAULT', user.vaultItems|length) }}{% else %}{{ lang('ONE_ITEM_IN_VAULT') }}{% endif %}</a></small>{% endif %}</h2><hr>{% endif %}
+      {% if store.storePacks is not empty %}
+      <div class="row">
+      {% for pack in store.storePacks %}
+      <div class="col-sm-6 col-md-4">
+        <div class="thumbnail item">
+          <img src="{{ pack.image }}" alt="{{ pack.name }}">
+          <div class="caption">
+            <h3>{{pack.name}} <small><a href="{{ url('store_category', pack.category.id, pack.category.slug) }}" class="fancy-link">{{ pack.category.name }}</a></small></h3>
+            <h4 class="{% if user.money < pack.price %}text-danger{% else %}text-success{% endif %}">{{ pack.price ~ ' ' ~ (pack.price > 1 ? config.currencyName.plural : config.currencyName.singular) }}</h4>
+            <hr>
+            <p><button class="btn btn-default" data-toggle="modal" data-target="#modal-{{pack.id}}">{{ lang('BTN_MORE_INFOS') }}</button>{% if user.money >= pack.price %}&nbsp;<button class="btn btn-primary" data-toggle="modal" data-target="#modal-{{pack.id}}">{{ lang('BTN_BUY') }}</button>{% endif %}</p>
+          </div>
+        </div>
+      </div>
+      <div id="{{ 'modal-' ~ pack.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-' ~ pack.id}}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="{{ 'label-' ~ pack.id}}">{{ lang('ITEM_DESCRIPTION') }}</h4>
+            </div>
+            <div class="modal-body">
+              <img src="{{ pack.image }}" class="img-responsive modal-image" alt="{{ pack.title }}">
+              <h3>{{pack.name}}</h3>
+              {{ pack.description|raw }}
+              {% if user is not empty %}
+              {% if user.money < pack.price %}
+              <p class="text-danger">{{ lang('NEED_MORE_MONEY', (user.money - pack.price)|abs, (user.money - pack.price)|abs > 1 ? config.currencyName.plural : config.currencyName.singular)|raw }}<br><a href="{{ url('store_buy') }}">{{ lang('WOULD_LIKE_BUY_MONEY', config.currencyName.plural)|raw }}</a></p>{% else %}<p class="text-info">{{ lang('BUY_ITEM_CONFIRMATION', user.money - pack.price, user.money - pack.price > 1 ? config.currencyName.plural : config.currencyName.singular)|raw }}</p>
+              {% endif %}
+              {% else %}
+              <p class="text-danger">{{ lang('MUST_LOGIN_TO_BUY') }}</p>
+              {% endif %}
+            </div>
+            <div class="modal-footer">
+              <form method="post" action="{{ url('store') }}" class="form-inline">
+                <input type="hidden" name="store-buy" value="{{ pack.id }}">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
+                {% if user.money >= pack.price %}<button type="submit" class="btn btn-primary">{{ lang('BTN_BUY') }}</button>{% endif %}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+      {% else %}
+      {{ lang('NO_ITEM') }}
+      {% endif %}
+    </div> <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}

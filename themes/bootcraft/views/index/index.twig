@@ -1,0 +1,108 @@
+{% extends 'includes/global_layout.twig' %}
+{% block fonts %}
+{{ parent() }}
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700">
+{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ url('assets', 'js/flexslider/flexslider.css') }}">
+{{ parent() }}
+{% endblock %}
+{% block content %}
+{{ parent() }}
+<div class="flexslider">
+  <ul class="slides">
+    <li>
+      <img src="http://ticraft.fr/demo/bootcraft/assets/img/slide1.jpg" alt="Slide 1">
+    </li>
+    <li>
+      <img src="http://ticraft.fr/demo/bootcraft/assets/img/slide2.jpg" alt="Slide 2">
+    </li>
+    <li>
+      <img src="http://ticraft.fr/demo/bootcraft/assets/img/slide3.jpg" alt="Slide 3">
+    </li>
+  </ul>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 col-md-push-8">
+      {% include 'includes/flash.twig' %}
+      <div class="servers">
+        <h2>Server Status</h2>
+        <hr>
+        {% if manager.servers is not empty %}
+        {% for server in manager.servers|slice(0, 5) %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><a href="{{ url('server', server.id, server.slug) }}">{{ server.name }}</a></h3>
+          </div>
+          <div class="panel-body text-center">
+            <pre class="server-ip">{{ server.ip }}</pre>
+            {% if server.motd is not empty %}
+            <div class="alert alert-success server-status">ONLINE</div>
+            {% if server.infos.players is not empty %}
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" aria-valuenow="{{ server.infos.players|length }}" aria-valuemin="0" aria-valuemax="{{ server.infos.maxPlayers }}" style="width: {{ (server.infos.players|length / server.infos.maxPlayers) * 100 }}%;">
+                <span class="sr-only">{{ server.infos.players|length }} players online</span>
+              </div>
+            </div>
+            <p>{{ server.infos.players|length }} players online</p>
+            {% for player in server.infos.players %}
+            <a href="{{ url('player', player.name) }}" title="{{ player.name }}"><img src="//minotar.net/avatar/{{ player.name }}/32" width="32" alt="{{ player.name }}"></a>
+            {% endfor %}
+            {% endif %}
+            {% else %}
+            <div class="alert alert-danger server-status">OFFLINE</div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No server…</p>
+        {% endif %}
+      </div>
+      <div class="servers box">
+        <h2>Vote for {{ config.siteName }}</h2>
+        <hr>
+        <div class="">
+          <img src="//www.mcserv.org/Medias/interface/mcserv_logo.png" class="img-responsive" alt="McServ">
+        </div>
+      </div>
+    </div> <!-- .col-md-4 -->
+    <div class="col-md-8 col-md-pull-4">
+      <div class="blog">
+        {% if blog.articles is not empty %}
+        {% for article in blog.articles|slice(0, 5) %}
+        <article class="blog-article box">
+          <div class="blog-article-header">
+            <h2 class="blog-article-title"><a href="{{ url('article', article.id, article.slug) }}">{{ article.title }}</a></h2>
+            <p class="blog-article-meta">{{ lang('POSTED') }} <time class="timeago" datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time> {{ lang('BY')|lower }} <a href="{{ url('player', article.author.username|lower) }}" class="btn btn-default"><img src="//minotar.net/avatar/{{ article.author.minecraftUsername }}/32" width="16" class="author-avatar" alt="{{ article.author.username }}">{{ article.author.username }}</a></p>
+            <img src="{{ article.image }}" width="940" class="blog-article-image img-responsive" alt="{{ article.name }}">
+          </div>
+          <div class="blog-article-content">
+            <p>{{ article.extract }}</p>
+          </div>
+          <p><a href="{{ url('article', article.id, article.slug) }}" class="read-more">{{ lang('READ_MORE') }}</a></p>
+        </article> <!-- /.blog-post -->
+        {% endfor %}
+        {% else %}
+        <p>{{ lang('NO_ARTICLE') }}</p>
+        {% endif %}
+        <a href="{{ url('blog') }}" class="btn btn-block btn-default">See All Articles</a>
+      </div>
+    </div> <!-- .col-md-8 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
+<script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script>
+<script src="{{ url('assets', 'js/flexslider/jquery.flexslider-min.js') }}"></script>
+<script>
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide"
+  });
+});
+</script>
+{% endblock %}

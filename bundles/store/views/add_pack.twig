@@ -1,0 +1,88 @@
+{% extends 'includes/store_layout.twig' %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2.css') }}">
+<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
+{% endblock %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
+        <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
+        <li class="active">{{ lang('CREATE_PACK') }}</li>
+      </ol>
+      <form role="form" method="post" action="{{ url('action', 'store', 'create-pack') }}">
+        <div class="form-group">
+          <label for="pack-name">{{ lang('NAME') }}</label>
+          <input type="text" name="pack-name" id="pack-name" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="pack-image">{{ lang('IMAGE') }}</label>
+          <input type="url" name="pack-image" id="pack-image" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="pack-description">{{ lang('DESCRIPTION') }}</label>
+          <input type="text" name="pack-description" id="pack-description" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="pack-price">{{ lang('PRICE') }}</label>
+          <input type="number" name="pack-price" id="pack-price" class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="pack-category">{{ lang('CATEGORY') }}</label>
+          <select name="pack-category" id="pack-category" class="form-control">
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pack-items">{{ lang('ITEMS') }}</label>
+          <select name="pack-items[]" id="pack-items" class="form-control" multiple>
+            {% for item in items %}
+            <option value="{{ item.id }}">{{ item.minecraftName }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pack-commands">{{ lang('COMMANDS') }}</label>
+          <select name="pack-commands[]" id="pack-commands" class="form-control" multiple>
+            {% for com in commands %}
+            <option value="{{ com.id }}">{{ com.description }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pack-ranks">{{ lang('RANKS') }}</label>
+          <select name="pack-ranks[]" id="pack-ranks" class="form-control" multiple>
+            {% for rank in ranks %}
+            <option value="{{ rank.id }}">{{ rank.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="pack-server">{{ lang('SERVER') }}</label>
+          <select name="pack-server" id="pack-server" class="form-control">
+            {% for server in manager.servers %}
+            <option value="{{ server.id }}">{{ server.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_SAVE') }}</button>
+        </div>
+      </form>
+    </div> <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="{{ url('assets', 'js/select2/select2.js') }}"></script>
+<script src="{{ url('assets', 'js/select2/select2_locale_' ~ config.language ~ '.js') }}"></script>
+<script>$(document).ready(function(){$("#pack-category").select2();$("#pack-items").select2();$("#pack-commands").select2();$("#pack-ranks").select2();$("#pack-server").select2()})</script>
+{% endblock %}

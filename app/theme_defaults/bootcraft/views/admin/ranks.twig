@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="{% if config.language|length > 0 %}{{ config.language }}{% else %}en{% endif %}">
+  <head>
+    <meta charset="utf-8">
+    <title>{% if title is defined and title is not empty %}{{ title }} | {{ config.siteName|capitalize }}{% else %}Minicraft{% endif %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url('assets', 'css/style.css') }}">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- HTML5 shiv -->
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    
+    <div class="container">
+    
+      <div class="row">
+      
+        <div class="col-md-12">
+          
+          {% include 'includes/flash.twig' %}
+          
+          {% if ranks is defined and ranks is not empty %}
+          <table class="table table-hover table-striped table-bordered">
+            <tr>
+              <th>Name</th>
+              <th>Force</th>
+              <th>Edit</th>
+              <th>Remove</th>
+            </tr>
+            {% for rank in ranks %}
+            <tr>
+              <td>{{ rank.name }}</td>
+              <td>{{ rank.force }}</td>
+              <td><a href="{{ url('action', 'ranks', 'edit-rank') }}-{{ rank.id }}" class="btn btn-default">Edit</a></td>
+              <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ rank.id }}">
+                Remove
+              </button></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% else %}
+          <p>No ranks to show…</p>
+          {% endif %}
+          
+          
+          
+          
+          
+          
+          {% for rank in ranks %}
+          <!-- Modal -->
+          <div id="modal-{{rank.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                  Sure? remove {{rank.name}}?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <form method="post" action="">
+                    <input type="hidden" name="remove-rank" value="{{rank.id}}">
+                    <button type="submit" class="btn btn-primary">Buy</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          
+          
+          <p><a href="{{ url('action', 'ranks', 'add') }}">Add rank</a></p>
+          
+        
+        </div>  <!-- /.col-md-12 -->
+      
+      </div> <!-- /.row -->
+    
+    </div> <!-- /.container -->
+
+    <!-- Javascript -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  </body>
+</html>

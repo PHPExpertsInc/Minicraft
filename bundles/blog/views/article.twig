@@ -1,0 +1,37 @@
+{% extends 'includes/blog_layout.twig' %}
+{% block content %}
+{{ parent() }}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="{{ url('blog') }}">{{ lang('BLOG') }}</a></li>
+      <li class="active">{{ article.title }}</li>
+    </ol>
+    <section class="col-md-12">
+      {% if article is not empty %}
+      <article class="article">
+        <div class="article-header">
+          <h1 class="article-title">{{ article.title }}</h1>
+          <p class="article-meta">{{ lang('POSTED') }} <time class="timeago" datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time> {{ lang('BY')|lower }} <a href="{{ url('player', article.author.username|lower) }}" class="btn btn-default"><img src="//minotar.net/avatar/{{ article.author.minecraftUsername }}/32" width="16" class="author-avatar" alt="{{ article.author.username }}">{{ article.author.username }}</a></p>
+          <img src="{{ article.image }}" width="940" class="article-image img-responsive" alt="{{ article.name }}">
+        </div>
+        <div class="article-content">
+          {{ article.body|raw }}
+        </div>
+      </article>
+      <div id="disqus_thread"></div>
+      <script>var disqus_shortname="{{ config.disqusId() }}";(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//"+disqus_shortname+".disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(e)})()</script>
+      <noscript>{{ lang('ENABLE_JS_COMMENTS') }}</noscript>
+      {% else %}
+      {{ lang('NO_ARTICLE') }}
+      {% endif %}
+    </section> <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
+<script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script>
+{% endblock %}
