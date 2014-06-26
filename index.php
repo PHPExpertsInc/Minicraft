@@ -28,10 +28,7 @@
  * http://minicraft.io/forum
  * ==============================
  */
-$time  = microtime();
-$time  = explode(' ', $time);
-$time  = $time[1] + $time[0];
-$start = $time;
+
 /* ============================== */
 // Constants
 // Full URL:
