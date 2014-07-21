@@ -1,6 +1,5 @@
 {% extends 'includes/store_layout.twig' %}
 {% block content %}
-{{ parent() }}
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
@@ -41,7 +40,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
               <h4 class="modal-title" id="{{ 'label-pack-' ~ pack.id }}">{{ lang('REMOVE_PACK') }}</h4>
             </div>
             <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', pack.name)|raw }}</div>
@@ -87,8 +86,8 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="{{ 'label-item-' ~ item.id }}">{{ lang('REMOVE_ITEM') }}</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+              <h4 id="{{ 'label-item-' ~ item.id }}" class="modal-title">{{ lang('REMOVE_ITEM') }}</h4>
             </div>
             <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', item.minecraftName)|raw }}</div>
             <div class="modal-footer">
@@ -131,8 +130,8 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="{{ 'label-command-' ~ command.id }}">{{ lang('REMOVE_COMMAND') }}</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+              <h4 id="{{ 'label-command-' ~ command.id }}" class="modal-title">{{ lang('REMOVE_COMMAND') }}</h4>
             </div>
             <div class="modal-body">{{ lang('REMOVE_CONFIRMATION_NEUTRAL')|raw }}</div>
             <div class="modal-footer">

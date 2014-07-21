@@ -2,69 +2,70 @@
 
 /* ============================== */
 if (is_object($user)) {
-  header('Location: ' . URL);
+  Helpers::redirect($router, 'home');
   die();
 }
 /* ============================== */
 
 /* ============================== */
-$data         = $_POST['login'];
-$username     = trim($data['username']);
-$raw_password = trim($data['password']);
-$cookie       = isset($data['cookie']);
+$array         = $_POST['login'];
+$username     = trim($array['username']);
+$raw_password = trim($array['password']);
+$cookie       = isset($array['cookie']);
 
 $error_handler = new ErrorHandler;
+$flash = new Flash;
 /* ============================== */
 
 
-if (empty($username) and empty($raw_password)) {
+if (empty($_POST)) {
   die($twig->render('login/login.twig', array(
-    'pageTitle' => $translator->getTranslation($config->getLanguage(), 'REGISTER'),
+    'pageTitle' => $translator->getTranslation($config->getLang(), 'LOGIN'),
     'handler' => $error_handler,
     'config' => $config,
     'user' => $user,
-    'flash' => new Flash
+    'flash' => $flash
   )));
 } else {
-  $error_handler->saveLoginUsername($username);
-  $error_handler->saveLoginCookie($cookie);
+  $error_handler->saveField('username', $username);
+  $error_handler->saveField('cookie', $cookie);
   
   /* ============================== */
   $waiting_time = Security::userCanDoAction('login') - time();
   if ($waiting_time > 0) {
-    $error_handler->addLoginError($translator->getTranslation($config->getLanguage(), 'WAIT_BEFORE_LOGIN', array(
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'WAIT_BEFORE_LOGIN', array(
       $waiting_time
-    )));
+    )), 'warning');
     $error_handler->saveToSessions();
-    $url = $router->getController('login')->getUrl();
-    header('Location: ' . URL . '/' . $url);
+    Helpers::redirect($router, 'login');
     die();
   }
   /* ============================== */
   
   /* ============================== */
   if (empty($username)) {
-    $error_handler->addLoginError($translator->getTranslation($config->getLanguage(), 'USERNAME_EMPTY'));
-    $error_handler->setLoginErrorUsername(true);
+    $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'USERNAME_EMPTY'), 'username');
+    $error_handler->addError('username');
   } elseif (empty($raw_password)) {
-    $error_handler->addLoginError($translator->getTranslation($config->getLanguage(), 'PASSWORD_EMPTY'));
-    $error_handler->setLoginErrorPassword(true);
+    $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'PASSWORD_EMPTY'), 'password');
+    $error_handler->addError('password');
   } elseif (!Helpers::usernameIsValid($username) or Helpers::tooShort($username, 3) or Helpers::tooLong($username, 16)) {
-    $error_handler->addLoginError($translator->getTranslation($config->getLanguage(), 'USER_UNKNOWN'));
-    $error_handler->setLoginErrorUsername(true);
+    $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'USER_UNKNOWN'), 'username');
+    $error_handler->addError('username');
   } elseif (Helpers::tooShort($raw_password, 6) or Helpers::tooLong($raw_password, 255)) {
-    $error_handler->addLoginError($translator->getTranslation($config->getLanguage(), 'PASSWORD_INCORRECT'));
-    $error_handler->setLoginErrorPassword(true);
+    $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'PASSWORD_INCORRECT'), 'password');
+    $error_handler->addError('password');
     Security::actionFailed('login', 5);
   }
   /* ============================== */
   
   /* ============================== */
-  if ($error_handler->readyToLogin()) {
+  if ($error_handler->noError()) {
     $infos = $ticraft->call('checkCredentials', array(
       $username,
       $raw_password
     ));
+    
     if (!empty($infos)) {
       $user = new User($infos);
       $user->generateSession();
@@ -75,25 +76,22 @@ if (empty($username) and empty($raw_password)) {
       
       Security::actionSucceeded('login');
       
-      if (!empty($_GET['from'])) {
-        header('Location: ' . $_GET['from']);
-      } elseif (!empty($data['from'])) {
-        header('Location: ' . $data['from']);
+      if (!empty($array['from'])) {
+        header('Location: ' . $array['from']);
+        die();
       } else {
-        header('Location: ' . URL);
+        Helpers::redirect($router, 'home');
+        die();
       }
-      
-      die();
     } else {
-      $error_handler->addLoginError($translator->getTranslation($config->getLanguage(), 'PASSWORD_INCORRECT'));
-      $error_handler->setLoginErrorPassword(true);
+      $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'PASSWORD_INCORRECT'), 'password');
+      $error_handler->addError('password');
       Security::actionFailed('login', 5);
     }
   }
   /* ============================== */
   
   $error_handler->saveToSessions();
-  $url = $router->getController('login')->getUrl();
-  header('Location: ' . URL . '/' . $url);
+  Helpers::redirect($router, 'login');
   die();
 }

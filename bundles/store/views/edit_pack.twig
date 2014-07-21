@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
 {% endblock %}
 {% block content %}
-{{ parent() }}
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
@@ -17,59 +16,62 @@
       </ol>
       <form role="form" method="post" action="{{ url('action', 'packs', 'edit-pack') }}-{{ pack.id }}">
         <div class="form-group">
-          <label for="pack-name">Name</label>
-          <input type="text" name="pack-name" id="pack-name" class="form-control" placeholder="Enter title" value="{{ pack.name }}">
+          <label for="pack-name">{{ lang('PACK_NAME') }}</label>
+          <input type="text" name="edit-pack[name]" id="pack-name" class="form-control" value="{{ pack.name }}">
         </div>
         <div class="form-group">
-          <label for="pack-image">pack image</label>
-          <input type="url" name="pack-image" id="pack-image" class="form-control" placeholder="Enter url" value="{{ pack.image }}">
+          <label for="pack-image">{{ lang('PACK_IMAGE') }}</label>
+          <input type="url" name="edit-pack[image]" id="pack-image" class="form-control" value="{{ pack.image }}">
         </div>
         <div class="form-group">
-          <label for="pack-description">pack desc</label>
-          <input type="text" name="pack-description" id="pack-description" class="form-control" placeholder="Enter desc" value="{{ pack.description }}">
+          <label for="pack-description">{{ lang('PACK_DESCRIPTION') }}</label>
+          <input type="text" name="edit-pack[description]" id="pack-description" class="form-control" value="{{ pack.description }}">
         </div>
         <div class="form-group">
-          <label for="pack-price">pack price</label>
-          <input type="number" name="pack-price" id="pack-price" class="form-control" placeholder="Enter price" value="{{ pack.price }}">
+          <label for="pack-price">{{ lang('PACK_PRICE') }}</label>
+          <input type="number" name="edit-pack[price]" id="pack-price" class="form-control" value="{{ pack.price }}">
         </div>
         <div class="form-group">
-          <label for="pack-category">pack category</label>
-          <select name="pack-category" id="pack-category" class="form-control">
+          <label for="pack-category">{{ lang('PACK_CATEGORY') }}</label>
+          <select name="edit-pack[category]" id="pack-category" class="form-control">
             {% for category in categories %}
             <option value="{{ category.id }}" {% if category.id == pack.category.id %}selected{% endif %}>{{ category.name }}</option>
             {% endfor %}
           </select>
         </div>
         <div class="form-group">
-          <label for="pack-items">pack items</label>
-          <select name="pack-items" id="pack-items" class="form-control" multiple>
+          <label for="pack-items">{{ lang('PACK_ITEMS') }}</label>
+          <select name="items[]" id="pack-items" class="form-control" multiple>
             {% for item in items %}
             <option value="{{ item.id }}"{% if item.id in pack.storeItems %} selected{% endif %}>{{ item.minecraftName }}</option>
             {% endfor %}
           </select>
         </div>
         <div class="form-group">
-          <label for="pack-commands">pack command</label>
-          <select name="pack-commands" id="pack-commands" class="form-control" multiple>
+          <label for="pack-commands">{{ lang('PACK_COMMANDS') }}</label>
+          <select name="commands[]" id="pack-commands" class="form-control" multiple>
             {% for command in commands %}
             <option value="{{ command.id }}"{% if command.id in pack.storeCommands %} selected{% endif %}>{{ command.command }}</option>
             {% endfor %}
           </select>
         </div>
         <div class="form-group">
-          <label for="pack-ranks">pack ranks</label>
-          <select name="pack-ranks" id="pack-ranks" class="form-control" multiple>
+          <label for="pack-ranks">{{ lang('PACK_RANKS') }}</label>
+          <select name="ranks[]" id="pack-ranks" class="form-control" multiple>
             {% for rank in ranks %}
             <option value="{{ rank.id }}"{% if rank.id in pack.ranks %} selected{% endif %}>{{ rank.name }}</option>
             {% endfor %}
           </select>
         </div>
-        
         <div class="form-group">
-          <button type="submit" class="btn btn-default">Save</button>
+          <label for="pack-server">{{ lang('SERVER') }}</label>
+          <input type="text" name="edit-pack[server]" id="pack-server" class="form-control" value="{{ pack.server }}">
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-default">{{ lang('BTN_SAVE') }}</button>
         </div>
       </form>
-    </div> <!-- .col-md-12 -->
+    </div> <!-- .col-md-6 -->
   </div> <!-- .row -->
 </div> <!-- .container -->
 {% endblock %}

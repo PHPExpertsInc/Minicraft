@@ -12,18 +12,22 @@ class Article {
   protected $category;
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^a_#', $key)) {
-        $key    = str_replace('a_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^a_#', $key)) {
+          $key    = str_replace('a_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
         }
       }
+      
+      $this->setCategory(new ArticleCategory($infos));
+      $this->setAuthor(new User($infos));
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
-    
-    $this->setCategory(new ArticleCategory($infos));
-    $this->setAuthor(new User($infos));
   }
   
   public function __toString() {

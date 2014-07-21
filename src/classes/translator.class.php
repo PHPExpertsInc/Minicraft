@@ -12,7 +12,7 @@ class Translator {
     }
   }
   
-  public function getTranslation($language = 'en', $key, $markers = array()) {
+  public function getTranslation($language, $key, $markers = array()) {
     $translation = $this->translations[$language]->translate($key);
     
     if (empty($translation)) {

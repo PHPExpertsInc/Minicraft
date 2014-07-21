@@ -7,14 +7,18 @@ class StoreCategory {
   protected $description;
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^cat_#', $key)) {
-        $key    = str_replace('cat_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^cat_#', $key)) {
+          $key    = str_replace('cat_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
         }
       }
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
   }
   
@@ -23,15 +27,15 @@ class StoreCategory {
   }
   
   public function addItem($item) {
-    $this->items[] = $item;
+    array_push($this->items, $item);
   }
   
   public function addRank($rank) {
-    $this->ranks[] = $rank;
+    array_push($this->ranks, $rank);
   }
   
   public function addCommand($command) {
-    $this->commands[] = $command;
+    array_push($this->commands, $command);
   }
   
   public function getId() {

@@ -5,11 +5,10 @@
 <link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
 {% endblock %}
 {% block content %}
-{{ parent() }}
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-offset-3 col-md-6">
       <ol class="breadcrumb">
         <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
         <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
@@ -23,7 +22,7 @@
           <div class="panel-body">
             <div class="form-group">
               <label for="item-minecraft">{{ lang('MINECRAFT_ITEM') }}</label>
-              <select name="item-minecraft" id="item-minecraft" class="form-control">
+              <select id="item-minecraft" class="form-control" name="add-item[minecraft]">
                 {% for item in minecraftItems %}
                 <option value="{{ item.id }};{{ item.meta }};{{ item.name }}" data-id="{{ item.id }}" data-meta="{{ item.meta }}">{{ item.name }}</option>
                 {% endfor %}
@@ -31,7 +30,7 @@
             </div>
             <div class="form-group">
               <label for="item-quantity">{{ lang('QUANTITY') }}</label>
-              <input type="number" name="item-quantity" id="item-quantity" class="form-control">
+              <input id="item-quantity" class="form-control" type="number" name="add-item[quantity]">
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
@@ -45,19 +44,19 @@
           <div class="panel-body">
             <div class="form-group">
               <label for="item-id">{{ lang('ITEM_ID') }}</label>
-              <input type="number" name="item-id" id="item-id" class="form-control">
+              <input id="item-id" class="form-control" type="number" name="add-item[id]">
             </div>
             <div class="form-group">
               <label for="item-meta">{{ lang('METADATA') }}</label>
-              <input type="number" name="item-meta" id="item-meta" class="form-control">
+              <input id="item-meta" class="form-control" type="number" name="add-item[meta]">
             </div>
             <div class="form-group">
               <label for="item-name">{{ lang('NAME') }}</label>
-              <input type="text" name="item-name" id="item-name" class="form-control">
+              <input id="item-name" class="form-control" type="text" name="add-item[name]">
             </div>
             <div class="form-group">
               <label for="item-icon">{{ lang('ICON_URL') }}</label>
-              <input type="url" name="item-icon" id="item-icon" class="form-control">
+              <input id="item-icon" class="form-control" type="url" name="add-item[icon]">
             </div>
             <div class="form-group">
               <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
@@ -65,7 +64,7 @@
           </div>
         </div>
       </form>
-    </div> <!-- .col-md-12 -->
+    </div> <!-- .col-md-6 -->
   </div> <!-- .row -->
 </div> <!-- .container -->
 {% endblock %}

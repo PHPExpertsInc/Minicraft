@@ -1,25 +1,31 @@
 <?php
 
 class Email {
-  public static function sendConfirmationEmail($email, $username, $token, $translator, $config, $router) {
+  public static function getBackgroundUrl() {
+    $background_url = 'http:' . URL . '/' . $router->getController('assets')->getUrl();
+    $background_url = preg_replace('#%m1%#', 'img/email_bg.png', $background_url);
     
+    return $background_url;
+  }
+
+  public static function sendConfirmationEmail($email, $username, $token, $translator, $config, $router) {
     $swift_class = VENDORS . 'Swift/swift_required.php';
     require_once($swift_class);
     
-    $verify_url = URL . '/' . $router->getController('verify')->getUrl();
+    $verify_url = 'http:' . URL . '/' . $router->getController('verify')->getUrl();
     $verify_url = preg_replace('#%m1%#', urlencode($email), $verify_url);
     $verify_url = preg_replace('#%m2%#', $token, $verify_url);
     
     $infos = array(
-      'subject' => $translator->getTranslation($config->getLanguage(), 'EMAIL_CONFIRMATION_SUBJECT'),
+      'subject' => $translator->getTranslation($config->getLang(), 'EMAIL_CONFIRMATION_SUBJECT'),
       'username' => ucfirst($username),
-      'site_name' => ucfirst($config->getSiteName()),
-      'site_email' => $config->getSiteEmail(),
-      'verify_url' => $verify_url,
-      'background_url' => URL . '/assets/img/email_background.jpg',
-      'activate_btn' => $translator->getTranslation($config->getLanguage(), 'EMAIL_CONFIRMATION_BTN'),
-      'instructions' => $translator->getTranslation($config->getLanguage(), 'EMAIL_CONFIRMATION_INSTRUCTIONS'),
-      'headline' => $translator->getTranslation($config->getLanguage(), 'EMAIL_CONFIRMATION_HEADLINE')
+      'siteName' => ucfirst($config->getSiteName()),
+      'siteEmail' => $config->getSiteEmail(),
+      'verifyUrl' => $verify_url,
+      'backgroundUrl' => self::getBackgroundUrl($router),
+      'activateBtn' => $translator->getTranslation($config->getLang(), 'EMAIL_CONFIRMATION_BTN'),
+      'instructions' => $translator->getTranslation($config->getLang(), 'EMAIL_CONFIRMATION_INSTRUCTIONS'),
+      'headline' => $translator->getTranslation($config->getLang(), 'EMAIL_CONFIRMATION_HEADLINE')
     );
     
     $body     = self::formatConfirmationEmail($infos, 'html');
@@ -37,7 +43,7 @@ class Email {
     
     $message->setSubject($infos['subject']);
     $message->setFrom(array(
-      $infos['site_email'] => $infos['site_name']
+      $config->getSiteEmail() => $config->getSiteName()
     ));
     $message->setTo(array(
       $email => ucfirst($username)
@@ -69,18 +75,15 @@ class Email {
     
     $reset_url = 'http:' . URL . '/' . $router->getController('reset')->getUrl() . '?token=' . $token;
     
-    $background_url = 'http:' . URL . '/' . $router->getController('assets')->getUrl();
-    $background_url = preg_replace('#%m1%#', 'img/email_background.jpg', $background_url);
-    
     $infos = array(
-      'subject' => $translator->getTranslation($config->getLanguage(), 'EMAIL_RESET_SUBJECT'),
+      'subject' => $translator->getTranslation($config->getLang(), 'EMAIL_RESET_SUBJECT'),
       'username' => ucfirst($username),
       'resetUrl' => $reset_url,
-      'backgroundUrl' => $background_url,
-      'btn' => $translator->getTranslation($config->getLanguage(), 'EMAIL_RESET_BTN'),
-      'instructions' => $translator->getTranslation($config->getLanguage(), 'EMAIL_RESET_INSTRUCTIONS'),
-      'inscructions_txt' => $translator->getTranslation($config->getLanguage(), 'EMAIL_RESET_INSTRUCTIONS_TXT'),
-      'headline' => $translator->getTranslation($config->getLanguage(), 'EMAIL_RESET_HEADLINE')
+      'backgroundUrl' => self::getBackgroundUrl($router),
+      'btn' => $translator->getTranslation($config->getLang(), 'EMAIL_RESET_BTN'),
+      'instructions' => $translator->getTranslation($config->getLang(), 'EMAIL_RESET_INSTRUCTIONS'),
+      'inscructions_txt' => $translator->getTranslation($config->getLang(), 'EMAIL_RESET_INSTRUCTIONS_TXT'),
+      'headline' => $translator->getTranslation($config->getLang(), 'EMAIL_RESET_HEADLINE')
     );
     
     $body     = self::formatResetPasswordEmail($infos, $config, 'html');

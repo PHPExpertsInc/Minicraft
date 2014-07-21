@@ -1,15 +1,9 @@
 {% extends 'includes/store_layout.twig' %}
-{% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2.css') }}">
-<link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
-{% endblock %}
 {% block content %}
-{{ parent() }}
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-offset-3 col-md-6">
       <ol class="breadcrumb">
         <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
         <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
@@ -25,17 +19,17 @@
       <form role="form" method="post" action="{{ url('action', 'store', 'add-command') }}">
         <div class="form-group">
           <label for="command-command">{{ lang('CONSOLE_COMMAND') }}</label>
-          <input type="text" name="command-command" id="command-command" class="form-control">
+          <input id="command-command" class="form-control" type="text" name="add-command[command]">
         </div>
         <div class="form-group">
           <label for="command-description">{{ lang('DESCRIPTION') }}</label>
-          <input type="text" name="command-description" id="command-description" class="form-control">
+          <input id="command-description" class="form-control" type="text" name="add-command[description]">
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
         </div>
       </form>
-    </div> <!-- .col-md-12 -->
+    </div> <!-- .col-md-6 -->
   </div> <!-- .row -->
 </div> <!-- .container -->
 {% endblock %}

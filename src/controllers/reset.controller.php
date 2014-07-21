@@ -2,7 +2,7 @@
 
 /* ============================== */
 if (is_object($user)) {
-  header('Location: ' . URL);
+  Helpers::redirect($router, 'home');
   die();
 }
 /* ============================== */
@@ -14,9 +14,8 @@ $flash = new Flash;
 
 /* ============================== */
 if (empty($account)) {
-  // Step 1
   die($twig->render('reset/step_1.twig', array(
-    'pageTitle' => $translator->getTranslation($config->getLanguage(), 'RESET_PASSWORD'),
+    'pageTitle' => $translator->getTranslation($config->getLang(), 'RESET_PASSWORD'),
     'config' => $config,
     'user' => $user,
     'flash' => $flash
@@ -35,9 +34,8 @@ if (empty($account)) {
 /* ============================== */
 $waiting_time = Security::userCanDoAction('reset') - time();
 if ($waiting_time > 0) {
-  $flash->addFlash($translator->getTranslation($config->getLanguage(), 'WAIT_BEFORE_RESET', array($waiting_time)));
-  $url = $router->getController('reset')->getUrl();
-  header('Location: ' . URL . '/' . $url);
+  $flash->addFlash($translator->getTranslation($config->getLang(), 'WAIT_BEFORE_RESET', array($waiting_time)));
+  Helpers::redirect($router, 'reset');
   die();
 }
 /* ============================== */
@@ -45,9 +43,8 @@ if ($waiting_time > 0) {
 /* ============================== */
 if (empty($user_infos)) {
   // Step 1 sent but error
-  $flash->addFlash($translator->getTranslation($config->getLanguage(), 'NO_ACCOUNT_MATCHING'), 'warning');
-  $url = $router->getController('reset')->getUrl();
-  header('Location: ' . URL . '/' . $url);
+  $flash->addFlash($translator->getTranslation($config->getLang(), 'NO_ACCOUNT_MATCHING'), 'warning');
+  Helpers::redirect($router, 'reset');
   die();
 } else {
   // Step 1 sent no error
@@ -58,9 +55,9 @@ if (empty($user_infos)) {
   
   Email::sendResetPasswordEmail($user->getEmail(), $user->getUsername(), $token, $translator, $config, $router);
   
-  $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_RESET'), 'success');
+  $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_RESET'), 'success');
   
-  header('Location: ' . URL);
+  Helpers::redirect($router, 'home');
   die();
 }
 /* ============================== */

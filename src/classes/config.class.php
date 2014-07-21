@@ -23,16 +23,21 @@ class Config {
   protected $currency_plural;
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^c_#', $key)) {
-        $key    = str_replace('c_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^c_#', $key)) {
+          $key    = str_replace('c_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
         }
       }
+      
+      $this->setDebugMode = !empty($this->debug_mode);
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
-    $this->setDebugMode = !empty($this->debug_mode);
   }
   
   public function setSmtpServer($server) {
@@ -192,8 +197,8 @@ class Config {
     return $this->disqus_id;
   }
   
+  // @todo Make this editable from the administration panel
   public function getTopCountries() {
-    // @todo Make this dynamic
     return array(
       'zz' => 'Unspecified',
       'fr' => 'France',
@@ -205,8 +210,8 @@ class Config {
     );
   }
   
+  // @todo Make this editable from the administration panel
   public function getMenuItems() {
-    // @todo Make this dynamic
     return array(
       array(
         'url' => '/blog',
@@ -217,12 +222,12 @@ class Config {
         'name' => 'Forum'
       ),
       array(
-        'url' => '/vote',
-        'name' => 'Vote'
+        'url' => '/voter',
+        'name' => 'Voter'
       ),
       array(
-        'url' => '/store',
-        'name' => 'Store'
+        'url' => '/boutique',
+        'name' => 'Boutique'
       ),
       array(
         'url' => array(
@@ -239,14 +244,36 @@ class Config {
             'name' => 'Support'
           )
         ),
-        'name' => 'Others'
+        'name' => 'Autres'
       )
     );
   }
   
   public function isActive($bundle) {
-    // @todo Code this
-    return true;
+    $bundles = array(
+      'blog',
+      'store'
+    );
+    
+    return in_array($bundle, $bundles);
+  }
+  
+  // @todo Make this editable from the administration panel
+  public function getVoteSites() {
+    $sites = array(
+      array(
+        'name' => 'MCServ',
+        'url' => 'http://www.mcserv.org/',
+        'logo' => 'http://www.mcserv.org/Medias/interface/mcserv_logo.png'
+      ),
+      array(
+        'name' => 'Top Minecraft',
+        'url' => 'http://www.top-minecraft.net/',
+        'logo' => 'http://www.top-minecraft.net/css/img/logo.png'
+      )
+    );
+    
+    return $sites;
   }
   
   public function setCurrencySingular($name) {

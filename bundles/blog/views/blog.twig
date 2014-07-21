@@ -1,6 +1,5 @@
 {% extends 'includes/blog_layout.twig' %}
 {% block content %}
-{{ parent() }}
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
@@ -26,7 +25,7 @@
       {% else %}
       {{ lang('NO_ARTICLE') }}
       {% endif %}
-    </section> <!-- .blog-main -->
+    </section>
     </div> <!-- .col-md-12 -->
   </div> <!-- .row -->
 </div> <!-- .container -->

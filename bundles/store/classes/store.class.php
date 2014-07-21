@@ -5,8 +5,12 @@ class Store {
   protected $packs = array();
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      $this->addStorePack(new StorePack($value));
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        $this->addStorePack(new StorePack($value));
+      }
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
   }
   

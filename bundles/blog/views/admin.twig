@@ -1,6 +1,5 @@
 {% extends 'includes/blog_layout.twig' %}
 {% block content %}
-{{ parent() }}
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
@@ -24,12 +23,12 @@
             <td><a href="{{ url('article', article.id, article.slug) }}" class="fancy-link">{{ article.title }}</a></td>
             <td>{{ article.author.username }}</td>
             <td><time datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time></td>
-            <td><a href="{{ url('action', 'blog', 'edit-article') ~ "-" ~ article.id  }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
-            <td><button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{ article.id }}">{{ lang('BTN_REMOVE') }}</button></td>
+            <td><a href="{{ url('action', 'blog', 'edit-article') ~ '-' ~ article.id  }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
+            <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-' ~ article.id }}">{{ lang('BTN_REMOVE') }}</button></td>
           </tr>
           {% endfor %}
         </table>
-      </div>
+      </div> <!-- .table-responsive -->
       {% else %}
       <p>{{ lang('NO_ARTICLE') }}</p>
       {% endif %}
@@ -39,7 +38,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
               <h4 class="modal-title" id="{{ 'label-' ~ article.id}}">{{ lang('REMOVE_ARTICLE') }}</h4>
             </div>
             <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', article.title)|raw }}</div>
@@ -49,19 +48,14 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
                 <button type="submit" class="btn btn-danger">{{ lang('BTN_REMOVE') }}</button>
               </form>
-            </div>
-          </div>
-        </div>
-      </div>
+            </div> <!-- .modal-footer -->
+          </div> <!-- .modal-content -->
+        </div> <!-- .modal-dialog -->
+      </div> <!-- #modal -->
       {% endfor %}
       {% endif %}
       <a href="{{ url('action', 'blog', 'write') }}" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_WRITE_ARTICLE') }}</a>
-    </section>  <!-- /.col-md-12 -->
-  </div> <!-- /.row -->
-</div> <!-- /.container -->
-{% endblock %}
-{% block javascripts %}
-{{ parent() }}
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
-<script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script> 
+    </section>  <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
 {% endblock %}

@@ -1,7 +1,7 @@
 {% if flash.flashes is not empty %}
 {% if flash.successFlashes is not empty %}
 <div class="alert alert-success alert-dismissable">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times"></i></button>
   {% if flash.successFlashes|length > 1 %}
   <ul>
     {% for message in flash.successFlashes %}
@@ -16,7 +16,7 @@
 
 {% if flash.infoFlashes is not empty %}
 <div class="alert alert-info alert-dismissable">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times"></i></button>
   {% if flash.infoFlashes|length > 1 %}
   <ul>
     {% for message in flash.infoFlashes %}
@@ -31,7 +31,7 @@
 
 {% if flash.warningFlashes is not empty %}
 <div class="alert alert-warning alert-dismissable">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times"></i></button>
   {% if flash.warningFlashes|length > 1 %}
   <ul>
     {% for message in flash.warningFlashes %}
@@ -46,7 +46,7 @@
 
 {% if flash.dangerFlashes is not empty %}
 <div class="alert alert-danger alert-dismissable">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times"></i></button>
   {% if flash.dangerFlashes|length > 1 %}
   <ul>
     {% for message in flash.dangerFlashes %}

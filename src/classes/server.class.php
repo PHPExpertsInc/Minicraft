@@ -18,17 +18,21 @@ class Server {
   protected $jsonapi = null;
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^s_#', $key)) {
-        $key    = str_replace('s_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^s_#', $key)) {
+          $key    = str_replace('s_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
         }
       }
+      
+      $this->setServerType(new ServerType($infos));
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
-    
-    $this->setServerType(new ServerType($infos));
   }
   
   public function __toString() {
@@ -43,7 +47,8 @@ class Server {
         $this->jsonapi = new JSONAPI($this->ip, $this->jsonapi_port, $this->jsonapi_username, $this->jsonapi_password);
       }
       catch (Exception $e) {
-        die($e);
+        Logger::log(__FILE__, $e);
+        return false;
       }
     }
   }
@@ -67,7 +72,8 @@ class Server {
     if ($json[0]['is_success']) {
       return true;
     } else {
-      die($json[0]['error']['message']);
+      Logger::log(__FILE__, $json[0]['error']['message']);
+      return false;
     }
   }
   
@@ -96,6 +102,7 @@ class Server {
     if ($json[0]['result'] == 'success') {
       return $json[0]['success'];
     } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
       return false;
     }
   }
@@ -105,6 +112,7 @@ class Server {
     if ($json[0]['result'] == 'success') {
       return $json[0]['success'];
     } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
       return false;
     }
   }
@@ -114,6 +122,7 @@ class Server {
     if ($json[0]['result'] == 'success') {
       return $json[0]['success'];
     } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
       return false;
     }
   }
@@ -123,6 +132,7 @@ class Server {
     if ($json[0]['result'] == 'success') {
       return $json[0]['success'];
     } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
       return false;
     }
   }
@@ -132,6 +142,7 @@ class Server {
     if ($json[0]['result'] == 'success') {
       return $json[0]['success'];
     } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
       return false;
     }
   }
@@ -141,6 +152,7 @@ class Server {
     if ($json[0]['result'] == 'success') {
       return $json[0]['success'];
     } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
       return false;
     }
   }
@@ -150,6 +162,7 @@ class Server {
     if ($json[0]['result'] == 'success') {
       return $json[0]['success'];
     } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
       return false;
     }
   }
@@ -161,6 +174,7 @@ class Server {
     if ($json[0]['result'] == 'success') {
       return $json[0]['success'];
     } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
       return false;
     }
   }
@@ -172,6 +186,7 @@ class Server {
     if ($json[0]['result'] == 'success') {
       return $json[0]['success'];
     } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
       return false;
     }
   }

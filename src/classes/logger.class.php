@@ -28,6 +28,8 @@ class Logger {
       case 2:
         $child->setAttribute('class', 'list-group-item-danger');
         break;
+      default:
+        break;
     }
     
     $parent->appendChild($child);

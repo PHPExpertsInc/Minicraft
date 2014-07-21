@@ -8,18 +8,22 @@ class Rank {
   protected $users = array();
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^r_#', $key)) {
-        $key    = str_replace('r_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
-        }
-      } elseif ($key === 'users') {
-        foreach ($value as $user_infos) {
-          $this->addUser(new User($user_infos));
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^r_#', $key)) {
+          $key    = str_replace('r_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
+        } elseif ($key === 'users') {
+          foreach ($value as $user_infos) {
+            $this->addUser(new User($user_infos));
+          }
         }
       }
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
   }
   
@@ -28,7 +32,7 @@ class Rank {
   }
   
   public function addUser($user) {
-    $this->users[] = $user;
+    array_push($this->users, $user);
   }
   
   public function setId($id) {

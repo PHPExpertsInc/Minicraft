@@ -24,15 +24,7 @@ class Ticraft {
   protected $api_url = 'http://api.ticraft.fr/index.php';
   
   public function __construct() {
-    try {
-      $query = Database::getInstance()->query('SELECT username, api_key FROM Config');
-      $data  = $query->fetch();
-      $query->closeCursor();
-    }
-    catch (PDOException $e) {
-      Logger::log(__FILE__, $e->getMessage());
-    }
-    
+    $data = Database::getApiInfos();
     $this->username = $data['username'];
     $this->api_key  = $data['api_key'];
   }
@@ -61,7 +53,7 @@ class Ticraft {
     $json   = @json_decode($result, true);
     $return = (array) $json;
     
-    //echo($method . Helpers::var_dump($result));
+    //echo($method . ': ' . Helpers::var_dump($result));
     
     if (isset($return['status']) and $return['status'] == 0) {
       return !empty($return['data']) ? $return['data'] : null;

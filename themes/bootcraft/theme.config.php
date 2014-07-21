@@ -1,3 +1,4 @@
 <?php
 
-die('no config for this theme!');
+// @todo Code this
+die('Not done yet…');

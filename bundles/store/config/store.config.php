@@ -8,58 +8,61 @@ if (!empty($store_infos)) {
 $categories     = array();
 $all_categories = $ticraft->call('getAllStoreCategories');
 if (!empty($all_categories)) {
-  foreach ($all_categories as $key => $value) {
-    $categories[] = new StoreCategory($value);
+  foreach ($all_categories as $category_infos) {
+    array_push($categories, new StoreCategory($category_infos));
   }
 }
 
-// @todo Fix bug here (items in pack are not already selected - see Twig template)
-
+// @todo Items in pack are not already selected - see Twig template
 $items     = array();
 $all_items = $ticraft->call('getAllStoreItems');
 if (!empty($all_items)) {
-  foreach ($all_items as $key => $value) {
-    $items[] = new StoreItem($value);
+  foreach ($all_items as $item_infos) {
+    array_push($items, new StoreItem($item_infos));
   }
 }
 
 $commands     = array();
 $all_commands = $ticraft->call('getAllStoreCommands');
 if (!empty($all_commands)) {
-  foreach ($all_commands as $key => $value) {
-    $commands[] = new StoreCommand($value);
+  foreach ($all_commands as $command_infos) {
+    array_push($commands, new StoreCommand($command_infos));
   }
 }
 
 $ranks     = array();
 $all_ranks = $ticraft->call('getAllRanks');
 if (!empty($all_ranks)) {
-  foreach ($all_ranks as $key => $value) {
-    $ranks[] = new Rank($value);
+  foreach ($all_ranks as $rank_infos) {
+    array_push($ranks, new Rank($rank_infos));
   }
 }
 
 if (!empty($action)) {
   if (preg_match('#^edit-pack-(\d+)#', $action, $matches)) {
-    $pack = new StorePack($ticraft->call('getStorePackInfosFromId', $matches[1]));
+    $infos = $ticraft->call('getStorePackInfosFromId', $matches[1]);
+    if (!empty($infos)) {
+      $pack = new StorePack($infos);
+    }
     
-    $name              = trim($_POST['pack-name']);
-    $image             = trim($_POST['pack-image']);
-    $description       = trim($_POST['pack-description']);
-    $price             = intval($_POST['pack-price']);
-    $category          = intval($_POST['pack-category']);
-    $selected_items    = $_POST['pack-items'];
-    $selected_commands = trim($_POST['pack-commands']);
-    $selected_ranks    = trim($_POST['pack-ranks']);
+    $array             = $_POST['edit-pack'];
+    $name              = trim($array['name']);
+    $image             = trim($array['image']);
+    $description       = trim($array['description']);
+    $price             = intval($array['price']);
+    $category          = intval($array['category']);
+    $selected_items    = $_POST['items'];
+    $selected_commands = $_POST['commands'];
+    $selected_ranks    = $_POST['ranks'];
     
-    if (empty($name) and empty($image) and empty($description) and empty($price) and empty($category) and empty($selected_items) and empty($selected_commands) and empty($selected_ranks)) {
+    if (empty($_POST)) {
       die($store_twig->render('edit_pack.twig', array(
         'pack' => $pack,
         'categories' => $categories,
         'items' => $items,
         'commands' => $commands,
         'ranks' => $ranks,
-        'pageTitle' => $translator->getTranslation($config->getLanguage(), 'EDIT_PACK'),
+        'pageTitle' => $translator->getTranslation($config->getLang(), 'EDIT_PACK'),
         'user' => $user,
         'config' => $config,
         'flash' => new Flash
@@ -73,9 +76,9 @@ if (!empty($action)) {
           $name
         ));
         if ($success) {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_CHANGE_PACK_NAME'), 'success');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_PACK_NAME'), 'success');
         } else {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_CHANGE_PACK_NAME'), 'warning');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_PACK_NAME'), 'warning');
         }
       }
       
@@ -85,9 +88,9 @@ if (!empty($action)) {
           $image
         ));
         if ($success) {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_CHANGE_PACK_IMAGE'), 'success');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_PACK_IMAGE'), 'success');
         } else {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_CHANGE_PACK_IMAGE'), 'warning');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_PACK_IMAGE'), 'warning');
         }
       }
       
@@ -97,9 +100,9 @@ if (!empty($action)) {
           $description
         ));
         if ($success) {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_CHANGE_PACK_DESCRIPTION'), 'success');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_PACK_DESCRIPTION'), 'success');
         } else {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_CHANGE_PACK_DESCRIPTION'), 'warning');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_PACK_DESCRIPTION'), 'warning');
         }
       }
       
@@ -109,9 +112,9 @@ if (!empty($action)) {
           $price
         ));
         if ($success) {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_CHANGE_PACK_PRICE'), 'success');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_PACK_PRICE'), 'success');
         } else {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_CHANGE_PACK_PRICE'), 'warning');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_PACK_PRICE'), 'warning');
         }
       }
       
@@ -121,38 +124,40 @@ if (!empty($action)) {
           $category
         ));
         if ($success) {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_CHANGE_PACK_CATEGORY'), 'success');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_PACK_CATEGORY'), 'success');
         } else {
-          $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_CHANGE_PACK_CATEGORY'), 'warning');
+          $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_PACK_CATEGORY'), 'warning');
         }
       }
       
       // @todo Manage the items, commands and ranks
       
-      $url = $router->getController('manage')->getUrl();
-      $url = preg_replace('#%m1%#', 'store', $url);
-      header('Location: ' . URL . '/' . $url);
+      Helpers::redirect($router, 'manage', array(
+        'store'
+      ));
       die();
     }
   } elseif (preg_match('#^create-pack$#', $action)) {
-    $name              = trim($_POST['pack-name']);
-    $image             = trim($_POST['pack-image']);
-    $description       = trim($_POST['pack-description']);
-    $price             = intval($_POST['pack-price']);
-    $category          = intval($_POST['pack-category']);
-    $selected_items    = $_POST['pack-items'];
-    $selected_commands = $_POST['pack-commands'];
-    $selected_ranks    = $_POST['pack-ranks'];
-    $server            = intval($_POST['pack-server']);
+    $array             = $_POST['create-pack'];
+    $name              = trim($array['name']);
+    // @todo Allow Imgur hosting like the Blog Bundle
+    $image             = trim($array['image']);
+    $description       = trim($array['description']);
+    $price             = intval($array['price']);
+    $category          = intval($array['category']);
+    $selected_items    = $_POST['items'];
+    $selected_commands = $_POST['commands'];
+    $selected_ranks    = $_POST['ranks'];
+    $server            = intval($array['server']);
     
-    if (empty($name)) {
+    if (empty($_POST)) {
       die($store_twig->render('add_pack.twig', array(
         'categories' => $categories,
         'items' => $items,
         'commands' => $commands,
         'ranks' => $ranks,
         'manager' => new ServerManager($ticraft->call('getAllServers')),
-        'pageTitle' => $translator->getTranslation($config->getLanguage(), 'CREATE_PACK'),
+        'pageTitle' => $translator->getTranslation($config->getLang(), 'CREATE_PACK'),
         'user' => $user,
         'config' => $config,
         'flash' => new Flash
@@ -173,45 +178,46 @@ if (!empty($action)) {
       $flash = new Flash;
       
       if ($success) {
-        $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_ADD_PACK'), 'success');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_ADD_PACK'), 'success');
       } else {
-        $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_ADD_PACK'), 'warning');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_ADD_PACK'), 'warning');
       }
       
-      $url = $router->getController('manage')->getUrl();
-      $url = preg_replace('#%m1%#', 'store', $url);
-      header('Location: ' . URL . '/' . $url);
+      Helpers::redirect($router, 'manage', array(
+        'store'
+      ));
       die();
     }
   } elseif (preg_match('#^add-item$#', $action)) {
-    $minecraft      = explode(';', $_POST['item-minecraft']);
+    $array          = $_POST['add-item'];
+    $minecraft      = explode(';', $array['minecraft']);
     $minecraft_id   = intval($minecraft[0]);
     $minecraft_meta = intval($minecraft[1]);
     $minecraft_name = trim($minecraft[2]);
-    $quantity       = intval($_POST['item-quantity']);
-    $icon           = trim($_POST['item-icon']);
+    $quantity       = intval($array['quantity']);
+    $icon           = trim($array['icon']);
     
-    if (!empty($_POST['item-id'])) {
-      $minecraft_id = $_POST['item-id'];
+    if (!empty($array['id'])) {
+      $minecraft_id = $array['id'];
     }
-    if (!empty($_POST['item-meta'])) {
-      $minecraft_meta = $_POST['item-meta'];
+    if (!empty($array['meta'])) {
+      $minecraft_meta = $array['meta'];
     }
-    if (!empty($_POST['item-name'])) {
-      $minecraft_name = $_POST['item-name'];
+    if (!empty($array['name'])) {
+      $minecraft_name = $array['name'];
     }
-    if (!empty($_POST['item-icon'])) {
-      $icon = $_POST['item-icon'];
+    if (!empty($array['icon'])) {
+      $icon = $array['icon'];
     } else {
       $icon = 'http://cdn.ticraft.fr/items?id=' . $minecraft_id . '&meta=' . $minecraft_meta;
     }
     
-    if (empty($quantity)) { // @todo Check more if form sent
+    if (empty($_POST)) {
       $minecraft_items = $ticraft->call('getAllMinecraftItems');
-      $minecraft_items = array_splice($minecraft_items, 1);
+      $minecraft_items = array_splice($minecraft_items, 1); // Removes the Air item
       die($store_twig->render('add_item.twig', array(
         'minecraftItems' => $minecraft_items,
-        'pageTitle' => $translator->getTranslation($config->getLanguage(), 'ADD_ITEM'),
+        'pageTitle' => $translator->getTranslation($config->getLang(), 'ADD_ITEM'),
         'user' => $user,
         'config' => $config,
         'flash' => new Flash
@@ -228,9 +234,9 @@ if (!empty($action)) {
       $flash = new Flash;
       
       if ($success) {
-        $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_ADD_ITEM'), 'success');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_ADD_ITEM'), 'success');
       } else {
-        $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_ADD_ITEM'), 'warning');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_ADD_ITEM'), 'warning');
       }
       
       $url = $router->getController('manage')->getUrl();
@@ -239,12 +245,13 @@ if (!empty($action)) {
       die();
     }
   } elseif (preg_match('#^add-command$#', $action)) {
-    $command     = trim($_POST['command-command']);
-    $description = trim($_POST['command-description']);
+    $array = $_POST['add-command'];
+    $command     = trim($array['command']);
+    $description = trim($array['description']);
     
     if (empty($command)) { // @todo Check if form was sent with a better method
       die($store_twig->render('add_command.twig', array(
-        'pageTitle' => $translator->getTranslation($config->getLanguage(), 'ADD_COMMAND'),
+        'pageTitle' => $translator->getTranslation($config->getLang(), 'ADD_COMMAND'),
         'user' => $user,
         'config' => $config,
         'flash' => new Flash
@@ -258,19 +265,20 @@ if (!empty($action)) {
       $flash = new Flash;
       
       if ($success) {
-        $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_ADD_COMMAND'), 'success');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_ADD_COMMAND'), 'success');
       } else {
-        $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_ADD_COMMAND'), 'warning');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_ADD_COMMAND'), 'warning');
       }
       
-      $url = $router->getController('manage')->getUrl();
-      $url = preg_replace('#%m1%#', 'store', $url);
-      header('Location: ' . URL . '/' . $url);
+      Helpers::redirect($router, 'manage', array(
+        'store'
+      ));
       die();
     }
     
   } else {
-    die('404');
+    Helpers::throw404($twig, $config, $user);
+    die();
   }
 } elseif (!empty($_POST['remove-pack'])) {
   $flash   = new Flash;
@@ -279,9 +287,9 @@ if (!empty($action)) {
     $id
   ));
   if ($success) {
-    $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_REMOVE_PACK'), 'success');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_REMOVE_PACK'), 'success');
   } else {
-    $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_REMOVE_PACK'), 'warning');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_REMOVE_PACK'), 'warning');
   }
   
   $url = $router->getController('manage')->getUrl();
@@ -295,14 +303,14 @@ if (!empty($action)) {
     $id
   ));
   if ($success) {
-    $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_REMOVE_ITEM'), 'success');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_REMOVE_ITEM'), 'success');
   } else {
-    $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_REMOVE_ITEM'), 'warning');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_REMOVE_ITEM'), 'warning');
   }
   
-  $url = $router->getController('manage')->getUrl();
-  $url = preg_replace('#%m1%#', 'store', $url);
-  header('Location: ' . URL . '/' . $url);
+  Helpers::redirect($router, 'manage', array(
+    'store'
+  ));
   die();
 } elseif (!empty($_POST['remove-command'])) {
   $flash   = new Flash;
@@ -311,21 +319,21 @@ if (!empty($action)) {
     $id
   ));
   if ($success) {
-    $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_REMOVE_COMMAND'), 'success');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_REMOVE_COMMAND'), 'success');
   } else {
-    $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_REMOVE_COMMAND'), 'warning');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_REMOVE_COMMAND'), 'warning');
   }
   
-  $url = $router->getController('manage')->getUrl();
-  $url = preg_replace('#%m1%#', 'store', $url);
-  header('Location: ' . URL . '/' . $url);
+  Helpers::redirect($router, 'manage', array(
+    'store'
+  ));
   die();
 } else {
   die($store_twig->render('admin.twig', array(
     'store' => $store,
     'items' => $items,
     'commands' => $commands,
-    'pageTitle' => $translator->getTranslation($config->getLanguage(), 'ADMIN_STORE'),
+    'pageTitle' => $translator->getTranslation($config->getLang(), 'ADMIN_STORE'),
     'user' => $user,
     'config' => $config,
     'flash' => new Flash

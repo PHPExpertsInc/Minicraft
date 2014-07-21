@@ -6,14 +6,18 @@ class StoreCommand {
   protected $description;
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^sc_#', $key)) {
-        $key    = str_replace('sc_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^sc_#', $key)) {
+          $key    = str_replace('sc_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
         }
       }
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
   }
   

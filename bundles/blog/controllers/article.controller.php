@@ -6,11 +6,14 @@ preg_match($regex, $uri, $matches);
 $article_id   = $matches[1];
 $article_slug = $matches[2];
 
-$article = new Article($ticraft->call('getArticleInfosFromId', array(
+$article_data = $ticraft->call('getArticleInfosFromId', array(
   $article_id
-)));
+));
+if (!empty($article_data)) {
+  $article = new Article($article_data);
+}
 
-if (empty($article)) {
+if (!is_object($article)) {
   Helpers::throw404($twig, $config, $user);
   die();
 } elseif ($article_slug != $article->getSlug()) {
@@ -23,7 +26,7 @@ if (empty($article)) {
   die($blog_twig->render('article.twig', array(
     'manager' => new ServerManager($ticraft->call('getAllServers')),
     'article' => $article,
-    'pageTitle' => Helpers::generateExtract($article->getTitle(), 32),
+    'pageTitle' => Helpers::generateExtract($article->getTitle(), 40),
     'config' => $config,
     'user' => $user,
     'flash' => new Flash

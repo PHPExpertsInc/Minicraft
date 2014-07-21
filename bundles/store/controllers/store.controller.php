@@ -1,6 +1,9 @@
 <?php
-//die(Helpers::var_dump($user));
-$store = new Store($ticraft->call('getAllStorePacks'));
+
+$store_infos = $ticraft->call('getAllStorePacks');
+if (!empty($store_infos)) {
+  $store = new Store($store_infos);
+}
 
 $flash = new Flash;
 
@@ -16,33 +19,31 @@ if (!empty($_POST['store-buy'])) {
       
       if ($success) {
         $user->setMoney($user->getMoney() - $pack->getPrice());
-        $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_BUY_PACK', array($pack->getName())), 'success');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_BUY_PACK', array($pack->getName())), 'success');
         if ($pack->hasItems()) {
-          $url = $router->getController('vault')->getUrl();
-          header('Location: ' . $url);
+          Helpers::redirect($router, 'vault');
           die();
         }
       } else {
-        $flash->addFlash('failed buy ' . $store->getStorePack($pack_id), 'warning');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_BUY_PACK', array($pack->getName())), 'warning');
       }
     } else {
-      $flash->addFlash('dont have enough money, failed buy ' . $store->getStorePack($pack_id), 'warning');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_BUY_PACK_NOT_ENOUGH_MONEY', array($pack->getName())), 'warning');
     }
   } else {
-    $flash->addFlash('must be signed in ', 'warning');
-    $url = $router->getController('login')->getUrl();
-    header('Location: ' . $url);
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'MUST_LOGIN_TO_BUY'), 'warning');
+    Helpers::redirect($router, 'login');
     die();
   }
-  $url = $router->getController('store')->getUrl();
-  header('Location: ' . $url);
+  
+  Helpers::redirect($router, 'store');
   die();
 }
 
 die($store_twig->render('store.twig', array(
   'manager' => new ServerManager($ticraft->call('getAllServers')),
   'store' => $store,
-  'pageTitle' => 'Store',
+  'pageTitle' => $translator->getTranslation($config->getLang(), 'STORE'),
   'config' => $config,
   'user' => $user,
   'flash' => $flash

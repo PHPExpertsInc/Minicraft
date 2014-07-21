@@ -1,114 +1,114 @@
 <?php
 
+$flash = new Flash;
 if (!empty($action)) {
   if (preg_match('#^edit-rank-(\d+)#', $action, $matches)) {
     $types     = array();
-    $rank = new Rank($ticraft->call('getRankInfosFromId', $matches[1]));
-    if (empty($_POST['rank-name']) and empty($_POST['rank-force'])) {
-      die($twig->render('admin/edit_rank.twig', array(
-        'rank' => $rank,
-        'page_title' => 'Edit rank',
-        'user' => $user,
-        'config' => $config,
-        'flash' => new Flash
-      )));
-    } else {
-      $flash = new Flash;
-      $name = trim($_POST['rank-name']);
-      $force = intval($_POST['rank-force']);
-      
-      if (!empty($name) and $name != $rank->getName()) {
-        $success = $ticraft->call('updateRankName', array(
-          $rank->getId(),
-          $name
-        ));
-        if ($success) {
-          $flash->addFlash('success changing rank name', 'success');
-        } else {
-          $flash->addFlash('failed changing rank name', 'warning');
+    $rank_infos = $ticraft->call('getRankInfosFromId', $matches[1]);
+    if (!empty($rank_infos)) {
+      $rank = new Rank($rank_infos);
+      if (empty($_POST)) {
+        die($twig->render('admin/edit_rank.twig', array(
+          'rank' => $rank,
+          'page_title' => $translator->getTranslation($config->getLang(), 'EDIT_RANK'),
+          'user' => $user,
+          'config' => $config,
+          'flash' => $flash
+        )));
+      } else {
+        $array = $_POST['edit-rank'];
+        $name = trim($array['name']);
+        $force = intval($array['force']);
+        
+        if (!empty($name) and $name != $rank->getName()) {
+          $success = $ticraft->call('updateRankName', array(
+            $rank->getId(),
+            $name
+          ));
+          if ($success) {
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_RANK_NAME'), 'success');
+          } else {
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_RANK_NAME'), 'warning');
+          }
         }
-      }
-      
-      if (!empty($force) and $force != $rank->getForce()) {
-        $success = $ticraft->call('updateRankForce', array(
-          $rank->getId(),
-          $force
-        ));
-        if ($success) {
-          $flash->addFlash('success changing rank force', 'success');
-        } else {
-          $flash->addFlash('failed changing rank force', 'warning');
+        
+        if (!empty($force) and $force != $rank->getForce()) {
+          $success = $ticraft->call('updateRankForce', array(
+            $rank->getId(),
+            $force
+          ));
+          if ($success) {
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_RANK_FORCE'), 'success');
+          } else {
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_RANK_FORCE'), 'warning');
+          }
         }
+        
+        Helpers::redirect($router, 'manage', array(
+          'ranks'
+        ));
+        die();
       }
-      
-      $url = $router->getController('manage')->getUrl();
-      $url = preg_replace('#%m1%#', 'ranks', $url);
-      header('Location: ' . URL . '/' . $url);
-      die();
     }
   } elseif (preg_match('#^add$#', $action)) {
-    if (empty($_POST['rank-name']) and empty($_POST['rank-force'])) {      
+    if (empty($_POST)) {      
       die($twig->render('admin/add_rank.twig', array(
-        'page_title' => 'Add rank',
+        'page_title' => $translator->getTranslation($config->getLang(), 'ADD_RANK'),
         'user' => $user,
         'config' => $config,
-        'flash' => new Flash
+        'flash' => $flash
       )));
     } else {
-      $name      = trim($_POST['rank-name']);
-      $force       = trim($_POST['rank-force']);
+      $array = $_POST['add-rank'];
+      $name      = trim($array['name']);
+      $force       = trim($array['force']);
       
       $success = $ticraft->call('addRank', array(
         $name,
         $force
       ));
       
-      $flash = new Flash;
-      
       if ($success) {
-        $flash->addFlash('success adding rank', 'success');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_ADD_RANK'), 'success');
       } else {
-        $flash->addFlash('failed adding rank', 'warning');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_ADD_RANK'), 'warning');
       }
       
-      $url = $router->getController('manage')->getUrl();
-      $url = preg_replace('#%m1%#', 'ranks', $url);
-      header('Location: ' . URL . '/' . $url);
+      Helpers::redirect($router, 'manage', array(
+        'ranks'
+      ));
       die();
-      
-      
-      
-      
     }
   }
 } elseif (!empty($_POST['remove-rank'])) {
-  $flash   = new Flash;
   $id      = intval($_POST['remove-rank']);
   $success = $ticraft->call('removerank', array(
     $id
   ));
   
   if ($success) {
-    $flash->addFlash('success removing rank', 'success');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_REMOVE_RANK'), 'success');
   } else {
-    $flash->addFlash('failed removing rank', 'warning');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_REMOVE_RANK'), 'warning');
   }
   
-  $url = $router->getController('manage')->getUrl();
-  $url = preg_replace('#%m1%#', 'ranks', $url);
-  header('Location: ' . URL . '/' . $url);
+  Helpers::redirect($router, 'manage', array(
+    'ranks'
+  ));
   die();
 } else {
   $ranks = array();
   $all_ranks = $ticraft->call('getAllRanks');
-  foreach ($all_ranks as $key => $value) {
-    $ranks[] = new Rank($value);
+  foreach ($all_ranks as $rank_infos) {
+    if (!empty($rank_infos)) {
+      array_push($ranks, new Rank($rank_infos));
+    }
   }
   die($twig->render('admin/ranks.twig', array(
     'ranks' => $ranks,
-    'page_title' => 'Manage ranks',
+    'page_title' => $translator->getTranslation($config->getLang(), 'MANAGE_RANKS'),
     'user' => $user,
     'config' => $config,
-    'flash' => new Flash
+    'flash' => $flash
   )));
 }

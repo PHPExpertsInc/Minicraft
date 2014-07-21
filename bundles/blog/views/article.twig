@@ -1,6 +1,5 @@
 {% extends 'includes/blog_layout.twig' %}
 {% block content %}
-{{ parent() }}
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
@@ -20,13 +19,15 @@
           {{ article.body|raw }}
         </div>
       </article>
+      {% if config.disqusId is not empty %}
       <div id="disqus_thread"></div>
-      <script>var disqus_shortname="{{ config.disqusId() }}";(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//"+disqus_shortname+".disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(e)})()</script>
+      <script>var disqus_shortname="{{ config.disqusId }}";(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src="//"+disqus_shortname+".disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(e)})()</script>
       <noscript>{{ lang('ENABLE_JS_COMMENTS') }}</noscript>
+      {% endif %}
       {% else %}
       {{ lang('NO_ARTICLE') }}
       {% endif %}
-    </section> <!-- .col-md-12 -->
+    </section>
   </div> <!-- .row -->
 </div> <!-- .container -->
 {% endblock %}

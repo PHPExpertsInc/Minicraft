@@ -19,25 +19,31 @@ class User {
   protected $last_login;
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^u_#', $key)) {
-        $key    = str_replace('u_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^u_#', $key)) {
+          $key    = str_replace('u_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
         }
       }
-    }
-    
-    if (!empty($infos['vault_items'])) {
-      foreach ($infos['vault_items'] as $key => $value) {
-        $this->addVaultItem(new StoreItem($value));
+      
+      if (!empty($infos['vault_items'])) {
+        foreach ($infos['vault_items'] as $item_infos) {
+          if (!empty($item_infos)) {
+            $this->addVaultItem(new StoreItem($item_infos));
+          }
+        }
       }
+      
+      $this->setRank(new Rank($infos));
+      $this->setConfirmed(!empty($this->confirmed));
+      $this->setBanned(!empty($this->banned));
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
-    
-    $this->setRank(new Rank($infos));
-    $this->setConfirmed(!empty($this->confirmed));
-    $this->setBanned(!empty($this->banned));
   }
   
   public function __toString() {
@@ -45,191 +51,36 @@ class User {
   }
   
   public function getVotes() {
+    // @todo Code this
     return 3;
   }
   
   public function getTotalVotes() {
+    // @todo Code this
     return 9;
   }
   
   public function addVaultItem($item) {
-    $this->vault_items[] = $item;
+    array_push($this->vault_items, $item);
   }
   
   public function getVaultItems() {
     return $this->vault_items;
   }
   
-  public function banUser($reason = '', $hours = 0, $email = false) {
-    $expires = $hours > 0 ? time() + 3600 * $hours : time() + 3600 * 999999;
-    $result  = Ticraft::banUser($this, $reason, $hours);
-    if ($result AND $email) {
-      Email::sendBanEmail($this, $reason, $expires);
-    }
-    $this->banned = true;
-    $this->save();
+  public function generateSession($session_expires = 14) {
+    Database::generateSession($this->getId(), $session_expires);
+  }
+  
+  public function generateCookie($cookie_expires = 14) {
+    Database::generateCookie($this->getId(), $cookie_expires);
+  }
     
-    return $result;
-  }
-  
-  public function unbanUser($email) {
-    Ticraft::unbanUser($this);
-    if ($email) {
-      Email::sendUnbanEmail($this);
-    }
-    $this->banned = false;
-    $this->save();
-  }
-  
-  public function buyStorePack($store_pack) {
-    if ($this->money >= $store_pack->getPrice()) {
-      $server = new Server;
-      $server->hydrate($store_pack->getServerId());
-      $online_players = $server->getOnlinePlayersUsernames;
-      if (!in_array($this->mc_username, $online_players)) {
-        // If user is not in game
-        $result = Ticraft::purchasePack($this, $store_pack, false);
-      } else {
-        // If user is in game
-        $send = $server->givePack($this, $store_pack);
-        if ($send) {
-          $result = Ticraft::purchasePack($this, $store_pack, true);
-        } else {
-          $result = Ticraft::purchasePack($this, $store_pack, false);
-        }
-      }
-      $this->removeMoney($store_pack->getPrice());
-      $this->save();
-    } else {
-      $result = false;
-    }
-    
-    return $result;
-  }
-  
-  public function generateCookie() {
-    global $config;
-    $cookie_id = Helpers::randomKey(32);
-    $query     = Database::getInstance()->prepare('INSERT INTO Cookies(user_id, cookie_id, date_added, date_expires) VALUES(:user_id, :cookie_id, :date_added, :date_expires)');
-    $query->execute(array(
-      'user_id' => $this->getId(),
-      'cookie_id' => $cookie_id,
-      'date_added' => time(),
-      'date_expires' => time() + ($config->getCookieExpires() * 24 * 60 * 60)
-    ));
-    $query->closeCursor();
-    setcookie('MinicraftCookie', $cookie_id, $config->getCookieExpires(), null, null, false, true);
-  }
-  
-  public function generateSession() {
-    global $config;
-    $session_id = Helpers::randomKey(32);
-    $query      = Database::getInstance()->prepare('INSERT INTO Sessions(user_id, session_id, date_added, date_expires) VALUES(:user_id, :session_id, :date_added, :date_expires)');
-    $query->execute(array(
-      'user_id' => $this->getId(),
-      'session_id' => $session_id,
-      'date_added' => time(),
-      'date_expires' => time() + ($config->getSessionExpires() * 24 * 60 * 60)
-    ));
-    $query->closeCursor();
-    $_SESSION['MinicraftSession'] = $session_id;
-  }
-  
-  public function getConfirmationToken() {
-    $confirmation_token = Ticraft::getConfirmationToken($this);
-    
-    return empty($confirmation_token) ? false : $confirmation_token;
-  }
-  
-  public function removeResetToken() {
-    $result = Ticraft::removeResetToken($this);
-    
-    return $result;
-  }
-  
-  public function createResetToken() {
-    Ticraft::removeResetToken($this);
-    $token = Ticraft::createResetToken($this);
-    
-    return $token;
-  }
-  
-  public function getResetToken() {
-    $token = Ticraft::getResetToken($this);
-    
-    return $token;
-  }
-  
-  public function removeMoney($amount) {
-    if ($this->money >= $amount) {
-      $result = Ticraft::removeMoney($amount);
-      if ($result) {
-        $this->money = $this->money - $amount;
-      }
-    } else {
-      $result = Ticraft::setMoney(0);
-      if ($result) {
-        $this->money = 0;
-      }
-    }
-    
-    return $result;
-  }
-  
-  public function updateUsername($username) {
-    $result = Ticraft::updateUsername($this, $username);
-    
-    return $result;
-  }
-  
-  public function updatePassword($password) {
-    $result = Ticraft::updatePassword($this, $password);
-    
-    return $result;
-  }
-  
-  public function updateEmail($email) {
-    $result = Ticraft::updateEmail($this, $email);
-    
-    return $result;
-  }
-  
-  public function updateBirthdate($birthdate) {
-    $result = Ticraft::updateBirthdate($this, $birthdate);
-    
-    return $result;
-  }
-  
-  public function updateGenre($genre) {
-    $result = Ticraft::updateGenre($this, $genre);
-    
-    return $result;
-  }
-  
-  public function updateCity($city) {
-    $result = Ticraft::updateCity($this, $city);
-    
-    return $result;
-  }
-  
-  public function updateCountry($country) {
-    $result = Ticraft::updateCountry($this, $country);
-    
-    return $result;
-  }
-  
-  public function updateLastLogin($last_login) {
-    global $ticraft;
+  public function updateLastLogin($ticraft, $last_login = time()) {
     $result = $ticraft->call('updateLastLogin', array(
-      $this,
+      $this->getId(),
       $last_login
     ));
-    
-    return $result;
-  }
-  
-  public function updateConfirmationStatus($confirmation) {
-    $result = Ticraft::updateConfirmationStatus($this, $confirmation);
     
     return $result;
   }

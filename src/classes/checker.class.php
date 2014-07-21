@@ -45,11 +45,16 @@ class Checker {
     
     // Show errors
     if (!empty($this->errors)) {
-      foreach ($this->errors as $error) {
-        if ($debug) {
-          echo ($error);
+      if ($debug) {
+        foreach ($this->errors as $error) {
+          echo($error);
+          Logger::log(__FILE__, $error);
         }
-        Logger::log(__FILE__, $error);
+        die();
+      } else {
+        foreach ($this->errors as $error) {
+          Logger::log(__FILE__, $error);
+        }
       }
     }
   }

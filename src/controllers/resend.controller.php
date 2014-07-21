@@ -6,7 +6,7 @@ if (Security::userCanDoAction('resend', false)) {
     $flash = new Flash;
     $token = Database::addEmail($user->getEmail(), $user->getUsername());
     Email::sendConfirmationEmail($user->getEmail(), $user->getUsername(), $token);
-    $flash->addFlash('Un lien a été envoyé à ' . $user->getEmail() . ' pour confirmer cette adresse email.', 'info');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'CONFIRMATION_LINK_SENT', array($user->getEmail())), 'info');
     Security::actionSucceeded('resend');
   }
 } else {
@@ -14,5 +14,5 @@ if (Security::userCanDoAction('resend', false)) {
 }
 /* ============================== */
 
-header('Location: ' . URL);
+Helpers::redirect($router, 'home');
 die();

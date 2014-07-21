@@ -1,23 +1,27 @@
 {% spaceless %}
+{# I am adding this comment because my editor doesn't recognize the Twig syntax otherwise… #}
 <!DOCTYPE html>
 <html lang="{% if config.language is not empty %}{{ config.language|lower }}{% else %}en{% endif %}">
 <head>
   {% block head %}
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{% if pageTitle is not empty %}{{ pageTitle ~ ' | ' ~ config.siteName|capitalize }}{% else %}Minicraft{% endif %}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>{% block title %}{% if pageTitle is not empty %}{{ pageTitle ~ ' | ' ~ config.siteName|capitalize }}{% elseif config.siteName is not empty %}{{ config.siteName }}{% else %}Minicraft{% endif %}{% endblock %}</title>
+  <meta name="description" content="{{ config.siteDescription }}">
+  <meta name="keywords" content="{{ config.keywords }}">
+  <meta name="author" content="Charles Tatibouët">
   {% block fonts %}
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,800,300">
-  {% endblock %}
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  {% endblock %}{# end fonts block #}
   {% block stylesheets %}
-  <link rel="stylesheet" href="{{ url('assets', 'css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url('assets', 'css/global.css') }}">
-  {% endblock %}
+  {% endblock %}{# end stylesheets block #}
   <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  {% endblock %}
+  <script src="{{ url('assets', 'js/modernizr.js') }}"></script>
+  {% endblock %}{# end head block #}
 </head>
 <body>
   {% block body %}
@@ -95,21 +99,20 @@
                 </div>
               </form>
             </li>
-          </ul> <!--/.navbar-right -->
-        </nav> <!--/.nav-collapse -->
-      </div> <!--/.container-fluid -->
-    </div> <!--/.navbar -->
+          </ul> <!-- .navbar-right -->
+        </nav> <!-- .nav-collapse -->
+      </div> <!-- .container-fluid -->
+    </div> <!-- .navbar -->
     {% endblock %}{# end nav block #}
     {% endblock %}{# end header block #}
     {% block modals %}
     {% if user is empty %}
-    <!-- Modal Register -->
     <div id="modal-register" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <form action="{{ url('register') }}" method="post" role="form" class="form-horizontal">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
               <h4 class="modal-title">{{ lang('REGISTER') }}</h4>
             </div>
             <div class="modal-body">
@@ -137,9 +140,9 @@
               <button type="submit" class="btn btn-primary">{{ lang('BTN_REGISTER') }}</button>
             </div>
           </form>
-        </div>
-      </div>
-    </div> <!-- .modal-register -->
+        </div> <!-- .modal-content -->
+      </div> <!-- .modal-dialog -->
+    </div> <!-- #modal-register -->
     <div id="modal-login" class="modal fade">
       <div class="modal-dialog">
         <div class="tab-content">
@@ -147,7 +150,7 @@
             <div class="modal-content">
               <form action="{{ url('login') }}" method="post" class="form-horizontal" role="form">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                   <h4 class="modal-title">{{ lang('LOGIN') }}</h4>
                 </div>
                 <div class="modal-body">
@@ -178,13 +181,13 @@
                   <button type="submit" class="btn btn-primary">{{ lang('BTN_LOGIN') }}</button>
                 </div>
               </form>
-            </div>
-          </div>
+            </div> <!-- .modal-content -->
+          </div> <!-- #login-tab -->
           <div id="forgot-tab" class="tab-pane fade">
             <div class="modal-content">
               <form action="{{ url('reset') }}" method="post" role="form">
                 <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
                   <h4 class="modal-title">{{ lang('RESET_PASSWORD') }}</h4>
                 </div>
                 <div class="modal-body">
@@ -203,11 +206,11 @@
                   <button type="submit" class="btn btn-primary">{{ lang('BTN_RESET') }}</button>
                 </div>
               </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> <!-- .modal-login -->
+            </div> <!-- .modal-content -->
+          </div> <!-- #forgot-tab -->
+        </div> <!-- .tab-content -->
+      </div> <!-- .modal-dialog -->
+    </div> <!-- #modal-login -->
     {% endif %}
     {% endblock%}{# end modals block #}
     {% endblock%}{# end wrap block #}
@@ -215,16 +218,17 @@
   </div>
   <footer id="footer">
   {% block footer %}
-    <p>Powered by <a href="//minicraft.io">Minicraft</a> and the <a href="//ticraft.fr">Ticraft API</a>.</p>
     <p><a href="#">{{ lang('BACK_TO_TOP') }}</a></p>
+    <p>Charles Tatibouët &copy; {{ "now"|date }}</p>
+    <p>Powered by <a href="http://minicraft.io">Minicraft</a> and the <a href="http://ticraft.fr">Ticraft API</a>.</p>
   {% endblock %}{# end footer block #}
   </footer>
   {% block javascripts %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-  <script>$('#modal-login').on('shown.bs.modal', function () {$('#login-username').focus()})</script>
-  <script>$('#modal-register').on('shown.bs.modal', function () {$('#register-username').focus()})</script>
-  {% endblock %}
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script>$('#modal-login').on('shown.bs.modal', function () {$('#modal-login-username').focus()})</script>
+  <script>$('#modal-register').on('shown.bs.modal', function () {$('#modal-register-username').focus()})</script>
+  {% endblock %}{# end javascript block #}
   {% endblock %}{# end body block #}
 </body>
 </html>

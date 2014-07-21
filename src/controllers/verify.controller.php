@@ -8,41 +8,26 @@ $token = $matches[2][0];
 
 /* ============================== */
 if (!empty($email) and !empty($token)) {
-  $query = Database::getInstance()->prepare('SELECT token, date_confirmed FROM Emails WHERE email = :email');
-  $query->execute(array(
-    'email' => $email
-  ));
-  $fetch = $query->fetch();
-  $query->closeCursor;
-  
-  /* ============================== */
-  if (empty($fetch)) {
-    Logger::log(__FILE__, 'Failed sending a confirmation email to ' . $email, 1);
-  } elseif (is_numeric($fetch['date_confirmed']) and $fetch['date_confirmed'] != 0) {
+  $infos = Database::getTokenInfosFromEmail($email);
+  $flash = new Flash;
+  if (empty($infos)) {
+    Logger::log(__FILE__, 'Failed sending a confirmation email to ' . $email . '?', 1);
+  } elseif (is_numeric($infos['date_confirmed']) and $infos['date_confirmed'] != 0) {
     // Already confirmed
-    die('already confirmed');
-  } elseif ($token == $fetch['token']) {
-    $query = Database::getInstance()->prepare('UPDATE Emails SET date_confirmed = :date_confirmed WHERE email = :email AND token = :token');
-    $query->execute(array(
-      'date_confirmed' => time(),
-      'email' => $email,
-      'token' => $token
-    ));
-    $query->closeCursor;
-    
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'EMAIL_ALREADY_CONFIRMED'), 'warning');
+    Helpers::redirect($router, 'home');
+    die();
+  } elseif ($token == $infos['token']) {
+    Database::confirmEmail($email, $token);
     $ticraft->call('confirmEmail', array(
       $email
     ));
-    
-    $flash = new Flash;
-    $flash->addFlash('Votre adresse email a été confirmée.', 'success');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'EMAIL_CONFIRMED'), 'success');
   } else {
-    $flash = new Flash;
-    $flash->addFlash('Token incorrect.', 'danger');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'TOKEN_INCORRECT'), 'warning');
   }
-  /* ============================== */
 }
 /* ============================== */
 
-header('Location: ' . URL);
+Helpers::redirect($router, 'home');
 die();

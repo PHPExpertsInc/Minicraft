@@ -477,7 +477,7 @@ class Helpers {
   }
   
   // Bolt - http://bolt.cm
-  public static function randomString($length, $human_friendly = true, $include_symbols = false, $no_duplicate_chars = false) {
+  public static function randomString($length = 32, $human_friendly = true, $include_symbols = false, $no_duplicate_chars = false) {
     $nice_chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefhjkmnprstuvwxyz23456789';
     $all_an     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
     $symbols    = '!@#$%^&*()~_-=+{}[]|:;<>,.?/"\'\\`';
@@ -561,9 +561,7 @@ class Helpers {
       $localpart      = preg_replace('#[-.|\!|\#|\$|\%|\&|\'|\*|\+|\/|\=|\? |\^|\_|\`|\{|\or\}|\~]#', '', $localpart);
       
       // If there are no characters left in localpart or domain, the email address is valid
-      if (empty($domain) and empty($localpart)) {
-        return true;
-      }
+      return (empty($domain) and empty($localpart));
     }
     
     return false;
@@ -572,8 +570,6 @@ class Helpers {
   public static function blockAccess() {
     if (!in_array(@$_SERVER['REMOTE_ADDR'], array(
       '127.0.0.1',
-      '109.24.159.180',
-      '46.246.34.235',
       '::1'
     ))) {
       header('HTTP/1.0 403 Forbidden');

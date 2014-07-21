@@ -14,40 +14,44 @@ class StorePack {
   protected $servers = array();
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^sp_#', $key)) {
-        $key    = str_replace('sp_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^sp_#', $key)) {
+          $key    = str_replace('sp_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
+        }
+        
+        $this->setCategory(new StoreCategory($infos));
+      }
+      
+      if (!empty($infos['items'])) {
+        foreach ($infos['items'] as $key => $value) {
+          $item = new StoreItem($value);
+          $this->addItem($item);
+        }
+      }
+      
+      if (!empty($infos['commands'])) {
+        foreach ($infos['commands'] as $key => $value) {
+          $command = new StoreCommand($value);
+          $this->addCommand($command);
+        }
+      }
+      
+      if (!empty($infos['ranks'])) {
+        foreach ($infos['ranks'] as $key => $value) {
+          $rank = new Rank($value);
+          $this->addRank($rank);
         }
       }
       
       $this->setCategory(new StoreCategory($infos));
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
-    
-    if (!empty($infos['items'])) {
-      foreach ($infos['items'] as $key => $value) {
-        $item = new StoreItem($value);
-        $this->addItem($item);
-      }
-    }
-    
-    if (!empty($infos['commands'])) {
-      foreach ($infos['commands'] as $key => $value) {
-        $command = new StoreCommand($value);
-        $this->addCommand($command);
-      }
-    }
-    
-    if (!empty($infos['ranks'])) {
-      foreach ($infos['ranks'] as $key => $value) {
-        $rank = new Rank($value);
-        $this->addRank($rank);
-      }
-    }
-    
-    $this->setCategory(new StoreCategory($infos));
   }
   
   public function hasItems() {

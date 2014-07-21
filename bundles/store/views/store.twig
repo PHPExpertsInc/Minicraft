@@ -1,6 +1,5 @@
 {% extends 'includes/store_layout.twig' %}
 {% block content %}
-{{ parent() }}
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
@@ -24,8 +23,8 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="{{ 'label-' ~ pack.id}}">{{ lang('ITEM_DESCRIPTION') }}</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+              <h4 id="{{ 'label-' ~ pack.id}}" class="modal-title">{{ lang('ITEM_DESCRIPTION') }}</h4>
             </div>
             <div class="modal-body">
               <img src="{{ pack.image }}" class="img-responsive modal-image" alt="{{ pack.title }}">

@@ -8,21 +8,25 @@ class Comment {
   protected $replies = array();
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^com_#', $key)) {
-        $key    = str_replace('com_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^com_#', $key)) {
+          $key    = str_replace('com_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
         }
       }
+      
+      foreach ($infos['replies'] as $key => $value) {
+        $this->addReply(new Comment($value));
+      }
+      
+      $this->setAuthor(new User($infos));
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
-    
-    foreach ($infos['replies'] as $key => $value) {
-      $this->addReply(new Comment($value));
-    }
-    
-    $this->setAuthor(new User($infos));
   }
   
   public function getId() {
@@ -46,6 +50,6 @@ class Comment {
   }
   
   public function addReply($reply) {
-    $this->replies[$reply['com_id']][] = $reply;
+    array_push($this->replies[$reply['com_id']], $reply);
   }
 }

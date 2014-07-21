@@ -17,15 +17,6 @@
  * @licence http://opensource.org/licenses/MIT - MIT License
  * http://minicraft.io
  * https://github.com/CharlesTati/Minicraft
- * ====================
- * DOCUMENTATION
- * • English :
- * http://minicraft.io/en/doc
- * • Français :
- * http://minicraft.io/doc
- * ====================
- * SUPPORT
- * http://minicraft.io/forum
  * ==============================
  */
 
@@ -89,9 +80,11 @@ $checker->lowlevelChecks(true);
 
 /* ============================== */
 $ticraft = new Ticraft;
-$logger  = new Logger;
-$config  = new Config($ticraft->call('getConfig'));
-if (!file_exists(LANGUAGE . $config->getLanguage() . '.php')) {
+$config_infos = $ticraft->call('getConfig');
+if (!empty($config_infos)) {
+  $config  = new Config($config_infos);
+}
+if (!file_exists(LANGUAGE . $config->getLang() . '.php')) {
   $config->setLanguage('en');
 }
 /* ============================== */

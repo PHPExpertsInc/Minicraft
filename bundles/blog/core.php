@@ -5,8 +5,8 @@ require_once('config/settings.php');
 $bundle_router     = new Router;
 $bundle_translator = new Translator(BUNDLES . $bundle_name . '/config/lang/');
 
-if (file_exists(BUNDLES . $bundle_name . '/config/lang/' . $config->getLanguage() . '.php')) {
-  $blanguage = $config->getLanguage();
+if (file_exists(BUNDLES . $bundle_name . '/config/lang/' . $config->getLang() . '.php')) {
+  $blanguage = $config->getLang();
 } else {
   $blanguage = $bundle_translator->getDefaultLanguage();
 }

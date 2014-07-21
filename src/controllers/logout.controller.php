@@ -6,9 +6,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!empty($_POST['logout']['from'])) {
     header('Location: ' . $_POST['logout']['from']);
     die();
+  } elseif (!empty($_SERVER['HTTP_REFERER'])) {
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    die();
   }
 }
 /* ============================== */
 
-header('Location: ' . URL);
+Helpers::redirect($router, 'home');
 die();

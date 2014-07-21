@@ -7,14 +7,18 @@ class ArticleCategory {
   protected $articles = array();
   
   public function __construct($infos) {
-    foreach ($infos as $key => $value) {
-      if (preg_match('#^ac_#', $key)) {
-        $key    = str_replace('ac_', '', $key);
-        $method = 'set' . Helpers::camelCase($key);
-        if (method_exists($this, $method)) {
-          $this->$method($value);
+    if (!empty($infos)) {
+      foreach ($infos as $key => $value) {
+        if (preg_match('#^ac_#', $key)) {
+          $key    = str_replace('ac_', '', $key);
+          $method = 'set' . Helpers::camelCase($key);
+          if (method_exists($this, $method)) {
+            $this->$method($value);
+          }
         }
       }
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
   }
   
@@ -23,7 +27,7 @@ class ArticleCategory {
   }
   
   public function addArticle($article) {
-    $this->articles[] = $article;
+    array_push($this->articles, $article);
   }
   
   public function hasArticles() {

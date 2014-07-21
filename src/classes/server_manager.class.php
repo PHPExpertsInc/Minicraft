@@ -2,11 +2,16 @@
 
 class ServerManager {
   protected $servers = array();
-  
-  public function __construct($servers) {
-    foreach ($servers as $server_infos) {
-      $server                          = new Server($server_infos);
-      $this->servers[$server->getId()] = $server;
+  public function __construct($infos) {
+    if (!empty($infos)) {
+      foreach ($infos as $server_infos) {
+        if (!empty($server_infos)) {
+          $server = new Server($server_infos);
+          $this->servers[$server->getId()] = $server;
+        }
+      }
+    } else {
+      Logger::log(__FILE__, 'Array empty for class constructor.');
     }
   }
   
