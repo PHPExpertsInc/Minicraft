@@ -31,82 +31,107 @@ if (!empty($_POST['username']) and !empty($_POST['key'])) {
 <head>
   <meta charset="utf-8">
   <title>Ticraft Setup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
   <style>
     body {
-        background: url(//ticraft.fr/themes/ticraft/public/img/email_bg.jpg);
-    }
-    
-    .jumbotron {
-    	text-align: center;
-    	width: 30rem;
-    	border-radius: 0.5rem;
-    	top: 0;
-    	bottom: 0;
-    	left: 0;
-    	right: 0;
-    	position: absolute;
-    	margin: 4rem auto;
-    	background-color: #fff;
-    	padding: 2rem;
+      background-color: #f5f8fa;
+      font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+       font-weight: normal;
+       padding-bottom: 15px;
     }
     
     input {
-    	width: 100%;
-    	margin-bottom: 1.4rem;
-    	padding: 1rem;
-    	background-color: #ecf2f4;
-    	border-radius: 0.2rem;
-    	border: none;
+      border: none !important;
+      height: 8rem !important;
+      margin-bottom: 2rem !important;
+      font-size: 4.5rem !important;
+      text-align: center;
+      color: #556270 !important;
+      border-radius: 3px !important;
     }
     
-    h2 {
-    	margin-bottom: 3rem;
-    	font-weight: bold;
-    	color: #ababab;
+    @media (max-width: 480px) {
+      input {
+        font-size: 2.5rem !important;
+      }
     }
     
-    .btn {
-    	border-radius: 0.2rem;
-    	font-size: 3rem;
-    	color: #fff;
-    }
-    
-    .full-width {
-    	background-color: #8eb5e2;
-    	width: 100%;
-    	-webkit-border-top-right-radius: 0;
-    	-webkit-border-bottom-right-radius: 0;
-    	-moz-border-radius-topright: 0;
-    	-moz-border-radius-bottomright: 0;
-    	border-top-right-radius: 0;
-    	border-bottom-right-radius: 0;
+    input:focus {
+      box-shadow: none !important;
     }
     
     .box {
-    	position: absolute;
-    	bottom: 0;
-    	left: 0;
-    	margin-bottom: 3rem;
-    	margin-left: 3rem;
-    	margin-right: 3rem;
+      margin-top: 10%;
+      padding: 2rem;
+      background-color: #556270;
+      text-align: center;
+      border-radius: 6px;
+    }
+    
+    @media (max-width: 768px) {
+      .box {
+        margin-top: 15px;
+      }
+    }
+    
+    .btn-success {
+      border: none;
+      border-radius: 3px;
+      background-color: #c7f464;
+      color: #556270;
+      height: 8rem;
+    }
+    
+    .btn-success:hover {
+      background-color: #c7f464;
+      color: #556270;
+    }
+    
+    ::-webkit-input-placeholder {
+       color: #a5acb5 !important;
+       opacity: 1 !important;
+    }
+    
+    :-moz-placeholder {
+       color: #a5acb5 !important;
+       opacity: 1 !important;
+    }
+    
+    ::-moz-placeholder {
+       color: #a5acb5 !important;
+       opacity: 1 !important;
+    }
+    
+    :-ms-input-placeholder {  
+       color: #a5acb5 !important;
+       opacity: 1 !important;
     }
   </style>
 </head>
 <body>
-  <div class="jumbotron">
-    <div class="container">
-      <span class="glyphicon glyphicon-list-alt"></span>
-      <h2>Ticraft Setup</h2>
-      <div class="box">
-        <form method="post" action="">
-          <input type="text" placeholder="Ticraft Username">
-          <input type="text" placeholder="API Key">
-          <button class="btn btn-default full-width" type="submit">GO</button>
-        </form>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+        <div class="box">
+          <form method="post" action="">
+            <div class="form-group">
+              <input id="username" class="form-control input-lg" type="text" name="username" placeholder="Ticraft Username">
+            </div>
+            <div class="form-group">
+              <input id="key" class="form-control input-lg" type="text" name="key" placeholder="API Key">
+            </div>
+            <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fa fa-check fa-3x"></i></button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
+  <script src="//raw.githubusercontent.com/mathiasbynens/jquery-placeholder/master/jquery.placeholder.js"></script>
+  <script>
+    $('input').placeholder();
+  </script>
 </body>
 </html>
 <?php

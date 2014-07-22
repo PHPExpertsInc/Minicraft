@@ -45,6 +45,39 @@ class Database {
     }
   }
   
+  public static function getTokenInfosFromEmail($email) {
+    try {
+      $query = self::getInstance()->prepare('SELECT token, date_confirmed FROM Emails WHERE email = :email');
+      $query->execute(array(
+        'email' => $email
+      ));
+      $data = $query->fetch();
+      $query->closeCursor;
+    }
+    catch (PDOException $e) {
+      Logger::log(__FILE__, $e->getMessage());
+    }
+    
+    return $data;
+  }
+  
+  public static function confirmEmail($email, $token) {
+    try {
+      $query = self::getInstance()->prepare('UPDATE Emails SET date_confirmed = :date_confirmed WHERE email = :email AND token = :token');
+      $query->execute(array(
+        'date_confirmed' => time(),
+        'email' => $email,
+        'token' => $token
+      ));
+      $query->closeCursor;
+    }
+    catch (PDOException $e) {
+      Logger::log(__FILE__, $e->getMessage());
+    }
+    
+    return true;
+  }
+  
   public static function emailAlreadyConfirmed($email) {
     try {
       $query = self::getInstance()->prepare('SELECT token, date_confirmed FROM Emails WHERE email = :email');
@@ -251,88 +284,9 @@ class Database {
     }
   }
   
-  public static function emailAlreadyConfirmed($email) {
-    try {
-      $query = self::getInstance()->prepare('SELECT token, date_confirmed FROM Emails WHERE email = :email');
-      $query->execute(array(
-        'email' => $email
-      ));
-      $data = $query->fetch();
-      $query->closeCursor();
-    }
-    catch (PDOException $e) {
-      Logger::log(__FILE__, $e->getMessage());
-    }
-    
-    if ($data['date_confirmed'] > 0) {
-      return true;
-    } elseif (!empty($data['token'])) {
-      return $data['token'];
-    } else {
-      return false;
-    }
-  }
-  
-  public static function addEmail($email) {
-    $result = self::emailAlreadyConfirmed($email);
-    
-    if (empty($result)) {
-      $token = Helpers::randomKey();
-      try {
-        $query = self::getInstance()->prepare('INSERT INTO Emails(email, token, date_added) VALUES(:email, :token, :date_added)');
-        $query->execute(array(
-          'email' => $email,
-          'token' => $token,
-          'date_added' => time()
-        ));
-        $query->closeCursor();
-      }
-      catch (PDOException $e) {
-        Logger::log(__FILE__, $e->getMessage());
-      }
-      
-      return $token;
-    } else {
-      return $result;
-    }
-  }
-  
-  public static function getTokenInfosFromEmail($email) {
-    try {
-      $query = self::getInstance()->prepare('SELECT token, date_confirmed FROM Emails WHERE email = :email');
-      $query->execute(array(
-        'email' => $email
-      ));
-      $data = $query->fetch();
-      $query->closeCursor;
-    }
-    catch (PDOException $e) {
-      Logger::log(__FILE__, $e->getMessage());
-    }
-    
-    return $data;
-  }
-  
-  public static function confirmEmail($email, $token) {
-    try {
-      $query = self::getInstance()->prepare('UPDATE Emails SET date_confirmed = :date_confirmed WHERE email = :email AND token = :token');
-      $query->execute(array(
-        'date_confirmed' => time(),
-        'email' => $email,
-        'token' => $token
-      ));
-      $query->closeCursor;
-    }
-    catch (PDOException $e) {
-      Logger::log(__FILE__, $e->getMessage());
-    }
-    
-    return true;
-  }
-  
   public static function getApiInfos() {
     try {
-      self::getInstance()->query('SELECT username, api_key FROM Config');
+      $query = self::getInstance()->query('SELECT username, api_key FROM Config');
       $data  = $query->fetch();
       $query->closeCursor();
     }
