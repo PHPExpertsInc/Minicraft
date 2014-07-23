@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-md-offset-3 col-md-6">
       {% include 'includes/flash.twig' %}
-      <form role="form" method="post" action="{{ url('action', 'ranks', 'edit-rank') }}-{{ rank.id }}">
+      <form role="form" method="post" action="{{ currentUri }}">
         <div class="form-group">
           <label for="rank-name">{{ lang('RANK_NAME') }}</label>
           <input id="rank-name" class="form-control" type="text" name="add-rank[name]" value="{{ rank.name }}">

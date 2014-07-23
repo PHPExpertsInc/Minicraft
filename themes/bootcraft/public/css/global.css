@@ -16,10 +16,34 @@
 
 /* @end */
 
+/* @group Footer */
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 150px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 20px 0;
+  border-top: 1px solid #e5e5e5;
+  background-color: #f9f9f9;
+  color: #999;
+  text-align: center;
+}
+
+
+/* @end */
+
 /* @group General */
 
 body {
-  height: 100%;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
@@ -66,31 +90,6 @@ a.fancy-link:hover,
 p a:hover {
   border-bottom-width: 1px;
   border-bottom-style: solid;
-}
-
-/* @end */
-
-/* @group Footer */
-
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  padding-bottom: 20px;
-  margin: 0 auto -140px;
-}
-
-#push,
-#footer {
-  height: 140px;
-}
-
-#footer {
-  padding: 40px 0;
-  color: #999;
-  text-align: center;
-  background-color: #f9f9f9;
-  border-top: 1px solid #e5e5e5;
 }
 
 /* @end */
@@ -195,6 +194,26 @@ p a:hover {
   font-family: "Minecrafter", "Stonecraft", Arial;
   font-size: 3em;
   text-shadow: 0px 1px 0px #ccc, 0px 2px 0px #ccc, 0px 3px 0px #ccc, 0px 4px 0px #ccc, 0px 5px 0px #ccc, 0px 6px 0px #ccc, 0px 7px 0px #ccc;
+}
+
+/* @end */
+
+/* @group Slider */
+
+#slider {
+  margin-top: -20px;
+}
+
+#slider .item img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 992px) {
+  #slider {
+    margin-bottom: 20px;
+  }
 }
 
 /* @end */

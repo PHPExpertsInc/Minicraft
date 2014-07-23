@@ -16,7 +16,7 @@
           <li>{{ lang('REPLACE_IP', '%player_ip_address%')|raw }}</li>
         </ul>
       </div>
-      <form role="form" method="post" action="{{ url('action', 'store', 'add-command') }}">
+      <form role="form" method="post" action="{{ currentUri }}">
         <div class="form-group">
           <label for="command-command">{{ lang('CONSOLE_COMMAND') }}</label>
           <input id="command-command" class="form-control" type="text" name="add-command[command]">

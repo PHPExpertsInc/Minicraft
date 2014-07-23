@@ -14,7 +14,7 @@
         <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
         <li class="active">{{ lang('ADD_ITEM') }}</li>
       </ol>
-      <form role="form" method="post" action="{{ url('action', 'store', 'add-item') }}">
+      <form role="form" method="post" action="{{ currentUri }}">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">{{ lang('MINECRAFT_ITEM') }}</h3>

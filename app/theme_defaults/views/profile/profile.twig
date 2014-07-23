@@ -38,7 +38,7 @@
           <h3 class="panel-title">{{ lang('ACCOUNT_INFOS') }}</h3>
         </div>
         <div class="panel-body">
-          <form method="post" action="{{ url('profile') }}">
+          <form method="post" action="{{ currentUri }}">
             <div class="form-group{% if handler.errors.username %} has-error{% endif %}">
               <label class="control-label" for="username">{{ lang('USERNAME') }}</label>
               <input id="username" class="form-control" type="text" name="profile[username]" value="{{ user.username }}"{% if user.confirmed is empty %} disabled{% endif %}>
@@ -65,7 +65,7 @@
           <h3 class="panel-title">{{ lang('GENERAL_INFOS') }}</h3>
         </div>
         <div class="panel-body">
-          <form method="post" action="{{ url('profile') }}">
+          <form method="post" action="{{ currentUri }}">
             <div class="form-group{% if handler.errors.genre %} has-error{% endif %}">
               <label class="control-label" for="genre">{{ lang('GENRE') }}</label>
               <select id="genre" class="form-control" name="profile[genre]">

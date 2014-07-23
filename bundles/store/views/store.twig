@@ -39,7 +39,7 @@
               {% endif %}
             </div>
             <div class="modal-footer">
-              <form method="post" action="{{ url('store') }}" class="form-inline">
+              <form method="post" action="{{ currentUri }}" class="form-inline">
                 <input type="hidden" name="store-buy" value="{{ pack.id }}">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
                 {% if user.money >= pack.price %}<button type="submit" class="btn btn-primary">{{ lang('BTN_BUY') }}</button>{% endif %}

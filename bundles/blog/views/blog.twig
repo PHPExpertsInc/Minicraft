@@ -33,5 +33,6 @@
 {% block javascripts %}
 {{ parent() }}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
+<script src="//raw.githubusercontent.com/rmm5t/jquery-timeago/master/locales/jquery.timeago.{{ config.language }}.js"></script>
 <script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script> 
 {% endblock %}

@@ -43,7 +43,7 @@
             </div>
             <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', article.title)|raw }}</div>
             <div class="modal-footer">
-              <form method="post" action="{{ url('manage', 'blog') }}" class="form-inline">
+              <form method="post" action="{{ currentUri }}" class="form-inline">
                 <input type="hidden" name="remove-article" value="{{ article.id }}">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
                 <button type="submit" class="btn btn-danger">{{ lang('BTN_REMOVE') }}</button>

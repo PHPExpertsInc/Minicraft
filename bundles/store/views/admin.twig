@@ -45,7 +45,7 @@
             </div>
             <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', pack.name)|raw }}</div>
             <div class="modal-footer">
-              <form method="post" action="{{ url('manage', 'store') }}" class="form-inline">
+              <form method="post" action="{{ currentUri }}" class="form-inline">
                 <input type="hidden" name="remove-pack" value="{{ pack.id }}">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
                 <button type="submit" class="btn btn-danger">{{ lang('BTN_REMOVE') }}</button>
@@ -91,7 +91,7 @@
             </div>
             <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', item.minecraftName)|raw }}</div>
             <div class="modal-footer">
-              <form method="post" action="{{ url('manage', 'store') }}" class="form-inline">
+              <form method="post" action="{{ currentUri }}" class="form-inline">
                 <input type="hidden" name="remove-item" value="{{ item.id }}">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
                 <button type="submit" class="btn btn-danger">{{ lang('BTN_REMOVE') }}</button>
@@ -135,7 +135,7 @@
             </div>
             <div class="modal-body">{{ lang('REMOVE_CONFIRMATION_NEUTRAL')|raw }}</div>
             <div class="modal-footer">
-              <form method="post" action="{{ url('manage', 'store') }}" class="form-inline">
+              <form method="post" action="{{ currentUri }}" class="form-inline">
                 <input type="hidden" name="remove-command" value="{{ command.id }}">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
                 <button type="submit" class="btn btn-danger">{{ lang('BTN_REMOVE') }}</button>

@@ -14,7 +14,7 @@
         <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
         <li class="active">{{ lang('EDIT_PACK') }}</li>
       </ol>
-      <form role="form" method="post" action="{{ url('action', 'packs', 'edit-pack') }}-{{ pack.id }}">
+      <form role="form" method="post" action="{{ currentUri }}">
         <div class="form-group">
           <label for="pack-name">{{ lang('PACK_NAME') }}</label>
           <input type="text" name="edit-pack[name]" id="pack-name" class="form-control" value="{{ pack.name }}">

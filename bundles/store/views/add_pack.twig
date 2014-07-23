@@ -14,7 +14,7 @@
         <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
         <li class="active">{{ lang('CREATE_PACK') }}</li>
       </ol>
-      <form role="form" method="post" action="{{ url('action', 'store', 'create-pack') }}">
+      <form role="form" method="post" action="{{ currentUri }}">
         <div class="form-group">
           <label for="pack-name">{{ lang('PACK_NAME') }}</label>
           <input id="pack-name" class="form-control" type="text" name="add-pack[name]">

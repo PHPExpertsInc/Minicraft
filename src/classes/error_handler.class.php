@@ -18,7 +18,7 @@ class ErrorHandler {
   public function saveToSessions() {
     $_SESSION['errors'] = $this->errors;
     $_SESSION['error_messages'] = $this->error_messages;
-    $_SESSION['saved_fields'] = $this->saved;
+    $_SESSION['saved_fields'] = $this->saved_fields;
   }
   
   public function resetSessions() {
@@ -58,11 +58,11 @@ class ErrorHandler {
   }
   
   public function saveField($field, $data) {
-    $this->saved_ields[$field] = $data;
+    $this->saved_fields[$field] = $data;
   }
   
   public function getSavedField($field) {
-    return $this->saved_ields[$field];
+    return $this->saved_fields[$field];
   }
   
   /* ==================== */

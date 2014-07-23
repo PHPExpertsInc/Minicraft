@@ -80,9 +80,11 @@ class Server {
   public function isPlaying($username) {
     $players = $this->getPlayersOnline();
     
-    foreach ($players as $key => $value) {
-      if ($value['name'] == $username) {
-        return true;
+    if (!empty($players)) {
+      foreach ($players as $key => $value) {
+        if ($value['name'] == $username) {
+          return true;
+        }
       }
     }
     

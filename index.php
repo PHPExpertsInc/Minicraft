@@ -215,5 +215,20 @@ session_start();
 $user = Security::validateSession($ticraft);
 /* ============================== */
 
+
+/* ============================== */
+$servers = $ticraft->call('getAllServers');
+$login_url = '/' . $router->getController('login')->getUrl();
+$add_url = '/' . ROOT . $translator->getTranslation($config->getLang(), 'URL_ADMIN') . '/' . $translator->getTranslation($config->getLang(), 'URL_MANAGE') . '-servers/add';
+
+if ($_SERVER['REQUEST_URI'] != $login_url and empty($servers) and !is_object($user)) {
+  header('Location: ' . $login_url);
+  die();
+} elseif ($_SERVER['REQUEST_URI'] != $add_url and empty($servers) and is_object($user)) {
+  header('Location: ' . $add_url);
+  die();
+}
+/* ============================== */
+
 // Here we go!
 require_once(APP . 'router.php');

@@ -13,7 +13,7 @@ class Database {
   }
   
   public static function getInstance() {
-    if (self::$db == null) {
+    if (!is_object(self::$db)) {
       self::init();
     }
     
@@ -139,7 +139,7 @@ class Database {
   
   public static function getInfosFromCookieId($cookie_id) {
     try {
-      $query = self::getInstance()->prepare('SELECT admin_id, date_expires FROM Cookies WHERE cookie_id = :cookie_id');
+      $query = self::getInstance()->prepare('SELECT user_id, date_expires FROM Cookies WHERE cookie_id = :cookie_id');
       $query->execute(array(
         'cookie_id' => $cookie_id
       ));
@@ -155,7 +155,7 @@ class Database {
   
   public static function getInfosFromSessionId($session_id) {
     try {
-      $query = self::getInstance()->prepare('SELECT admin_id, date_expires FROM Sessions WHERE session_id = :session_id');
+      $query = self::getInstance()->prepare('SELECT user_id, date_expires FROM Sessions WHERE session_id = :session_id');
       $query->execute(array(
         'session_id' => $session_id
       ));

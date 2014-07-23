@@ -4,20 +4,20 @@
   <div class="row">
     <div class="col-md-offset-3 col-md-6">
       {% include 'includes/flash.twig' %}  
-      <form method="post" action="{{ url('register') }}" role="form">
+      <form method="post" action="{{ currentUri }}" role="form">
         <div class="form-group{% if handler.errors.username %} has-error{% endif %}">
-          <label class="control-label" for="register[username]">{{ lang('USERNAME') }}</label>
-          <input id="username" class="form-control" type="text" name="username"{% if handler.errors.username is empty %} value="{{ handler.savedField.username }}"{% endif %}{% if handler.registerFocusUsername %} autofocus{% endif %}>
+          <label class="control-label" for="username">{{ lang('USERNAME') }}</label>
+          <input id="username" class="form-control" type="text" name="register[username]"{% if handler.errors.username is empty %} value="{{ handler.savedField('username') }}"{% endif %}{% if handler.registerFocusUsername %} autofocus{% endif %}>
           {% if handler.errors.username %}<span class="help-block">{{ handler.errorMessages.username }}</span>{% endif %}
         </div>
         <div class="form-group{% if handler.errors.password %} has-error{% elseif handler.errors.username or handler.errors.email %} has-warning{% endif %}">
-          <label class="control-label" for="register[password]">{{ lang('PASSWORD') }}</label>
-          <input id="password" class="form-control" type="password" name="password"{% if handler.registerFocusPassword %} autofocus{% endif %}>
+          <label class="control-label" for="password">{{ lang('PASSWORD') }}</label>
+          <input id="password" class="form-control" type="password" name="register[password]"{% if handler.registerFocusPassword %} autofocus{% endif %}>
           {% if handler.errors.password %}<span class="help-block">{{ handler.errorMessages.password }}</span>{% endif %}
         </div>
         <div class="form-group{% if handler.errors.email %} has-error{% endif %}">
           <label class="control-label" for="email">{{ lang('EMAIL') }}</label>
-          <input id="email" class="form-control" type="text" name="register[email]"{% if handler.errors.email is empty %} value="{{ handler.savedField.email }}"{% endif %}{% if handler.registerFocusEmail %} autofocus{% endif %}>
+          <input id="email" class="form-control" type="text" name="register[email]"{% if handler.errors.email is empty %} value="{{ handler.savedField('email') }}"{% endif %}{% if handler.registerFocusEmail %} autofocus{% endif %}>
           {% if handler.errors.email %}<span class="help-block">{{ handler.errorMessages.email }}</span>{% endif %}
         </div>
         <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_REGISTER') }}</button>

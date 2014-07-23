@@ -3,10 +3,50 @@
 {{ parent() }}
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Noto+Serif:400,700">
 {% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ url('assets', 'js/owl-carousel/owl.carousel.css') }}">
+<link rel="stylesheet" href="{{ url('assets', 'js/owl-carousel/owl.theme.css') }}">
+{% endblock %}
 {% block title %}
 {{ config.siteName }}
 {% endblock %}
 {% block content %}
+{% if config.carouselItems is not empty %}
+<div id="slider" class="owl-carousel owl-theme">
+  {% for item in config.carouselItems %}
+  <div class="item">
+    <img src="{{ item.img }}" alt="{{ item.headline }}">
+  </div>
+  {% endfor %}
+</div>
+<!-- Uncomment this if you prefer Bootstrap's Carousel
+<div id="carousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    {% for item in config.carouselItems %}
+    <li data-target="#carousel" data-slide-to="{{ loop.index0 }}"{% if loop.first %} class="active"{% endif %}></li>
+    {% endfor %}
+  </ol>
+  <div class="carousel-inner">
+    {% for item in config.carouselItems %}
+    <div class="item{% if loop.first %} active{% endif %}">
+      <img src="{{ item.img }}" alt="{{ item.headline }}">
+      {% if item.headline is not empty or item.text is not empty or item.button is not empty %}
+      <div class="container">
+        <div class="carousel-caption">
+          {% if item.headline is not empty %}<h1>{{ item.headline }}</h1>{% endif %}
+          {% if item.text is not empty %}<p>{{ item.text }}</p>{% endif %}
+          {% if item.button is not empty %}<p><a class="btn btn-lg btn-primary" href="{{ item.button.link }}" role="button">{{ item.button.text }}</a></p>{% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  <a class="left carousel-control" href="#carousel" role="button" data-slide="prev"></a>
+  <a class="right carousel-control" href="#carousel" role="button" data-slide="next"></a>
+</div> -->
+{% endif %}
 <div class="container">
   <div class="row">
     <div class="col-md-4 col-md-push-8">
@@ -83,5 +123,17 @@
 {% block javascripts %}
 {{ parent() }}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
+<script src="//raw.githubusercontent.com/rmm5t/jquery-timeago/master/locales/jquery.timeago.{{ config.language }}.js"></script>
 <script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script>
+<script src="{{ url('assets', 'js/owl-carousel/owl.carousel.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+  $("#slider").owlCarousel({
+    navigation : false,
+    slideSpeed : 300,
+    paginationSpeed : 400,
+    singleItem:true
+  });
+});
+</script>
 {% endblock %}

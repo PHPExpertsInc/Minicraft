@@ -16,8 +16,6 @@ $cookie       = isset($array['cookie']);
 $error_handler = new ErrorHandler;
 $flash = new Flash;
 /* ============================== */
-
-
 if (empty($_POST)) {
   die($twig->render('login/login.twig', array(
     'pageTitle' => $translator->getTranslation($config->getLang(), 'LOGIN'),
@@ -76,7 +74,10 @@ if (empty($_POST)) {
       
       Security::actionSucceeded('login');
       
-      if (!empty($array['from'])) {
+      if (!empty($_GET['from'])) {
+        header('Location: ' . $_GET['from']);
+        die();
+      } elseif (!empty($array['from'])) {
         header('Location: ' . $array['from']);
         die();
       } else {
@@ -92,6 +93,14 @@ if (empty($_POST)) {
   /* ============================== */
   
   $error_handler->saveToSessions();
-  Helpers::redirect($router, 'login');
-  die();
+  if (!empty($_GET['from'])) {
+    header('Location: ' . $router->getController('login')->getUrl() . '?from=' . $_GET['from']);
+    die();
+  } elseif (!empty($array['from'])) {
+    header('Location: ' . $router->getController('login')->getUrl() . '?from=' . $array['from']);
+    die();
+  } else {
+    Helpers::redirect($router, 'login');
+    die();
+  }
 }

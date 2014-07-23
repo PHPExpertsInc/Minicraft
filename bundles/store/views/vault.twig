@@ -35,7 +35,7 @@
               <h4 class="text-danger">{{ lang('HAVE_YOU_ENOUGH_SPACES') }}</h4>
             </div>
             <div class="modal-footer">
-              <form method="post" action="{{ url('vault') }}" class="form-inline">
+              <form method="post" action="{{ currentUri }}" class="form-inline">
                 <input type="hidden" name="send-item" value="{{ item.id }}">
                 <div class="row">
                   <div class="col-md-6">

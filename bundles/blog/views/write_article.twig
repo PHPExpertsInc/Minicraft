@@ -14,7 +14,7 @@
         <li><a href="{{ url('manage', 'blog') }}">{{ lang('ADMIN_BLOG') }}</a></li>
         <li class="active">{{ lang('ADMIN_BLOG_WRITE') }}</li>
       </ol>
-      <form role="form" method="post" action="{{ url('action', 'blog', 'write') }}" enctype="multipart/form-data">
+      <form role="form" method="post" action="{{ currentUri }}" enctype="multipart/form-data">
         <div class="form-group">
           <label for="article-title">{{ lang('TITLE') }}</label>
           <input id="article-title" class="form-control" type="text" name="write-article[title]">

@@ -4,10 +4,10 @@ $lang = array();
 
 // URL
 $lang = array_merge($lang, array(
-  'URL_STORE' => 'store',
-  'URL_VAULT' => 'vault',
-  'URL_CATEGORY' => 'category',
-  'URL_BUY' => 'buy'
+  'URL_STORE' => 'boutique',
+  'URL_VAULT' => 'coffre',
+  'URL_CATEGORY' => 'categorie',
+  'URL_BUY' => 'acheter'
 ));
 
 // Not sorted yet

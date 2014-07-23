@@ -25,8 +25,6 @@
 </head>
 <body>
   {% block body %}
-  <div id="wrap">
-  {% block wrap %}
   {% block header %}
   {% block nav %}
     <div class="navbar navbar-static-top navbar-default" role="navigation">
@@ -105,9 +103,10 @@
     </div> <!-- .navbar -->
     {% endblock %}{# end nav block #}
     {% endblock %}{# end header block #}
+    {% block main %}{% endblock %}{# end main block #}
     {% block modals %}
     {% if user is empty %}
-    <div id="modal-register" class="modal fade">
+    <div id="modal-register" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <form action="{{ url('register') }}" method="post" role="form" class="form-horizontal">
@@ -117,24 +116,25 @@
             </div>
             <div class="modal-body">
               <div class="form-group">
-                <label for="register-username" class="col-lg-4 control-label">{{ lang('USERNAME') }}</label>
+                <label for="modal-register-username" class="col-lg-4 control-label">{{ lang('USERNAME') }}</label>
                 <div class="col-lg-8">
-                  <input type="text" name="register[username]" id="register-username" class="form-control">
+                  <input id="modal-register-username" class="form-control" type="text" name="register[username]">
                 </div>
               </div>
               <div class="form-group">
-                <label for="register-password" class="col-lg-4 control-label">{{ lang('PASSWORD') }}</label>
+                <label for="modal-register-password" class="col-lg-4 control-label">{{ lang('PASSWORD') }}</label>
                 <div class="col-lg-8">
-                  <input type="password" name="register[password]" id="register-password" class="form-control">
+                  <input id="modal-register-password" class="form-control" type="password" name="register[password]">
                 </div>
               </div>
               <div class="form-group">
-                <label for="register-email" class="col-lg-4 control-label">{{ lang('EMAIL') }}</label>
+                <label for="modal-register-email" class="col-lg-4 control-label">{{ lang('EMAIL') }}</label>
                 <div class="col-lg-8">
-                  <input type="email" name="register[email]" id="register-email" class="form-control">
+                  <input id="modal-register-email" class="form-control" type="email" name="register[email]">
                 </div>
               </div>
             </div>
+            <input type="hidden" name="register[from]" value="{{ currentUri }}">
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
               <button type="submit" class="btn btn-primary">{{ lang('BTN_REGISTER') }}</button>
@@ -143,7 +143,7 @@
         </div> <!-- .modal-content -->
       </div> <!-- .modal-dialog -->
     </div> <!-- #modal-register -->
-    <div id="modal-login" class="modal fade">
+    <div id="modal-login" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog">
         <div class="tab-content">
           <div id="login-tab" class="tab-pane fade in active">
@@ -155,15 +155,15 @@
                 </div>
                 <div class="modal-body">
                   <div class="form-group">
-                    <label for="login-username" class="col-lg-4 control-label">{{ lang('USERNAME') }}</label>
+                    <label for="modal-login-username" class="col-lg-4 control-label">{{ lang('USERNAME') }}</label>
                     <div class="col-lg-8">
-                      <input type="text" name="login[username]" id="login-username" class="form-control">
+                      <input id="modal-login-username" class="form-control" type="text" name="login[username]">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="login-password" class="col-lg-4 control-label">{{ lang('PASSWORD') }}</label>
+                    <label for="modal-login-password" class="col-lg-4 control-label">{{ lang('PASSWORD') }}</label>
                     <div class="col-lg-8">
-                      <input type="password" name="login[password]" id="login-password" class="form-control">
+                      <input id="modal-login-password" class="form-control" type="password" name="login[password]">
                     </div>
                   </div>
                   <div class="form-group">
@@ -173,8 +173,8 @@
                       </div>
                     </div>
                   </div>
-                  <input type="hidden" name="login[from]" value="{{ currentUri }}">
                 </div>
+                <input type="hidden" name="login[from]" value="{{ currentUri }}">
                 <div class="modal-footer">
                   <a href="#forgot-tab" data-toggle="tab" class="pull-left btn btn-default">{{ lang('BTN_FORGOT_PASSWORD') }}</a>
                   <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
@@ -194,8 +194,8 @@
                   <div class="form-group">
                     <div class="row">
                       <div class="col-md-offset-2 col-md-8">
-                        <label for="reset-password" class="control-label">{{ lang('USERNAME_OR_EMAIL') }}</label>
-                        <input type="text" name="account" id="reset-password" class="form-control">
+                        <label for="modal-reset-password" class="control-label">{{ lang('USERNAME_OR_EMAIL') }}</label>
+                        <input id="modal-reset-password" class="form-control" type="text" name="account">
                       </div>
                     </div>
                   </div>
@@ -213,14 +213,11 @@
     </div> <!-- #modal-login -->
     {% endif %}
     {% endblock%}{# end modals block #}
-    {% endblock%}{# end wrap block #}
-    <div id="push"></div>
-  </div>
-  <footer id="footer">
+  <footer>
   {% block footer %}
     <p><a href="#">{{ lang('BACK_TO_TOP') }}</a></p>
-    <p>Charles Tatibouët &copy; {{ "now"|date }}</p>
-    <p>Powered by <a href="http://minicraft.io">Minicraft</a> and the <a href="http://ticraft.fr">Ticraft API</a>.</p>
+    <p>Charles Tatibouët &copy; {{ 'now'|date('Y') }}</p>
+    <p>Powered by <a href="http://minicraft.io">Minicraft CMS</a> and <a href="http://ticraft.fr">Ticraft</a></p>
   {% endblock %}{# end footer block #}
   </footer>
   {% block javascripts %}

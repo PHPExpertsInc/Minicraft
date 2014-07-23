@@ -75,15 +75,6 @@ class User {
   public function generateCookie($cookie_expires = 14) {
     Database::generateCookie($this->getId(), $cookie_expires);
   }
-    
-  public function updateLastLogin($ticraft, $last_login = time()) {
-    $result = $ticraft->call('updateLastLogin', array(
-      $this->getId(),
-      $last_login
-    ));
-    
-    return $result;
-  }
   
   public function isConfirmed() {
     return $this->confirmed;

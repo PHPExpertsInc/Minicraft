@@ -18,7 +18,10 @@ class Security {
         ));
         if (!empty($infos)) {
           $user = new User($infos);
-          $user->updateLastLogin($ticraft, time());
+          $ticraft->call('updateLastLogin', array(
+            $user->getId(),
+            time()
+          ));
         }
       } else {
         self::logOut();
@@ -35,7 +38,10 @@ class Security {
         ));
         if (!empty($infos)) {
           $user = new User($infos);
-          $user->updateLastLogin(time());
+          $ticraft->call('updateLastLogin', array(
+            $user->getId(),
+            time()
+          ));
         }
       } else {
         self::logOut();

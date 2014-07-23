@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-md-offset-3 col-md-6">  
       {% include 'includes/flash.twig' %}  
-      <form role="form" method="post" action="{{ url('action', 'servers', 'add') }}">
+      <form role="form" method="post" action="{{ currentUri }}">
         <div class="form-group">
           <label class="control-label" for="server-title">{{ lang('SERVER_NAME') }}</label>
           <input id="server-name" class="form-control" type="text" name="add-server[name]" value="{{ server.name }}">

@@ -12,7 +12,6 @@ $array = $_POST['register'];
 $username     = trim($array['username']);
 $raw_password = trim($array['password']);
 $email        = filter_var(trim($array['email']), FILTER_SANITIZE_EMAIL);
-
 $error_handler = new ErrorHandler;
 $flash = new Flash;
 /* ============================== */
@@ -27,8 +26,8 @@ if (empty($_POST)) {
     'flash' => $flash
   )));
 } else {
-  $error_handler->save('username', $username);
-  $error_handler->save('email', $email);
+  $error_handler->saveField('username', $username);
+  $error_handler->saveField('email', $email);
   
   /* ============================== */
   $waiting_time = Security::userCanDoAction('register') - time();
@@ -138,8 +137,16 @@ if (empty($_POST)) {
         }
         /* ============================== */
         
-        Helpers::redirect($router, 'home');
-        die();
+        if (!empty($_GET['from'])) {
+          header('Location: ' . $_GET['from']);
+          die();
+        } elseif (!empty($array['from'])) {
+          header('Location: ' . $array['from']);
+          die();
+        } else {
+          Helpers::redirect($router, 'home');
+          die();
+        }
       } else {
         Logger::log(__FILE__, 'Registration of user ' . $email . ' failed.', 2);
       }
@@ -148,6 +155,14 @@ if (empty($_POST)) {
   /* ============================== */
   
   $error_handler->saveToSessions();
-  Helpers::redirect($router, 'register');
-  die();
+  if (!empty($_GET['from'])) {
+    header('Location: ' . $router->getController('register')->getUrl() . '?from=' . $_GET['from']);
+    die();
+  } elseif (!empty($array['from'])) {
+    header('Location: ' . $router->getController('register')->getUrl() . '?from=' . $array['from']);
+    die();
+  } else {
+    Helpers::redirect($router, 'register');
+    die();
+  }
 }
