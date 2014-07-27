@@ -24,22 +24,18 @@
             <td>{{ article.author.username }}</td>
             <td><time datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time></td>
             <td><a href="{{ url('action', 'blog', 'edit-article') ~ '-' ~ article.id  }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
-            <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-' ~ article.id }}">{{ lang('BTN_REMOVE') }}</button></td>
+            <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-article-' ~ article.id }}">{{ lang('BTN_REMOVE') }}</button></td>
           </tr>
           {% endfor %}
         </table>
       </div> <!-- .table-responsive -->
-      {% else %}
-      <p>{{ lang('NO_ARTICLE') }}</p>
-      {% endif %}
-      {% if blog.articles is not empty %}
       {% for article in blog.articles|sort %}
-      <div id="{{ 'modal-' ~ article.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-' ~ article.id}}" aria-hidden="true">
+      <div id="{{ 'modal-article-' ~ article.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-article-' ~ article.id}}" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-              <h4 class="modal-title" id="{{ 'label-' ~ article.id}}">{{ lang('REMOVE_ARTICLE') }}</h4>
+              <h4 class="modal-title" id="{{ 'label-article-' ~ article.id}}">{{ lang('REMOVE_ARTICLE') }}</h4>
             </div>
             <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', article.title)|raw }}</div>
             <div class="modal-footer">
@@ -55,6 +51,46 @@
       {% endfor %}
       {% endif %}
       <a href="{{ url('action', 'blog', 'write') }}" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_WRITE_ARTICLE') }}</a>
+      <hr>
+      {% if categories is not empty %}
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered">
+          <tr>
+            <th>{{ lang('NAME') }}</th>
+            <th>{{ lang('BTN_EDIT') }}</th>
+            <th>{{ lang('BTN_REMOVE') }}</th>
+          </tr>
+          {% for category in categories|sort %}
+          <tr>
+            <td>{{ category.name }}</td>
+            <td><a href="{{ url('action', 'blog', 'edit-article-category') ~ '-' ~ category.id  }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
+            <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-category-' ~ category.id }}">{{ lang('BTN_REMOVE') }}</button></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div> <!-- .table-responsive -->
+      <a href="{{ url('action', 'blog', 'create-article-category') }}" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_ADD_ARTICLE_CATEGORY') }}</a>
+      {% for category in categories|sort %}
+      <div id="{{ 'modal-category-' ~ category.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-category-' ~ category.id}}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+              <h4 class="modal-title" id="{{ 'label-category-' ~ category.id}}">{{ lang('REMOVE_ARTICLE_CATEGORY') }}</h4>
+            </div>
+            <div class="modal-body">{{ lang('REMOVE_CONFIRMATION', category.name)|raw }}</div>
+            <div class="modal-footer">
+              <form method="post" action="{{ currentUri }}" class="form-inline">
+                <input type="hidden" name="remove-article-category" value="{{ category.id }}">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
+                <button type="submit" class="btn btn-danger">{{ lang('BTN_REMOVE') }}</button>
+              </form>
+            </div> <!-- .modal-footer -->
+          </div> <!-- .modal-content -->
+        </div> <!-- .modal-dialog -->
+      </div> <!-- #modal -->
+      {% endfor %}
+      {% endif %}
     </section>  <!-- .col-md-12 -->
   </div> <!-- .row -->
 </div> <!-- .container -->

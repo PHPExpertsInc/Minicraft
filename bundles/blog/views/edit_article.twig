@@ -8,7 +8,7 @@
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
-    <div class="col-md-offset-3 col-md-6">
+    <div class="col-md-12">
       <ol class="breadcrumb">
         <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
         <li><a href="{{ url('manage', 'blog') }}">{{ lang('ADMIN_BLOG') }}</a></li>
@@ -17,17 +17,17 @@
       {% if article is not empty %}
       <img src="{{ article.image }}" class="img-responsive" alt="picture">
       <hr>
-      <div class="form-group">
-        <label for="article-image">{{ lang('IMAGE_URL') }}</label>
-        <input id="article-img" class="form-control" type="url" name="edit-article[image]">
-      </div>
-      <div class="form-group">
-        <label for="image-upload">{{ lang('OR_UPLOAD_IMAGE') }}</label>
-        <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
-        <input id="image-upload" type="file" name="image-upload">
-        <p class="help-block">{{ lang('ARTICLE_IMAGE_RECOMMENDED_SIZE', 940, 400) }}</p>
-      </div>
       <form role="form" method="post" action="{{ currentUri }}">
+        <div class="form-group">
+          <label for="article-image">{{ lang('IMAGE_URL') }}</label>
+          <input id="article-img" class="form-control" type="url" name="edit-article[image]">
+        </div>
+        <div class="form-group">
+          <label for="image-upload">{{ lang('OR_UPLOAD_IMAGE') }}</label>
+          <input type="hidden" name="MAX_FILE_SIZE" value="10485760">
+          <input id="image-upload" type="file" name="image-upload">
+          <p class="help-block">{{ lang('ARTICLE_IMAGE_RECOMMENDED_SIZE', 940, 400) }}</p>
+        </div>
         <div class="form-group">
           <label for="article-title">{{ lang('TITLE') }}</label>
           <input id="article-title" class="form-control" type="text" name="edit-article[title]" value="{{ article.title }}">

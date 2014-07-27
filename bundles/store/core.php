@@ -13,8 +13,9 @@ if (file_exists(BUNDLES . $bundle_name . '/config/lang/' . $config->getLang() . 
 
 $bundle_router->addController(new Controller('store', '#^/' . ROOT . $bundle_translator->getTranslation($blanguage, 'URL_STORE') . '/?$#', $bundle_translator->getTranslation($blanguage, 'URL_STORE'), 'store'));
 $bundle_router->addController(new Controller('vault', '#^/' . ROOT . $bundle_translator->getTranslation($blanguage, 'URL_STORE') . '/' . $bundle_translator->getTranslation($blanguage, 'URL_VAULT') . '/?$#', $bundle_translator->getTranslation($blanguage, 'URL_STORE') . '/' . $bundle_translator->getTranslation($blanguage, 'URL_VAULT'), 'store'));
-$bundle_router->addController(new Controller('store_buy', '#^/' . ROOT . $bundle_translator->getTranslation($blanguage, 'URL_STORE') . '/' . $bundle_translator->getTranslation($blanguage, 'URL_BUY') . '/?$#', $bundle_translator->getTranslation($blanguage, 'URL_STORE') . '/' . $bundle_translator->getTranslation($blanguage, 'URL_BUY'), 'store'));
+$bundle_router->addController(new Controller('buy', '#^/' . ROOT . $bundle_translator->getTranslation($blanguage, 'URL_STORE') . '/' . $bundle_translator->getTranslation($blanguage, 'URL_BUY') . '/?$#', $bundle_translator->getTranslation($blanguage, 'URL_STORE') . '/' . $bundle_translator->getTranslation($blanguage, 'URL_BUY'), 'store'));
 $bundle_router->addController(new Controller('store_category', '#^/' . ROOT . $bundle_translator->getTranslation($blanguage, 'URL_STORE') . '/' . $bundle_translator->getTranslation($blanguage, 'URL_CATEGORY') . '/(\d+)-([\w\-]+)/?$#', $bundle_translator->getTranslation($blanguage, 'URL_STORE') . '/' . $bundle_translator->getTranslation($blanguage, 'URL_CATEGORY') . '/%m1%-%m2%', 'store'));
+$bundle_router->addController(new Controller('starpass', '#^/' . ROOT . 'starpass/?#', 'starpass', 'store'));
 
 /* ============================== */
 // Imports and initialises Twig

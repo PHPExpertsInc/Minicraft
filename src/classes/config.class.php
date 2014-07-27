@@ -21,6 +21,7 @@ class Config {
   protected $disqus_id;
   protected $currency_singular;
   protected $currency_plural;
+  protected $money_add;
   
   public function __construct($infos) {
     if (!empty($infos)) {
@@ -222,10 +223,6 @@ class Config {
         'name' => 'Forum'
       ),
       array(
-        'url' => '/voter',
-        'name' => 'Voter'
-      ),
-      array(
         'url' => '/boutique',
         'name' => 'Boutique'
       ),
@@ -321,5 +318,28 @@ class Config {
       'singular' => $this->getCurrencySingular(),
       'plural' => $this->getCurrencyPlural()
     );
+  }
+  
+  public function getMoneyAddedPerCode() {
+    return 10;
+  }
+  
+  public function getStarpassInfos() {
+    return array(
+      'idd' => 236446,
+      'idp' => 147650
+    );
+  }
+  
+  public function getBundles() {
+    $bundle_names = array();
+    $bundles = glob(BUNDLES . '*', GLOB_ONLYDIR);
+    
+    foreach ($bundles as $bundle) {
+      preg_match('#^bundles/(.+)#', $bundle, $match);
+      array_push($bundle_names, $match[1]);
+    }
+    
+    return $bundle_names;
   }
 }

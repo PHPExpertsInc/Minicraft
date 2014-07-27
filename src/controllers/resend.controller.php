@@ -14,5 +14,5 @@ if (Security::userCanDoAction('resend', false)) {
 }
 /* ============================== */
 
-Helpers::redirect($router, 'home');
+Helpers::redirect($router, 'index');
 die();

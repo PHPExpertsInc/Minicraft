@@ -13,5 +13,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 /* ============================== */
 
-Helpers::redirect($router, 'home');
+Helpers::redirect($router, 'index');
 die();

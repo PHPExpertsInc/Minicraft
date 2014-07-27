@@ -4,7 +4,9 @@
   {% include 'includes/flash.twig' %}
   <div class="row">
     <div class="col-md-12">
-      {% if user %}<h2>{{ lang('SHOW_MONEY', user.money, user.money > 1 ? config.currencyName.plural : config.currencyName.singular) }}{% if user.vaultItems is not empty %}<br><small><a href="{{ url('vault') }}">{% if user.vaultItems|length > 1 %}{{ lang('NB_ITEMS_IN_VAULT', user.vaultItems|length) }}{% else %}{{ lang('ONE_ITEM_IN_VAULT') }}{% endif %}</a></small>{% endif %}</h2><hr>{% endif %}
+      {% if user %}<h2 class="clearfix">{{ lang('SHOW_MONEY', user.money, user.money > 1 ? config.currencyName.plural : config.currencyName.singular) }}{% if user.vaultItems is not empty %}<br><small><a href="{{ url('vault') }}">{% if user.vaultItems|length > 1 %}{{ lang('NB_ITEMS_IN_VAULT', user.vaultItems|length) }}{% else %}{{ lang('ONE_ITEM_IN_VAULT') }}{% endif %}</a></small>{% endif %}</h2>
+        <a class="btn btn-primary" href="{{ url('buy') }}">{{ lang('PURCHASE_MONEY') }}</a>
+        <hr>{% endif %}
       {% if store.storePacks is not empty %}
       <div class="row">
       {% for pack in store.storePacks %}
@@ -27,7 +29,7 @@
               <h4 id="{{ 'label-' ~ pack.id}}" class="modal-title">{{ lang('ITEM_DESCRIPTION') }}</h4>
             </div>
             <div class="modal-body">
-              <img src="{{ pack.image }}" class="img-responsive modal-image" alt="{{ pack.title }}">
+              <img src="{{ pack.image }}" class="center-block img-responsive modal-image" alt="{{ pack.title }}">
               <h3>{{pack.name}}</h3>
               {{ pack.description|raw }}
               {% if user is not empty %}

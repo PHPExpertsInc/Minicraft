@@ -10,7 +10,7 @@ if (!empty($action)) {
       if (empty($_POST)) {
         die($twig->render('admin/edit_rank.twig', array(
           'rank' => $rank,
-          'page_title' => $translator->getTranslation($config->getLang(), 'EDIT_RANK'),
+          'pageTitle' => $translator->getTranslation($config->getLang(), 'EDIT_RANK'),
           'user' => $user,
           'config' => $config,
           'flash' => $flash
@@ -26,9 +26,9 @@ if (!empty($action)) {
             $name
           ));
           if ($success) {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_RANK_NAME'), 'success');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_RANK_NAME'), 'success');
           } else {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_RANK_NAME'), 'warning');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_RANK_NAME'), 'warning');
           }
         }
         
@@ -38,9 +38,9 @@ if (!empty($action)) {
             $force
           ));
           if ($success) {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_RANK_FORCE'), 'success');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_RANK_FORCE'), 'success');
           } else {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_RANK_FORCE'), 'warning');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_RANK_FORCE'), 'warning');
           }
         }
         
@@ -53,7 +53,7 @@ if (!empty($action)) {
   } elseif (preg_match('#^add$#', $action)) {
     if (empty($_POST)) {      
       die($twig->render('admin/add_rank.twig', array(
-        'page_title' => $translator->getTranslation($config->getLang(), 'ADD_RANK'),
+        'pageTitle' => $translator->getTranslation($config->getLang(), 'ADD_RANK'),
         'user' => $user,
         'config' => $config,
         'flash' => $flash
@@ -106,7 +106,7 @@ if (!empty($action)) {
   }
   die($twig->render('admin/ranks.twig', array(
     'ranks' => $ranks,
-    'page_title' => $translator->getTranslation($config->getLang(), 'MANAGE_RANKS'),
+    'pageTitle' => $translator->getTranslation($config->getLang(), 'MANAGE_RANKS'),
     'user' => $user,
     'config' => $config,
     'flash' => $flash

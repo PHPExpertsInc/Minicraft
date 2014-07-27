@@ -1,7 +1,7 @@
 <?php
 
 class Email {
-  public static function getBackgroundUrl() {
+  public static function getBackgroundUrl($router) {
     $background_url = 'http:' . URL . '/' . $router->getController('assets')->getUrl();
     $background_url = preg_replace('#%m1%#', 'img/email_bg.png', $background_url);
     

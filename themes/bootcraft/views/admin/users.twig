@@ -1,0 +1,120 @@
+{% extends 'includes/global_layout.twig' %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
+        <li class="active">{{ lang('ADMIN_USERS') }}</li>
+      </ol>
+      {% include 'includes/flash.twig' %}
+      {% if users is not empty %}
+      <table class="table table-hover table-striped table-bordered">
+        <tr>
+          <th>{{ lang('USERNAME') }}</th>
+          <th>{{ lang('RANK') }}</th>
+          <th>{{ config.currencyName.plural|capitalize }}</th>
+          <th>{{ lang('EDIT') }}</th>
+          <th>{{ lang('CONFIRM_EMAIL') }}</th>
+          <th>{{ lang('RESET_PASSWORD') }}</th>
+          <th>{{ lang('BAN') }}</th>
+        </tr>
+        {% for player in users %}
+        <tr>
+          <td><a href="{{ url('player', player.username) }}">{{ player.username }}</a></td>
+          <td>{{ player.rank.name }}</td>
+          <td>{{ player.money }}</td>
+          <td><a href="{{ url('action', 'users', 'edit-user') ~ '-' ~ player.id }}" class="btn btn-default">{{ lang('EDIT') }}</a></td>
+          <td><button class="btn btn-default" data-toggle="modal" data-target="{{ '#modal-confirm-' ~ player.id }}">{{ lang('CONFIRM_EMAIL') }}</button></td>
+          <td><button class="btn btn-default" data-toggle="modal" data-target="{{ '#modal-reset-' ~ player.id }}">{{ lang('RESET_PASSWORD') }}</button></td>
+          <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-ban-' ~ player.id }}">{{ lang('BAN') }}</button></td>
+        </tr>
+        {% endfor %}
+      </table>
+      {% else %}
+      <p>{{ lang('NO_USER') }}</p>
+      {% endif %}
+      {% for player in users %}
+      <div id="{{ 'modal-confirm-' ~ player.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-confirm-' ~ player.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+              <h4 id="{{ 'label-confirm-' ~ player.id }}" class="modal-title">{{ lang('CONFIRM_EMAIL') }}</h4>
+            </div>
+            <div class="modal-body">{{ lang('CONFIRM_EMAIL_CONFIRMATION') }}</div>
+            <div class="modal-footer">
+              <form method="post" action="{{ currentUri }}" class="form-inline">
+                <input type="hidden" name="confirm-email" value="{{ player.id }}">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
+                <button type="submit" class="btn btn-primary">{{ lang('BTN_CONFIRM') }}</button>
+              </form>
+            </div> <!-- .modal-footer -->
+          </div> <!-- .modal-content -->
+        </div> <!-- .modal-dialog -->
+      </div>
+      <div id="{{ 'modal-reset-' ~ player.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-reset-' ~ player.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+              <h4 id="{{ 'label-reset-' ~ player.id }}" class="modal-title">{{ lang('RESET_PASSWORD') }}</h4>
+            </div>
+            <div class="modal-body">{{ lang('RESET_PASSWORD_CONFIRMATION') }}</div>
+            <div class="modal-footer">
+              <form method="post" action="{{ currentUri }}" class="form-inline">
+                <input type="hidden" name="reset-password" value="{{ player.id }}">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
+                <button type="submit" class="btn btn-primary">{{ lang('BTN_RESET') }}</button>
+              </form>
+            </div> <!-- .modal-footer -->
+          </div> <!-- .modal-content -->
+        </div> <!-- .modal-dialog -->
+      </div>
+      <div id="{{ 'modal-ban-' ~ player.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-ban-' ~ player.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+              <h4 id="{{ 'label-ban-' ~ player.id }}" class="modal-title">{{ lang('BAN_USER') }}</h4>
+            </div>
+            <form method="post" action="{{ currentUri }}">
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="duration">{{ lang('DURATION') }}</label>
+                  <input id="duration" class="form-control" type="number" name="ban-user[duration]">
+                </div>
+                <div class="form-group">
+                  <label for="duration-type">{{ lang('DURATION_TYPE') }}</label>
+                  <select id="duration-type" class="form-control" name="ban-user[duration-type]">
+                    <option value="60">Minutes</option>
+                    <option value="3600">Hours</option>
+                    <option value="86400" selected>Days</option>
+                    <option value="2629743">Months</option>
+                    <option value="31556926">Years</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="ban-reason">{{ lang('BAN_REASON') }}</label>
+                  <input id="ban-reason" class="form-control" type="text">
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" name="ban-user[ban-in-game]" checked> {{ lang('BAN_IN_GAME_TOO') }}
+                  </label>
+                </div>
+                <input type="hidden" name="ban-user[id]" value="{{ player.id }}">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{ lang('BTN_CLOSE') }}</button>
+                <button type="submit" class="btn btn-danger">{{ lang('BTN_BAN') }}</button>
+              </div> <!-- .modal-footer -->
+            </form>
+          </div> <!-- .modal-content -->
+        </div> <!-- .modal-dialog -->
+      </div>
+      {% endfor %}
+    </div> <!-- .col-md-12 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}

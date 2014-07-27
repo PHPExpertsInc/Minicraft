@@ -15,7 +15,7 @@ if (!empty($email) and !empty($token)) {
   } elseif (is_numeric($infos['date_confirmed']) and $infos['date_confirmed'] != 0) {
     // Already confirmed
     $flash->addFlash($translator->getTranslation($config->getLang(), 'EMAIL_ALREADY_CONFIRMED'), 'warning');
-    Helpers::redirect($router, 'home');
+    Helpers::redirect($router, 'index');
     die();
   } elseif ($token == $infos['token']) {
     Database::confirmEmail($email, $token);
@@ -29,5 +29,5 @@ if (!empty($email) and !empty($token)) {
 }
 /* ============================== */
 
-Helpers::redirect($router, 'home');
+Helpers::redirect($router, 'index');
 die();

@@ -2,7 +2,7 @@
 
 /* ============================== */
 if (is_object($user)) {
-  Helpers::redirect($router, 'home');
+  Helpers::redirect($router, 'index');
   die();
 }
 /* ============================== */
@@ -57,7 +57,7 @@ if (empty($user_infos)) {
   
   $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_RESET'), 'success');
   
-  Helpers::redirect($router, 'home');
+  Helpers::redirect($router, 'index');
   die();
 }
 /* ============================== */

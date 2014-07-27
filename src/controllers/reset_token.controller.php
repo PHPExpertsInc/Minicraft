@@ -2,7 +2,7 @@
 
 /* ============================== */
 if (is_object($user)) {
-  Helpers::redirect($router, 'home');
+  Helpers::redirect($router, 'index');
   die();
 }
 /* ============================== */
@@ -45,18 +45,18 @@ if (!empty($token) and (empty($password1) or empty($password2))) {
   } elseif ($password1 != $password2) {
     $flash->addFlash($translator->getTranslation($config->getLang(), 'PASSWORDS_DO_NOT_MATCH'), 'warning');
   } else {
-    $result = $ticraft->call('changePasswordFromToken', array(
+    $result = $ticraft->call('updatePasswordFromToken', array(
       $token,
       $password1
     ));
     if ($result) {
-      $flash->addFlash($translator->getTranslation($config->getLang(), 'PASSWORD_CHANGED'), 'success');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'PASSWORD_updateD'), 'success');
     } else {
-      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAILED_CHANGE_PASSWORD'), 'warning');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAILED_update_PASSWORD'), 'warning');
     }
     Security::actionSucceeded('reset');
     
-    Helpers::redirect($router, 'home');
+    Helpers::redirect($router, 'index');
     die();
   }
   /* ============================== */

@@ -35,7 +35,7 @@ die($twig->render('player/player.twig', array(
   'player' => $player,
   'playerInfos' => $player_infos,
   'manager' => $manager,
-  'pagePitle' => $title,
+  'pageTitle' => $title,
   'user' => $user,
   'config' => $config,
   'flash' => new Flash

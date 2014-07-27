@@ -2,7 +2,7 @@
 
 /* ============================== */
 if (is_object($user)) {
-  Helpers::redirect($router, 'home');
+  Helpers::redirect($router, 'index');
   die();
 }
 /* ============================== */
@@ -144,7 +144,7 @@ if (empty($_POST)) {
           header('Location: ' . $array['from']);
           die();
         } else {
-          Helpers::redirect($router, 'home');
+          Helpers::redirect($router, 'index');
           die();
         }
       } else {

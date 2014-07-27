@@ -2,15 +2,15 @@
 
 $flash = new Flash;
 
-if (!empty($action)) {
-  $categories     = array();
-  $all_categories = $ticraft->call('getAllArticleCategories');
-  if (!empty($all_categories)) {
-    foreach ($all_categories as $key => $value) {
-      array_push($categories, new ArticleCategory($value));
-    }
+$categories     = array();
+$all_categories = $ticraft->call('getAllArticleCategories');
+if (!empty($all_categories)) {
+  foreach ($all_categories as $key => $value) {
+    array_push($categories, new ArticleCategory($value));
   }
-  
+}
+
+if (!empty($action)) {
   if (preg_match('#^edit-article-(\d+)#', $action, $matches)) {
     $infos = $ticraft->call('getArticleInfosFromId', $matches[1]);
     if (!empty($infos)) {
@@ -60,7 +60,7 @@ if (!empty($action)) {
         }
         
         if (!empty($category) and $category != $article->getCategory()->getId()) {
-          $success = $ticraft->call('updateArticleCategory', array(
+          $success = $ticraft->call('changeArticleCategory', array(
             $article->getId(),
             $category
           ));
@@ -72,6 +72,43 @@ if (!empty($action)) {
           }
         }
         
+        Helpers::redirect($router, 'manage', array(
+          'blog'
+        ));
+        die();
+      }
+    }
+  } elseif (preg_match('#^edit-article-category-(\d+)#', $action, $matches)) {
+    $infos = $ticraft->call('getArticleCategoryInfosFromId', $matches[1]);
+    if (!empty($infos)) {
+      $category = new ArticleCategory($infos);
+    }
+    
+    if (is_object($category)) {
+      if (empty($_POST)) {
+        die($blog_twig->render('edit_article_category.twig', array(
+          'category' => $category,
+          'pageTitle' => $translator->getTranslation($config->getLang(), 'EDIT_ARTICLE_CATEGORY'),
+          'user' => $user,
+          'config' => $config,
+          'flash' => $flash
+        )));
+      } else {
+        $name = trim($_POST['name']);
+        
+        if (!empty($name) and $name != $category->getName()) {
+          $success = $ticraft->call('updateArticleCategoryName', array(
+            $category->getId(),
+            $name
+          ));
+          
+          if ($success) {
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_ARTICLE_CATEGORY_NAME'), 'success');
+          } else {
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_ARTICLE_CATEGORY_NAME'), 'warning');
+          }
+        }
+                
         Helpers::redirect($router, 'manage', array(
           'blog'
         ));
@@ -122,13 +159,13 @@ if (!empty($action)) {
       }
       
       if (!empty($custom_cat)) {
-        $result   = $ticraft->call('addArticleCategory', array(
+        $result   = $ticraft->call('createArticleCategory', array(
           $custom_cat
         ));
         $category = $result ? $result : 1;
       }
       
-      $success = $ticraft->call('addArticle', array(
+      $success = $ticraft->call('createArticle', array(
         $image_url,
         $title,
         $body,
@@ -137,9 +174,37 @@ if (!empty($action)) {
       ));
       
       if ($success) {
-        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_ADD_ARTICLE'), 'success');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CREATE_ARTICLE'), 'success');
       } else {
-        $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_ADD_ARTICLE'), 'warning');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CREATE_ARTICLE'), 'warning');
+      }
+      
+      Helpers::redirect($router, 'manage', array(
+        'blog'
+      ));
+      die();
+    }
+  }elseif (preg_match('#^create-article-category$#', $action)) {
+    if (empty($_POST)) {
+      die($blog_twig->render('create_article_category.twig', array(
+        'pageTitle' => $translator->getTranslation($config->getLang(), 'CREATE_ARTICLE_CATEGORY'),
+        'user' => $user,
+        'config' => $config,
+        'flash' => $flash
+      )));
+    } else {
+      $name = trim($_POST['name']);
+            
+      if (!empty($name)) {
+        $success = $ticraft->call('createArticleCategory', array(
+          $name,
+        ));
+      }
+      
+      if ($success) {
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CREATE_ARTICLE_CATEGORY'), 'success');
+      } else {
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CREATE_ARTICLE_CATEGORY'), 'warning');
       }
       
       Helpers::redirect($router, 'manage', array(
@@ -167,9 +232,30 @@ if (!empty($action)) {
     'blog'
   ));
   die();
+} elseif (!empty($_POST['remove-article-category'])) {
+  if (count($categories) > 1) {
+    $id      = intval($_POST['remove-article-category']);
+    $success = $ticraft->call('removeArticleCategory', array(
+      $id
+    ));
+    
+    if ($success) {
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_REMOVE_ARTICLE_CATEGORY'), 'success');
+    } else {
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_REMOVE_ARTICLE_CATEGORY'), 'warning');
+    }
+  } else {
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'CANT_REMOVE_UNIQUE_ARTICLE_CATEGORY'), 'warning');
+  }
+  
+  Helpers::redirect($router, 'manage', array(
+    'blog'
+  ));
+  die();
 } else {
   die($blog_twig->render('admin.twig', array(
     'blog' => new Blog($ticraft->call('getAllArticlesAndAllArticleCategories')),
+    'categories' => $categories,
     'pageTitle' => $translator->getTranslation($config->getLang(), 'ADMIN_BLOG'),
     'user' => $user,
     'config' => $config,

@@ -5,44 +5,44 @@
   <div class="row">
     <div class="col-md-12">
       <ol class="breadcrumb">
-        <li><a href="{{ url('store') }}">{{ lang('STORE') }}</a></li>
-        <li class="active">{{ lang('VAULT') }}</li>
+        <li><a href="{{ url('store')  }}">{{ lang('STORE')  }}</a></li>
+        <li class="active">{{ lang('VAULT')  }}</li>
       </ol>
-      <div class="alert alert-warning">{{ lang('ALERT_ENOUGH_SPACES') }}</div>
+      <div class="alert alert-warning">{{ lang('ALERT_ENOUGH_SPACES')  }}</div>
       {% if user.vaultItems is not empty %}
       <div class="row">
       {% for item in user.vaultItems %}
       <div class="col-sm-6 col-md-3">
         <div class="thumbnail item">
-          <img src="{{ item.icon }}" class="img-responsive blur-fix" width="128" alt="{{ item.minecraftName }}">
+          <img src="{{ item.icon  }}" class="img-responsive blur-fix" width="128" alt="{{ item.minecraftName  }}">
           <div class="caption">
-            <h3 class="text-center">{{item.minecraftName}}</h3>
+            <h3 class="text-center">{{ item.quantity }}&nbsp;{{ item.minecraftName }}</h3>
             <hr>
-            <p><button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-{{item.id}}">{{ lang('BTN_SEND_IN_GAME') }}</button></p>
+            <p><button class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-{{ item.id }}">{{ lang('BTN_SEND_IN_GAME')  }}</button></p>
           </div>
         </div>
       </div>
-      <div id="{{ 'modal-' ~ item.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-' ~ item.id}}" aria-hidden="true">
+      <div id="{{ 'modal-' ~ item.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-' ~ item.id }}" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
-              <h4 id="{{ 'label-' ~ item.id}}" class="modal-title">{{ lang('ITEM_SEND') }}</h4>
+              <h4 id="{{ 'label-' ~ item.id }}" class="modal-title">{{ lang('ITEM_SEND')  }}</h4>
             </div>
             <div class="modal-body text-center">
-              <img src="{{ item.icon }}" class="img-responsive img-center blur-fix" width="128" alt="{{ item.minecraftName }}">
-              <h3>{{item.minecraftName}}</h3>
-              <h4 class="text-danger">{{ lang('HAVE_YOU_ENOUGH_SPACES') }}</h4>
+              <img src="{{ item.icon  }}" class="img-responsive img-center blur-fix" width="128" alt="{{ item.minecraftName  }}">
+              <h3>{{ item.minecraftName }}</h3>
+              <h4 class="text-danger">{{ lang('HAVE_YOU_ENOUGH_SPACES')  }}</h4>
             </div>
             <div class="modal-footer">
-              <form method="post" action="{{ currentUri }}" class="form-inline">
-                <input type="hidden" name="send-item" value="{{ item.id }}">
+              <form method="post" action="{{ currentUri  }}" class="form-inline">
+                <input type="hidden" name="send-item" value="{{ item.id  }}">
                 <div class="row">
                   <div class="col-md-6">
-                    <button type="button" class="btn btn-block btn-default" data-dismiss="modal">{{ lang('BTN_NO') }}</button>
+                    <button type="button" class="btn btn-block btn-default" data-dismiss="modal">{{ lang('BTN_NO')  }}</button>
                   </div>
                   <div class="col-md-6">
-                    <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_YES') }}</button>
+                    <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_YES')  }}</button>
                   </div>
                 </div>
               </form>
@@ -53,7 +53,7 @@
       {% endfor %}
       </div>
       {% else %}
-      {{ lang('NO_ITEM') }}
+      {{ lang('NO_ITEM')  }}
       {% endif %}
     </div> <!-- .col-md-12 -->
   </div> <!-- .row -->

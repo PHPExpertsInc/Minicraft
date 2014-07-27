@@ -193,6 +193,19 @@ class Server {
     }
   }
   
+  public function banPlayer($username, $reason = '') {
+    $json = $this->jsonapi->call('players.name.ban', array(
+      $username,
+      $reason
+    ));
+    if ($json[0]['result'] == 'success') {
+      return $json[0]['success'];
+    } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
+      return false;
+    }
+  }
+  
   public function getId() {
     return $this->id;
   }

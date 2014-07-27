@@ -108,6 +108,24 @@ if (!empty($_POST['username']) and !empty($_POST['key'])) {
        color: #a5acb5 !important;
        opacity: 1 !important;
     }
+    
+    h2 {
+      text-align: center;
+    }
+    
+    a {
+      padding-bottom: 3px;
+      text-align: center;
+      color: #556270;
+    }
+    
+    a:hover,
+    a:focus,
+    a:active {
+      text-decoration: none;
+      color: #556270;
+      box-shadow: 0 1px;
+    }
   </style>
 </head>
 <body>
@@ -125,6 +143,7 @@ if (!empty($_POST['username']) and !empty($_POST['key'])) {
             <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fa fa-check fa-3x"></i></button>
           </form>
         </div>
+        <h2><a href="http://ticraft.fr">Register</a></h2>
       </div>
     </div>
   </div>

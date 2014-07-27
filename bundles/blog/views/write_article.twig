@@ -8,7 +8,7 @@
 <div class="container">
   {% include 'includes/flash.twig' %}
   <div class="row">
-    <div class="col-md-offset-3 col-md-6">
+    <div class="col-md-12">
       <ol class="breadcrumb">
         <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
         <li><a href="{{ url('manage', 'blog') }}">{{ lang('ADMIN_BLOG') }}</a></li>
@@ -50,7 +50,7 @@
           <button type="submit" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_PUBLISH') }}</button>
         </div>
       </form>
-    </div>  <!-- .col-md-6 -->
+    </div>  <!-- .col-md-12 -->
   </div> <!-- .row -->
 </div> <!-- .container -->
 {% endblock %}

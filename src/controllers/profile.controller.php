@@ -2,7 +2,7 @@
 
 /* ============================== */
 if (!is_object($user)) {
-  Helpers::redirect($router, 'home');
+  Helpers::redirect($router, 'index');
   die();
 }
 /* ============================== */
@@ -30,7 +30,7 @@ $flash         = new Flash;
 /* ============================== */
 if (!empty($username) and $username != $user->getUsername()) {
   if (!$user->getConfirmed()) {
-    $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'CONFIRM__EMAIL_BEFORE_CHANGE_USERNAME'));
+    $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'CONFIRM__EMAIL_BEFORE_update_USERNAME'));
     $error_handler->addError('username');
   } elseif (!Helpers::usernameIsValid($username)) {
     $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'INVALID_USERNAME'), 'username');
@@ -47,16 +47,16 @@ if (!empty($username) and $username != $user->getUsername()) {
     $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'USERNAME_EXISTS'), 'username');
     $error_handler->addError('username');
   } else {
-    $success = $ticraft->call('changeUsername', array(
+    $success = $ticraft->call('updateUsername', array(
       $user->getId(),
       $user->getUsername(),
       $username
     ));
     if ($success) {
       $user->setUsername($username);
-      $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_USERNAME'), 'success');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_USERNAME'), 'success');
     } else {
-      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_USERNAME'), 'warning');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_USERNAME'), 'warning');
     }
   }
 }
@@ -71,16 +71,16 @@ if (!empty($raw_password)) {
     $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'PASSWORD_TOO_LONG'), 'password');
     $error_handler->addError('password');
   } else {
-    $result = $ticraft->call('changePassword', array(
+    $result = $ticraft->call('updatePassword', array(
       $user->getId(),
       $raw_password
     ));
     
     if (is_string($result)) {
       $user->setPassword($result);
-      $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_PASSWORD'), 'success');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_PASSWORD'), 'success');
     } else {
-      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_PASSWORD'), 'warning');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_PASSWORD'), 'warning');
     }
   }
 }
@@ -97,7 +97,7 @@ if (!empty($email) and $email != $user->getEmail()) {
     $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'EMAIL_EXISTS'), 'email');
     $error_handler->addError('email');
   } else {
-    $success = $ticraft->call('changeEmail', array(
+    $success = $ticraft->call('updateEmail', array(
       $user->getId(),
       $user->getEmail(),
       $email,
@@ -107,7 +107,7 @@ if (!empty($email) and $email != $user->getEmail()) {
     if ($success) {
       if ($result === true) { // Email already confirmed
         $user->setEmail($email);
-        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_EMAIL'), 'success');
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_EMAIL'), 'success');
       } else {
         Email::sendConfirmationEmail($email, $user->getUsername(), $result);
         $flash->addFlash($translator->getTranslation($config->getLang(), 'EMAIL_SENT_CONFIRM_EMAIL', array(
@@ -115,7 +115,7 @@ if (!empty($email) and $email != $user->getEmail()) {
         )), 'info');
       }
     } else {
-      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_EMAIL'), 'warning');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_EMAIL'), 'warning');
     }
   }
 }
@@ -127,61 +127,61 @@ if (!empty($genre) and $genre != $user->getGenre()) {
     $error_handler->addErrorMessage($translator->getTranslation($config->getLang(), 'GENRE_INCORRECT'), 'genre');
     $error_handler->addError('genre');
   } else {
-    $success = $ticraft->call('changeGenre', array(
+    $success = $ticraft->call('updateGenre', array(
       $user->getId(),
       $genre
     ));
     if ($success) {
       $user->setGenre($genre);
-      $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_GENRE'), 'success');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_GENRE'), 'success');
     } else {
-      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_GENRE'), 'warning');
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_GENRE'), 'warning');
     }
   }
 }
 /* ============================== */
 
 /* ============================== */
-if (!empty($birthdate) and $birthdate != $user->getBirthdate() and is_numeric($birthdate)) {
-  $success = $ticraft->call('changeBirthdate', array(
+if ($birthdate != $user->getBirthdate() and is_numeric($birthdate)) {
+  $success = $ticraft->call('updateBirthdate', array(
     $user->getId(),
     $birthdate
   ));
   if ($success) {
     $user->setBirthdate($birthdate);
-    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_BIRTHDATE'), 'success');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_BIRTHDATE'), 'success');
   } else {
-    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_BIRTHDATE'), 'warning');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_BIRTHDATE'), 'warning');
   }
 }
 /* ============================== */
 
 /* ============================== */
 if (!empty($country) and $country != $user->getCountry()) {
-  $success = $ticraft->call('changeCountry', array(
+  $success = $ticraft->call('updateCountry', array(
     $user->getId(),
     $country
   ));
   if ($success) {
     $user->setCountry($country);
-    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_COUNTRY'), 'success');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_COUNTRY'), 'success');
   } else {
-    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_COUNTRY'), 'warning');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_COUNTRY'), 'warning');
   }
 }
 /* ============================== */
 
 /* ============================== */
-if (!empty($city) and $city != $user->getCity()) {
-  $success = $ticraft->call('changeCity', array(
+if ($city != $user->getCity()) {
+  $success = $ticraft->call('updateCity', array(
     $user->getId(),
     $city
   ));
   if ($success) {
     $user->setCity($city);
-    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_CITY'), 'success');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_CITY'), 'success');
   } else {
-    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_CITY'), 'warning');
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_CITY'), 'warning');
   }
 }
 /* ============================== */
@@ -196,7 +196,7 @@ if (!empty($_POST)) {
   die($twig->render('profile/profile.twig', array(
     'countries' => $countries,
     'handler' => $error_handler,
-    'pagePitle' => $translator->getTranslation($config->getLang(), 'PROFILE'),
+    'pageTitle' => $translator->getTranslation($config->getLang(), 'PROFILE'),
     'user' => $user,
     'config' => $config,
     'flash' => $flash

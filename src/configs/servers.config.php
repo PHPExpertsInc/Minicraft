@@ -17,7 +17,7 @@ if (!empty($action)) {
         die($twig->render('admin/edit_server.twig', array(
           'server' => $server,
           'types' => $types,
-          'page_title' => $translator->getTranslation($config->getLang(), 'EDIT_SERVER'),
+          'pageTitle' => $translator->getTranslation($config->getLang(), 'EDIT_SERVER'),
           'user' => $user,
           'config' => $config,
           'flash' => $flash
@@ -38,9 +38,9 @@ if (!empty($action)) {
             $name
           ));
           if ($success) {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_SERVER_NAME'), 'success');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_SERVER_NAME'), 'success');
           } else {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_SERVER_NAME'), 'warning');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_SERVER_NAME'), 'warning');
           }
         }
         
@@ -50,9 +50,9 @@ if (!empty($action)) {
             $ip
           ));
           if ($success) {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_SERVER_IP'), 'success');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_SERVER_IP'), 'success');
           } else {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_SERVER_IP'), 'warning');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_SERVER_IP'), 'warning');
           }
         }
         
@@ -62,9 +62,9 @@ if (!empty($action)) {
             $description
           ));
           if ($success) {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_SERVER_DESCRIPTION'), 'success');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_SERVER_DESCRIPTION'), 'success');
           } else {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_SERVER_DESCRIPTION'), 'warning');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_SERVER_DESCRIPTION'), 'warning');
           }
         }
         
@@ -74,9 +74,9 @@ if (!empty($action)) {
             $type
           ));
           if ($success) {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_SERVER_TYPE'), 'success');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_SERVER_TYPE'), 'success');
           } else {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_SERVER_TYPE'), 'warning');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_SERVER_TYPE'), 'warning');
           }
         }
         
@@ -86,9 +86,9 @@ if (!empty($action)) {
             $jsonapi_port
           ));
           if ($success) {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_JSONAPI_PORT'), 'success');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_JSONAPI_PORT'), 'success');
           } else {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_JSONAPI_PORT'), 'warning');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_JSONAPI_PORT'), 'warning');
           }
         }
         
@@ -98,9 +98,9 @@ if (!empty($action)) {
             $jsonapi_username
           ));
           if ($success) {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_JSONAPI_USERNAME'), 'success');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_JSONAPI_USERNAME'), 'success');
           } else {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_JSONAPI_USERNAME'), 'warning');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_JSONAPI_USERNAME'), 'warning');
           }
         }
         
@@ -110,9 +110,9 @@ if (!empty($action)) {
             $jsonapi_password
           ));
           if ($success) {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_JSONAPI_PASSWORD'), 'success');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_UPDATE_JSONAPI_PASSWORD'), 'success');
           } else {
-            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_JSONAPI_PASSWORD'), 'warning');
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_UPDATE_JSONAPI_PASSWORD'), 'warning');
           }
         }
         
@@ -134,7 +134,7 @@ if (!empty($action)) {
       
       die($twig->render('admin/add_server.twig', array(
         'types' => $types,
-        'page_title' => $translator->getTranslation($config->getLang(), 'ADD_SERVER'),
+        'pageTitle' => $translator->getTranslation($config->getLang(), 'ADD_SERVER'),
         'user' => $user,
         'config' => $config,
         'flash' => $flash
@@ -190,7 +190,7 @@ if (!empty($action)) {
 } else {
   die($twig->render('admin/servers.twig', array(
     'manager' => new ServerManager($ticraft->call('getAllServers')),
-    'page_title' => $translator->getTranslation($config->getLang(), 'MANAGE_SERVERS'),
+    'pageTitle' => $translator->getTranslation($config->getLang(), 'MANAGE_SERVERS'),
     'user' => $user,
     'config' => $config,
     'flash' => $flash
