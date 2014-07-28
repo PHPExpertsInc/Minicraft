@@ -1,11 +1,15 @@
 {% extends 'includes/global_layout.twig' %}
+{% block head %}
+{{ parent() }}
+<link rel="icon" type="image/png" href="//minotar.net/avatar/{% if player.username is not empty %}{{player.username}}{% elseif playerInfos.name is not empty %}{{playerInfos.name}}{% else %}char{% endif %}/32">
+{% endblock %}
 {% block content %}
 <div class="container">
   <div class="row">
     <div class="col-md-offset-3 col-md-6">
       {% include 'includes/flash.twig' %}    
       <div class="text-center profile">
-        <img src="https://minotar.net/avatar/{% if player.username is not empty %}{{player.username}}{% elseif playerInfos.name is not empty %}{{playerInfos.name}}{% else %}char{% endif %}/32" alt="{% if player.username is not empty %}{{player.username}}{% elseif playerInfos.name is not empty %}{{playerInfos.name}}{% else %}char{% endif %}" class="blur-fix" width="256">
+        <img src="//minotar.net/avatar/{% if player.username is not empty %}{{player.username}}{% elseif playerInfos.name is not empty %}{{playerInfos.name}}{% else %}char{% endif %}/32" alt="{% if player.username is not empty %}{{player.username}}{% elseif playerInfos.name is not empty %}{{playerInfos.name}}{% else %}char{% endif %}" class="blur-fix" width="256">
         <h1 class="fancy-username">{% if player.username is not empty %}{{player.username}}{% else %}{{ lang('UNKOWN_PLAYER') }}{% endif %}</h1>
         <hr>
         {% if player %}

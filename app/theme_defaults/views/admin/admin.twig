@@ -34,14 +34,20 @@
       <p><a href="{{ url('action', 'servers', 'add') }}" class="btn btn-block btn-lg btn-primary">{{ lang('ADD_SERVER') }}</a></p>
       {% endif %}
       <ul class="nav nav-pills nav-justified">
-        <li><a href="{{ url('manage', 'blog') }}">{{ lang('MANAGE_BLOG') }}</a></li>
-        <li><a href="{{ url('manage', 'store') }}">{{ lang('MANAGE_STORE') }}</a></li>
         <li><a href="{{ url('manage', 'users') }}">{{ lang('MANAGE_USERS') }}</a></li>
         <li><a href="{{ url('manage', 'ranks') }}">{{ lang('MANAGE_RANKS') }}</a></li>
         <li><a href="{{ url('manage', 'theme') }}">{{ lang('MANAGE_THEME') }}</a></li>
         <li><a href="{{ url('manage', 'servers') }}">{{ lang('MANAGE_SERVERS') }}</a></li>
         <li><a href="{{ url('manage', 'votes') }}">{{ lang('MANAGE_VOTES') }}</a></li>
       </ul>
+      <hr>
+      {% if config.bundles is not empty %}
+      <ul class="nav nav-pills nav-justified">
+        {% for bundle in config.bundles %}
+        <li><a href="{{ url('manage', bundle) }}">{{ lang('MANAGE_BUNDLE', bundle) }}</a></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
     </div>  <!-- /.col-md-12 -->
   </div> <!-- /.row -->
 </div> <!-- /.container -->

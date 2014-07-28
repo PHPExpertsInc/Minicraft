@@ -32,6 +32,7 @@
             <div class="modal-body text-center">
               <img src="{{ item.icon  }}" class="img-responsive img-center blur-fix" width="128" alt="{{ item.minecraftName  }}">
               <h3>{{ item.minecraftName }}</h3>
+              <p>{{ lang('ITEM_SENT_TO', user.minecraftUsername) }}</p>
               <h4 class="text-danger">{{ lang('HAVE_YOU_ENOUGH_SPACES')  }}</h4>
             </div>
             <div class="modal-footer">

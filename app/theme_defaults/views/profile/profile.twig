@@ -1,19 +1,24 @@
 {% extends 'includes/global_layout.twig' %}
+{% block head %}
+{{ parent() }}
+<link rel="icon" type="image/png" href="//minotar.net/avatar/{{ user.minecraftUsername }}/32">
+{% endblock %}
 {% block stylesheets %}
 {{ parent() }}
 <link rel="stylesheet" href="{{ url('assets', 'js/select2/select2.css') }}">
 <link rel="stylesheet" href="{{ url('assets', 'js/select2/select2-bootstrap.css') }}">
+<link rel="stylesheet" href="{{ url('assets', 'css/datepicker.css') }}">
 {% endblock %}
 {% block content %}
 <div class="container">
   <div class="row">
     <div class="col-md-offset-3 col-md-6">  
-      {% include 'includes/flash.twig' %}  
       <div class="text-center profile-header">
         <img src="//minotar.net/avatar/{{ user.minecraftUsername }}/32" width="256" class="blur-fix" alt="{{ user.minecraftUsername }}" />
         <h1 class="fancy-username">{{ user.username }}</h1>
         <hr>
       </div>
+      {% include 'includes/flash.twig' %}  
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{ lang('USER_INFOS') }}</h3>
@@ -99,6 +104,7 @@
               <input id="city" class="form-control" type="text" name="profile[city]" value="{{ user.city }}">
             </div>
             <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+            {% if user.confirmed is empty %}<p><a href="{{ url('resend') }}">{{ lang('RESEND_CONFIRMATION_EMAIL') }}</a></p>{% endif %}
           </form>
         </div> <!-- .panel-body -->
       </div> <!-- .panel -->
@@ -110,7 +116,10 @@
 {{ parent() }}
 <script src="{{ url('assets', 'js/select2/select2.js') }}"></script>
 <script src="{{ url('assets', 'js/select2/select2_locale_' ~ config.language ~ '.js') }}"></script>
+<script src="{{ url('assets', 'js/bootstrap-datepicker.js') }}"></script>
 <script>function format(e){if(!e.id)return e.text;return'<img class="flag" src="//cdn.ticraft.fr/flag?cc='+e.id.toLowerCase()+'&retina" height="17">'+e.text}$("#country").select2({width:"resolve",formatResult:format,formatSelection:format,escapeMarkup:function(e){return e}})</script>
 <script>$(document).ready(function() { $("#genre").select2(); });</script>
-<script>$(function(){$("#birthdate").datepicker({defaultDate:"-14Y",maxDate:"-5Y",dateFormat:"dd-mm-yy",changeMonth:true,changeYear:true})})</script>
+<script>
+  $('input[type=date]').datepicker({ viewMode: 'years' });
+</script>
 {% endblock %}

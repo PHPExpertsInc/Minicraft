@@ -49,8 +49,8 @@
 {% endif %}
 <div class="container">
   <div class="row">
+    {% include 'includes/flash.twig' %}
     <div class="col-md-4 col-md-push-8">
-      {% include 'includes/flash.twig' %}
       <section id="status" class="servers">
         <h2>{{ lang('SERVER_STATUS') }}</h2>
         <hr>
@@ -129,10 +129,11 @@
 <script>
 $(document).ready(function() {
   $("#slider").owlCarousel({
-    navigation : false,
-    slideSpeed : 300,
-    paginationSpeed : 400,
-    singleItem:true
+    navigation: false,
+    slideSpeed: 300,
+    paginationSpeed: 400,
+    autoPlay: true,
+    singleItem: true
   });
 });
 </script>

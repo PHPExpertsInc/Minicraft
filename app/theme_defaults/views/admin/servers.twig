@@ -2,7 +2,11 @@
 {% block content %}
 <div class="container">
   <div class="row">
-    <div class="col-md-12">  
+    <div class="col-md-12">
+      <ol class="breadcrumb">
+        <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
+        <li class="active">{{ lang('ADMIN_SERVERS') }}</li>
+      </ol>
       {% include 'includes/flash.twig' %}  
       {% if manager is not empty %}
       {% for server in manager.servers %}

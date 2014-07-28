@@ -249,17 +249,17 @@ class Config {
   public function getCarouselItems() {
     return array(
       array(
-        'img' => '//placehold.it/1920x600',
+        'img' => '//placehold.it/1920x500',
         'headline' => 'Titre du slide 1',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
       ),
       array(
-        'img' => '//placehold.it/1920x600',
+        'img' => '//placehold.it/1920x500',
         'headline' => 'Titre du slide 2',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
       ),
       array(
-        'img' => '//placehold.it/1920x600',
+        'img' => '//placehold.it/1920x500',
         'headline' => 'Titre du slide 3',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
         'button' => array(

@@ -82,14 +82,19 @@ if (!empty($action)) {
   }
 } elseif (!empty($_POST['remove-rank'])) {
   $id      = intval($_POST['remove-rank']);
-  $success = $ticraft->call('removerank', array(
-    $id
-  ));
   
-  if ($success) {
-    $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_REMOVE_RANK'), 'success');
+  if ($id == 2) {
+    $flash->addFlash($translator->getTranslation($config->getLang(), 'CANT_REMOVE_DEFAULT_RANK'), 'warning');
   } else {
-    $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_REMOVE_RANK'), 'warning');
+    $success = $ticraft->call('removerank', array(
+      $id
+    ));
+    
+    if ($success) {
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_REMOVE_RANK'), 'success');
+    } else {
+      $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_REMOVE_RANK'), 'warning');
+    }
   }
   
   Helpers::redirect($router, 'manage', array(
