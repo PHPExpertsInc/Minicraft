@@ -104,6 +104,7 @@
               <input id="city" class="form-control" type="text" name="profile[city]" value="{{ user.city }}">
             </div>
             <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+            {% if user.confirmed is empty %}<p><a href="{{ url('resend') }}">{{ lang('RESEND_CONFIRMATION_EMAIL') }}</a></p>{% endif %}
           </form>
         </div> <!-- .panel-body -->
       </div> <!-- .panel -->

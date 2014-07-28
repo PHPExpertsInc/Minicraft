@@ -94,14 +94,14 @@ $lang = array_merge($lang, array(
 $lang = array_merge($lang, array(
   'URL_ADMIN' => 'admin',
   'URL_MANAGE' => 'manage',
-  'URL_SIGN_IN' => 'sign-in',
-  'URL_SIGN_OUT' => 'sign-out',
-  'URL_REGISTER' => 'register',
-  'URL_VERIFY' => 'verify',
-  'URL_RESEND' => 'resend',
+  'URL_SIGN_IN' => 'connexion',
+  'URL_SIGN_OUT' => 'deconnexion',
+  'URL_REGISTER' => 'inscription',
+  'URL_VERIFY' => 'confirmation',
+  'URL_RESEND' => 'renvoyer',
   'URL_RESET' => 'reset-password',
-  'URL_PROFILE' => 'profile',
-  'URL_PLAYER' => 'player',
+  'URL_PROFILE' => 'profil',
+  'URL_PLAYER' => 'joueur',
   'URL_ARTICLE' => 'article'
 ));
 

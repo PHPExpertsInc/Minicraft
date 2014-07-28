@@ -14,15 +14,15 @@ if (!empty($player_infos)) {
   $player = new User($player_infos);
   $manager      = new ServerManager($ticraft->call('getAllServers'));
   $server       = $manager->isPlaying($player->getMinecraftUsername());
+  $name = $player->getMinecraftUsername();
 }
 
-if (!empty($server)) {
+if (!empty($server) and !empty($player_infos)) {
   $player_infos = $server->getPlayer($player->getMinecraftUsername());
 } else {
   $player_infos = null;
 }
 
-$name = $player->getMinecraftUsername();
 if (!empty($name)) {
   $title = $name;
 } else {
