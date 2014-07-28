@@ -34,7 +34,7 @@
               {{ pack.description|raw }}
               {% if user is not empty %}
               {% if user.money < pack.price %}
-              <p class="text-danger">{{ lang('NEED_MORE_MONEY', (user.money - pack.price)|abs, (user.money - pack.price)|abs > 1 ? config.currencyName.plural : config.currencyName.singular)|raw }}<br><a href="{{ url('store_buy') }}">{{ lang('WOULD_LIKE_BUY_MONEY', config.currencyName.plural)|raw }}</a></p>{% else %}<p class="text-info">{{ lang('BUY_ITEM_CONFIRMATION', user.money - pack.price, user.money - pack.price > 1 ? config.currencyName.plural : config.currencyName.singular)|raw }}</p>
+              <p class="text-danger">{{ lang('NEED_MORE_MONEY', (user.money - pack.price)|abs, (user.money - pack.price)|abs > 1 ? config.currencyName.plural : config.currencyName.singular)|raw }}<br><a href="{{ url('buy') }}">{{ lang('WOULD_LIKE_BUY_MONEY', config.currencyName.plural)|raw }}</a></p>{% else %}<p class="text-info">{{ lang('BUY_ITEM_CONFIRMATION', user.money - pack.price, user.money - pack.price > 1 ? config.currencyName.plural : config.currencyName.singular)|raw }}</p>
               {% endif %}
               {% else %}
               <p class="text-danger">{{ lang('MUST_LOGIN_TO_BUY') }}</p>

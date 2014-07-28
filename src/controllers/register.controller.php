@@ -86,8 +86,8 @@ if (empty($_POST)) {
       $error_handler->addError('email', true);
     }
   }
-  
   /* ============================== */
+  
   // If no error, checks with database
   if ($error_handler->noError()) {
     /* ============================== */
@@ -110,19 +110,19 @@ if (empty($_POST)) {
     
     /* ============================== */
     // If still no error, registers the user
-    if ($error_handler->readyToRegister()) {
+    if ($error_handler->noError()) {
       $result = $ticraft->call('registerUser', array(
         $username,
         $raw_password,
         $email
       ));
+      
       if (!empty($result)) {
-        $flash = new Flash;
         $token = Database::addEmail($email, $username);
         
         /* ============================== */
         if (is_string($token)) {
-          Email::sendConfirmationEmail($email, $username, $token);
+          Email::sendConfirmationEmail($email, $username, $token, $translator, $config, $router);
           Security::actionSucceeded('register');
           $flash->addFlash($translator->getTranslation($config->getLang(), 'CONFIRMATION_LINK_SENT', array($email)), 'info');
           $user = new User($result);
@@ -136,7 +136,6 @@ if (empty($_POST)) {
           $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_SEND_CONFIRMATION_EMAIL'), 'warning');
         }
         /* ============================== */
-        
         if (!empty($_GET['from'])) {
           header('Location: ' . $_GET['from']);
           die();
@@ -148,6 +147,7 @@ if (empty($_POST)) {
           die();
         }
       } else {
+        $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_REGISTER'), 'warning');
         Logger::log(__FILE__, 'Registration of user ' . $email . ' failed.', 2);
       }
     }
