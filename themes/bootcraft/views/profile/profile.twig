@@ -120,6 +120,6 @@
 <script>function format(e){if(!e.id)return e.text;return'<img class="flag" src="//cdn.ticraft.fr/flag?cc='+e.id.toLowerCase()+'&retina" height="17">'+e.text}$("#country").select2({width:"resolve",formatResult:format,formatSelection:format,escapeMarkup:function(e){return e}})</script>
 <script>$(document).ready(function() { $("#genre").select2(); });</script>
 <script>
-  $('input[type=date]').datepicker({ viewMode: 'years' });
+  $('input[type=date]').datepicker({ viewMode: 'years', format: 'dd-mm-yyyy' });
 </script>
 {% endblock %}

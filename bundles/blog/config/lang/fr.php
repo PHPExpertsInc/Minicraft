@@ -4,26 +4,30 @@ $lang = array();
 
 // Not sorted yet
 $lang = array_merge($lang, array(
-  'SEE_COMMENTS' => 'See comments',
-  'NO_ARTICLE' => 'No article to show',
-  'POSTED' => 'Posted',
-  'BY' => 'By',
-  'ENABLE_JS_COMMENTS' => 'Please enable JavaScript to view the comments.',
-  'AUTHOR' => 'Author',
-  'PUBLICATION' => 'Publication',
-  'WRITE_ARTICLE' => 'Write an Article',
-  'EDIT_ARTICLE' => 'Edit an Article',
-  'REMOVE_ARTICLE' => 'Remove an Article',
-  'BODY' => 'Body',
-  'IMAGE_URL' => 'Image URL',
-  'OR_UPLOAD_IMAGE' => 'Or upload an image',
-  'ARTICLE_IMAGE_RECOMMENDED_SIZE' => 'Recommended size: %m1% x %m2%',
-  'SELECT_CATEGORY' => 'Select a category…',
-  'OR_CREATE_CATEGORY' => 'Or create a new category',
-  'SUCCESS_ADD_ARTICLE' => 'Article added successfuly',
-  'ADMIN_BLOG' => 'Blog Administration Panel',
-  'ADMIN_BLOG_WRITE' => 'Write an Article',
-  'ADMIN_BLOG_EDIT' => 'Edit an Article'
+  'SEE_COMMENTS' => 'Voir les commentaires',
+  'NO_ARTICLE' => 'Aucun article à afficher',
+  'POSTED' => 'Envoyé',
+  'BY' => 'Par',
+  'ENABLE_JS_COMMENTS' => 'Activez le Javascript de votre navigateur pour afficher les commentaires.',
+  'AUTHOR' => 'Auteur',
+  'PUBLICATION' => 'Publié',
+  'WRITE_ARTICLE' => 'Écrire un article',
+  'EDIT_ARTICLE' => 'Modifier l\'article',
+  'REMOVE_ARTICLE' => 'Supprimer l\'article',
+  'BODY' => 'Article',
+  'IMAGE_URL' => 'URL de l\'image',
+  'OR_UPLOAD_IMAGE' => 'Ou envoyer une image',
+  'ARTICLE_IMAGE_RECOMMENDED_SIZE' => 'Taille recommandée : %m1% x %m2%',
+  'SELECT_CATEGORY' => 'Séléctionner une catégorie…',
+  'OR_CREATE_CATEGORY' => 'Ou créer une catégorie',
+  'SUCCESS_ADD_ARTICLE' => 'Article ajouté avec succès',
+  'ADMIN_BLOG' => 'Panneau d\'administration du Blog',
+  'ADMIN_BLOG_WRITE' => 'Écrire un article',
+  'ADMIN_BLOG_EDIT_ARTICLE' => 'Modifier un article',
+  'ADMIN_BLOG_EDIT_ARTICLE_CATEGORY' => 'Modifier une catégorie',
+  'SEE_ALL_ARTICLES' => 'Voir tous les articles',
+  'REMOVE_ARTICLE_CATEGORY' => 'Supprimer la catégorie',
+  'ADMIN_BLOG_CREATE_ARTICLE_CATEGORY' => 'Ajouter une catégories'
 ));
 
 // URL
@@ -34,6 +38,8 @@ $lang = array_merge($lang, array(
 
 // Buttons
 $lang = array_merge($lang, array(
-  'BTN_PUBLISH' => 'Publish',
-  'BTN_WRITE_ARTICLE' => 'Write an Article'
+  'BTN_PUBLISH' => 'Publier',
+  'BTN_WRITE_ARTICLE' => 'Écrire un article',
+  'BTN_ADD_ARTICLE_CATEGORY' => 'Ajouter une catégorie',
+  'BTN_CREATE' => 'Créer'
 ));

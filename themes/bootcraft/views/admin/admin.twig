@@ -44,7 +44,7 @@
       {% if config.bundles is not empty %}
       <ul class="nav nav-pills nav-justified">
         {% for bundle in config.bundles %}
-        <li><a href="{{ url('manage', bundle) }}">{{ lang('MANAGE_BUNDLE', bundle) }}</a></li>
+        <li><a href="{{ url('manage', bundle) }}">{{ lang('MANAGE_BUNDLE', bundle|capitalize) }}</a></li>
         {% endfor %}
       </ul>
       {% endif %}

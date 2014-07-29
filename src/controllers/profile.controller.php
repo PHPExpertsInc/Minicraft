@@ -192,7 +192,7 @@ if (!empty($_POST)) {
   Helpers::redirect($router, 'profile');
   die();
 } else {
-  $countries = $translator->getCountries();
+  $countries = $translator->getCountries('fr');
   die($twig->render('profile/profile.twig', array(
     'countries' => $countries,
     'handler' => $error_handler,

@@ -5,7 +5,7 @@
     <div class="col-md-12">  
       <ol class="breadcrumb">
         <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
-        <li class="active">{{ lang('ADMIN_RANKS') }}</li>
+        <li class="active">{{ lang('MANAGE_RANKS') }}</li>
       </ol>
       {% include 'includes/flash.twig' %}
       {% if ranks is not empty %}
@@ -48,7 +48,7 @@
         </div> <!-- .modal-dialog -->
       </div>
       {% endfor %}
-      <p><a class="btn btn-default" href="{{ url('action', 'ranks', 'add') }}">{{ lang('ADD_RANK') }}</a></p>
+      <p><a class="btn btn-default" href="{{ url('action', 'ranks', 'add') }}">{{ lang('BTN_ADD_RANK') }}</a></p>
     </div> <!-- .col-md-12 -->
   </div> <!-- .row -->
 </div> <!-- .container -->

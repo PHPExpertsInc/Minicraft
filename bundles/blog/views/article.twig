@@ -12,7 +12,7 @@
       <article class="article">
         <div class="article-header">
           <h1 class="article-title">{{ article.title }}</h1>
-          <p class="article-meta">{{ lang('POSTED') }} <time class="timeago" datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time> {{ lang('BY')|lower }} <a href="{{ url('player', article.author.username|lower) }}" class="btn btn-default"><img src="//minotar.net/avatar/{{ article.author.minecraftUsername }}/32" width="16" class="author-avatar" alt="{{ article.author.username }}">{{ article.author.username }}</a></p>
+          <p class="article-meta">{{ lang('POSTED') }} <time datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time> {{ lang('BY')|lower }} <a href="{{ url('player', article.author.username|lower) }}" class="btn btn-default"><img src="//minotar.net/avatar/{{ article.author.minecraftUsername }}/32" width="16" class="author-avatar" alt="{{ article.author.username }}">{{ article.author.username }}</a></p>
           <img src="{{ article.image }}" width="940" class="article-image img-responsive" alt="{{ article.name }}">
         </div>
         <div class="article-content">
@@ -35,5 +35,6 @@
 {{ parent() }}
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
 <script src="//raw.githubusercontent.com/rmm5t/jquery-timeago/master/locales/jquery.timeago.{{ config.language }}.js"></script>
-<script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script>
+<script src="//raw.githubusercontent.com/rmm5t/jquery-timeago/master/locales/jquery.timeago.{{ config.language }}-short.js"></script>
+<script>jQuery(document).ready(function(){jQuery("time").timeago()})</script>
 {% endblock %}

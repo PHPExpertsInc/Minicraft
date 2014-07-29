@@ -201,13 +201,10 @@ class Config {
   // @todo Make this editable from the administration panel
   public function getTopCountries() {
     return array(
-      'zz' => 'Unspecified',
+      'zz' => 'Non spécifié',
       'fr' => 'France',
-      'be' => 'Belgium',
-      'ca' => 'Canada',
-      'us' => 'United States',
-      'gb' => 'United Kingdom',
-      'au' => 'Australia'
+      'be' => 'Belgique',
+      'ca' => 'Canada'
     );
   }
   
@@ -218,31 +215,31 @@ class Config {
         'url' => '/blog',
         'name' => 'News'
       ),
-      array(
-        'url' => '/forum',
-        'name' => 'Forum'
-      ),
+//      array(
+//        'url' => '/forum',
+//        'name' => 'Forum'
+//      ),
       array(
         'url' => '/boutique',
         'name' => 'Boutique'
-      ),
-      array(
-        'url' => array(
-          array(
-            'url' => '/page/terms',
-            'name' => 'Terms'
-          ),
-          array(
-            'url' => '/page/banish',
-            'name' => 'Banishments'
-          ),
-          array(
-            'url' => '/support',
-            'name' => 'Support'
-          )
-        ),
-        'name' => 'Autres'
       )
+//      array(
+//        'url' => array(
+//          array(
+//            'url' => '/page/terms',
+//            'name' => 'Terms'
+//          ),
+//          array(
+//            'url' => '/page/banish',
+//            'name' => 'Banishments'
+//          ),
+//          array(
+//            'url' => '/support',
+//            'name' => 'Support'
+//          )
+//        ),
+//        'name' => 'Autres'
+//      )
     );
   }
   

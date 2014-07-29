@@ -5,13 +5,13 @@
     <div class="col-md-12">
       <ol class="breadcrumb">
         <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
-        <li class="active">{{ lang('ADMIN_SERVERS') }}</li>
+        <li class="active">{{ lang('MANAGE_SERVERS') }}</li>
       </ol>
       {% include 'includes/flash.twig' %}  
       {% if manager is not empty %}
       {% for server in manager.servers %}
       <div class="well">
-        <p>{{ server.name }}</p>
+        <h2>{{ server.name }}</h2>
         <p><code>{{ server.ip }}</code></p>
         <p><code>{{ server.version }}</code></p>
         <p><code>{{ server.infos.port }}</code></p>
@@ -28,10 +28,10 @@
           </div>
         </div>
         {% else %}
-        {{ lang('NO_PLAYER_ONLINE') }}
+        <p>{{ lang('NO_PLAYER_ONLINE') }}</p>
         {% endif %}
-        <a href="{{ url('action', 'servers', 'edit-server') }}-{{ server.id }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a>
-        <button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{server.id }}">{{ lang('BTN_REMOVE') }}</button>
+        <p><a href="{{ url('action', 'servers', 'edit-server') }}-{{ server.id }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></p>
+        <p><button class="btn btn-danger" data-toggle="modal" data-target="#modal-{{server.id }}">{{ lang('BTN_REMOVE') }}</button></p>
       </div>
       <div id="{{ 'modal-' ~ server.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-' ~ server.id }}" aria-hidden="true">
         <div class="modal-dialog">

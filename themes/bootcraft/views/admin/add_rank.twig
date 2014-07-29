@@ -5,8 +5,8 @@
     <div class="col-md-offset-3 col-md-6">
       <ol class="breadcrumb">
         <li><a href="{{ url('admin') }}">{{ lang('ADMIN_PANEL') }}</a></li>
-        <li><a href="{{ url('manage', 'ranks') }}">{{ lang('ADMIN_RANKS') }}</a></li>
-        <li class="active">{{ lang('ADD_RANKS') }}</li>
+        <li><a href="{{ url('manage', 'ranks') }}">{{ lang('MANAGE_RANKS') }}</a></li>
+        <li class="active">{{ lang('ADD_RANK') }}</li>
       </ol>
       {% include 'includes/flash.twig' %}  
       <form role="form" method="post" action="{{ currentUri }}">

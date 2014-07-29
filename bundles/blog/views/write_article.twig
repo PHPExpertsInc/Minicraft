@@ -38,7 +38,7 @@
           <select id="article-category" class="form-control" name="write-article[category]"{% if categories is empty %} disabled{% endif %}>
             <option></option>
             {% for category in categories %}
-            <option value="{{ category.id }}">{{ category.name }}</option>
+            <option value="{{ category.id }}"{% if loop.first %} selected{% endif %}>{{ category.name }}</option>
             {% endfor %}
           </select>
         </div>
