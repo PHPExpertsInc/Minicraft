@@ -172,7 +172,7 @@ if (!empty($country) and $country != $user->getCountry()) {
 /* ============================== */
 
 /* ============================== */
-if ($city != $user->getCity()) {
+if (!empty($city) and $city != $user->getCity()) {
   $success = $ticraft->call('updateCity', array(
     $user->getId(),
     $city

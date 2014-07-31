@@ -82,7 +82,6 @@ a.fancy-link,
 a.fancy-link:hover,
 p a,
 p a:hover {
-  color: #52bad5;
   text-decoration: none;
 }
 
@@ -115,10 +114,6 @@ p a:hover {
 
 .blog-article-title a {
   color: #333;
-}
-
-.blog-article-title a:hover {
-  color: #52bad5;
 }
 
 .blog-article-image {

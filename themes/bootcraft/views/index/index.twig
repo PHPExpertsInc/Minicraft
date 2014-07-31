@@ -122,19 +122,10 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
-<script src="//raw.githubusercontent.com/rmm5t/jquery-timeago/master/locales/jquery.timeago.{{ config.language }}.js"></script>
+<script src="{{ url('assets', 'js/timeago.js') }}"></script>
+<script src="{{ url('assets', 'js/timeago-locales/jquery.timeago.' ~ config.language ~ '.js') }}"></script>
+<script src="{{ url('assets', 'js/timeago-locales/jquery.timeago.' ~ config.language ~ '-short.js') }}"></script>
 <script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script>
 <script src="{{ url('assets', 'js/owl-carousel/owl.carousel.min.js') }}"></script>
-<script>
-$(document).ready(function() {
-  $("#slider").owlCarousel({
-    navigation: false,
-    slideSpeed: 300,
-    paginationSpeed: 400,
-    autoPlay: true,
-    singleItem: true
-  });
-});
-</script>
+<script>$(document).ready(function(){$("#slider").owlCarousel({navigation:false,slideSpeed:300,paginationSpeed:400,autoPlay:true,singleItem:true})})</script>
 {% endblock %}

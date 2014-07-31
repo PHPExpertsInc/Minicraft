@@ -97,7 +97,23 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.4.0/jquery.timeago.min.js"></script>
-<script src="//raw.githubusercontent.com/rmm5t/jquery-timeago/master/locales/jquery.timeago.{{ config.language }}.js"></script>
+<script src="{{ url('assets', 'js/timeago.js') }}"></script>
+<script>
+  jQuery.timeago.settings.strings = {
+   prefixAgo: "Il y a",
+   prefixFromNow: "d'ici",
+   seconds: "moins d'une minute",
+   minute: "une minute",
+   minutes: "%d minutes",
+   hour: "une heure",
+   hours: "%d heures",
+   day: "un jour",
+   days: "%d jours",
+   month: "un mois",
+   months: "%d mois",
+   year: "un an",
+   years: "%d ans"
+  };
+</script>
 <script>jQuery(document).ready(function(){jQuery("time").timeago()})</script> 
 {% endblock %}
