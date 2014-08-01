@@ -130,6 +130,7 @@ $router->addController(new Controller('reset', '#^/' . ROOT . $translator->getTr
 $router->addController(new Controller('reset_token', '#^/' . ROOT . $translator->getTranslation($config->getLang(), 'URL_RESET') . '/?#', $translator->getTranslation($config->getLang(), 'URL_RESET')));
 $router->addController(new Controller('profile', '#^/' . ROOT . $translator->getTranslation($config->getLang(), 'URL_PROFILE') . '/?#', $translator->getTranslation($config->getLang(), 'URL_PROFILE')));
 $router->addController(new Controller('player', '#^/' . ROOT . $translator->getTranslation($config->getLang(), 'URL_PLAYER') . '/([\w\-]+)/?#', $translator->getTranslation($config->getLang(), 'URL_PLAYER') . '/%m1%'));
+$router->addController(new Controller('out', '#^/' . ROOT . $translator->getTranslation($config->getLang(), 'URL_OUT') . '/(.+)#', $translator->getTranslation($config->getLang(), 'URL_OUT') . '/%m1%'));
 /* ============================== */
 
 /* ============================== */

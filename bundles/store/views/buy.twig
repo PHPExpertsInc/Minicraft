@@ -4,11 +4,12 @@
   {% include 'includes/flash.twig' %}
   <div class="row">
     <div class="col-md-offset-2 col-md-8">
-      {% if user %}<h2>{{ lang('SHOW_MONEY', user.money, user.money > 1 ? config.currencyName.plural : config.currencyName.singular) }}</h2><hr>{% endif %}
-      <div class="table-responsive">
-        <div id="starpass_{{ config.starpassInfos.idd }}"></div>
-        <script type="text/javascript" src="http://script.starpass.fr/script.php?idd={{ config.starpassInfos.idd }}&amp;verif_en_php=1&amp;datas="></script>
-        <noscript>{{ lang('ACTIVATE_JAVASCRIPT_TO_BUY') }}</noscript>
+      <div class="box box-orange">
+        <div class="table-responsive">
+          <div id="starpass_{{ config.starpassInfos.idd }}"></div>
+          <script type="text/javascript" src="http://script.starpass.fr/script.php?idd={{ config.starpassInfos.idd }}&amp;verif_en_php=1&amp;datas="></script>
+          <noscript>{{ lang('ACTIVATE_JAVASCRIPT_TO_BUY') }}</noscript>
+        </div>
       </div>
     </div> <!-- .col-md-8 -->
   </div> <!-- .row -->

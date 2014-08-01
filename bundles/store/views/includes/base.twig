@@ -7,12 +7,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>{% block title %}{% if pageTitle is not empty %}{{ pageTitle ~ ' | ' ~ config.siteName|capitalize }}{% elseif config.siteName is not empty %}{{ config.siteName }}{% else %}Minicraft{% endif %}{% endblock %}</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <meta name="description" content="{{ config.siteDescription }}">
   <meta name="keywords" content="{{ config.keywords }}">
   <meta name="author" content="Charles Tatibouët">
   {% block fonts %}
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url('assets', 'css/bootstrap.min.css') }}">
   {% endblock %}{# end fonts block #}
   {% block stylesheets %}
   <link rel="stylesheet" href="{{ url('assets', 'css/global.css') }}">
@@ -74,29 +75,17 @@
               <ul class="dropdown-menu">
                 <li><a href="{{ url('profile') }}">{{ lang('PROFILE') }}</a></li>
                 {% if config.isActive('store') %}<li><a href="{{ url('vault') }}">{{ lang('VAULT') }}</a></li>{% endif %}
-                <li class="divider"></li>
-                <li>
+                <li class="li-danger">
                   <div class="container-fluid">
                     <form action="{{ url('logout') }}" method="post" role="form">
                       <input type="hidden" name="logout[from]" value="{{ currentUri }}">
-                      <button type="submit" class="btn btn-block btn-danger">{{ lang('LOGOUT') }}</button>
+                      <button type="submit" class="">{{ lang('LOGOUT') }}</button>
                     </form>
                   </div>
                 </li>
               </ul>
             </li>
             {% endif %}
-            <li class="dropdown hidden-xs">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
-              <form id="search-dropdown" class="dropdown-menu" role="search">
-                <div class="input-group">
-                  <input type="search" class="form-control" placeholder="{{ lang('SEARCH_PLAYER') }}">
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary" type="button">{{ lang('BTN_SEARCH') }}</button>
-                  </span>
-                </div>
-              </form>
-            </li>
           </ul> <!-- .navbar-right -->
         </nav> <!-- .nav-collapse -->
       </div> <!-- .container-fluid -->

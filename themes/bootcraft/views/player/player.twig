@@ -7,23 +7,40 @@
 <div class="container">
   <div class="row">
     <div class="col-md-offset-3 col-md-6">
-      {% include 'includes/flash.twig' %}    
-      <div class="text-center profile">
+      {% include 'includes/flash.twig' %}
+      <div class="text-center">
         <img src="//minotar.net/avatar/{% if player.username is not empty %}{{player.username}}{% elseif playerInfos.name is not empty %}{{playerInfos.name}}{% else %}char{% endif %}/32" alt="{% if player.username is not empty %}{{player.username}}{% elseif playerInfos.name is not empty %}{{playerInfos.name}}{% else %}char{% endif %}" class="blur-fix" width="256">
         <h1 class="fancy-username">{% if player.username is not empty %}{{player.username}}{% else %}{{ lang('UNKOWN_PLAYER') }}{% endif %}</h1>
-        <hr>
-        {% if player %}
-        <dl class="dl-horizontal">
-          <dt>{{ lang('CITY') }}{{ lang('COLON')|raw }}</dt>
-          <dd>{{ player.city }}</dd>
-          <dt>{{ lang('RANK') }}{{ lang('COLON')|raw }}</dt>
-          <dd>{{ player.rank.name }}</dd>
-          {% if playerInfos %}
-          <dt>{{ lang('ARRIVED_HERE') }}{{ lang('COLON')|raw }}</dt>
-          <dd><time class="timeago" datetime="{{ playerInfos.firstPlayed|date('Y-m-d\\TH:i:sP') }}">{{ playerInfos.firstPlayed|date('F j, Y') }}</time></dd>
-          {% endif %}  
-        </dl>
-        {% endif %}     
+      </div>
+      <div class="box box-orange">
+        <div class="text-center profile">
+          {% if player %}
+          <dl class="dl-horizontal">
+            <dt>{{ lang('RANK') }}{{ lang('COLON')|raw }}</dt>
+            <dd>{{ player.rank.name }}</dd>
+            {% if player.country is not empty and player.country != 'zz' %}
+            <dt>{{ lang('COUNTRY') }}{{ lang('COLON')|raw }}</dt>
+            <dd><img class="flag" src="//cdn.ticraft.fr/flag?cc={{ player.country }}&retina" height="17" title="{{ player.country }}" alt="{{ player.country }}"></dd>
+            {% endif %}
+            {% if player.city is not empty %}
+            <dt>{{ lang('CITY') }}{{ lang('COLON')|raw }}</dt>
+            <dd>{{ player.city }}</dd>
+            {% endif %}
+            {% if player.genre is not empty and player.genre != 'unspecified' %}
+            <dt>{{ lang('GENRE') }}{{ lang('COLON')|raw }}</dt>
+            <dd>{% if player.genre == 'female' %}{{ lang('FEMALE') }}{% elseif player.genre == 'male' %}{{ lang('MALE') }}{% endif %}</dd>
+            {% endif %}
+            {% if player.age is not empty %}
+            <dt>{{ lang('AGE') }}{{ lang('COLON')|raw }}</dt>
+            <dd>{{ lang('YEARS_OLD', player.age) }}</dd>
+            {% endif %}
+            {% if playerInfos %}
+            <dt>{{ lang('ARRIVED_HERE') }}{{ lang('COLON')|raw }}</dt>
+            <dd><time class="timeago" datetime="{{ playerInfos.firstPlayed|date('Y-m-d\\TH:i:sP') }}">{{ playerInfos.firstPlayed|date('F j, Y') }}</time></dd>
+            {% endif %}  
+          </dl>
+          {% endif %}     
+        </div>
       </div>
     </div> <!-- .col-md-6 -->
   </div> <!-- .row -->

@@ -1,0 +1,13 @@
+.store-intro {
+  text-align: center;
+}
+
+@media (min-width: 480px) {
+  .store-intro {
+    text-align: left;
+  }
+  
+  .purchase-money {
+    font-size: 1.8em;
+  }
+}

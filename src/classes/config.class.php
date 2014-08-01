@@ -213,7 +213,7 @@ class Config {
     return array(
       array(
         'url' => '/blog',
-        'name' => 'News'
+        'name' => 'Blog'
       ),
 //      array(
 //        'url' => '/forum',
@@ -246,17 +246,17 @@ class Config {
   public function getCarouselItems() {
     return array(
       array(
-        'img' => '//placehold.it/1920x500',
+        'img' => '//placehold.it/1920x500/41444c/ffc873&text=Minicraft',
         'headline' => 'Titre du slide 1',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
       ),
       array(
-        'img' => '//placehold.it/1920x500',
-        'headline' => 'Titre du slide 2',
+        'img' => '//placehold.it/1920x500/e4dbbf/dc5b21&text=Ticraft',
+        'headline' => 'Titre du slide 1',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
       ),
       array(
-        'img' => '//placehold.it/1920x500',
+        'img' => '//placehold.it/1920x500/313646/e4dbbf',
         'headline' => 'Titre du slide 3',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
         'button' => array(

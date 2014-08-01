@@ -18,7 +18,7 @@ if (!empty($action)) {
           }
         }
         
-        $countries = $translator->getCountries();
+        $countries = $translator->getCountries($config->getLanguage());
         
         die($twig->render('admin/edit_user.twig', array(
           'player' => $player,

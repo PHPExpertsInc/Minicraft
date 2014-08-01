@@ -19,62 +19,64 @@
         <li class="active">{{ lang('EDIT_USER') }}</li>
       </ol>
       {% include 'includes/flash.twig' %}  
-      <form method="post" action="{{ currentUri }}">
-        <div class="form-group{% if handler.errors.username %} has-error{% endif %}">
-          <label class="control-label" for="username">{{ lang('USERNAME') }}</label>
-          <input id="username" class="form-control" type="text" name="edit-player[username]" value="{{ player.username }}">
-          {% if handler.errors.username %}<span class="help-block">{{ handler.errorMessages.username }}</span>{% endif %}
-        </div>
-        <div class="form-group{% if handler.errors.email %} has-error{% endif %}">
-          <label class="control-label" for="email">{{ lang('EMAIL') }}</label>
-          <input id="email" class="form-control" type="email" name="edit-player[email]" value="{{ player.email }}">
-          {% if handler.errors.email %}<span class="help-block">{{ handler.errorMessages.email }}</span>{% endif %}
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="money">{{ config.currencyName.plural|capitalize }}</label>
-          <input id="money" class="form-control" type="number" name="edit-player[money]" value="{{ player.money }}">
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="rank">{{ lang('RANK') }}</label>
-          <select id="rank" class="form-control" name="edit-player[rank]">
-            {% for rank in ranks|sort %}
-            <option value="{{ rank.id }}"{% if player.rank.name == rank.name %} selected{% endif %}>{{ rank.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="genre">{{ lang('GENRE') }}</label>
-          <select id="genre" class="form-control" name="edit-player[genre]">
-            <option value="unspecified"{% if player.genre == 'unspecified' %} selected{% endif %}>{{ lang('UNSPECIFIED') }}</option>
-            <option value="female"{% if player.genre == 'female' %} selected{% endif %}>{{ lang('FEMALE') }}</option>
-            <option value="male"{% if player.genre == 'male' %} selected{% endif %}>{{ lang('MALE') }}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="birthdate">{{ lang('BIRTHDATE') }}</label>
-          <input id="birthdate" class="form-control" type="date" name="edit-player[birthdate]" placeholder="{{ lang('BIRTHDATE_PLACEHOLDER') }}"{% if player.birthdate is not empty %} value="{{ player.birthdate|date('d-m-Y') }}"{% endif %} data-date="01-01-2000" data-date-format="dd-mm-yyyy">
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="country">{{ lang('COUNTRY') }}</label>
-          <select id="country" class="form-control" name="edit-player[country]">
-            <optgroup>
-              {% for code, name in config.topCountries %}
-              <option value="{{ code }}"{% if player.country == code %} selected{% endif %}>{{ name }}</option>
+      <div class="box box-blue">
+        <form method="post" action="{{ currentUri }}">
+          <div class="form-group{% if handler.errors.username %} has-error{% endif %}">
+            <label class="control-label" for="username">{{ lang('USERNAME') }}</label>
+            <input id="username" class="form-control" type="text" name="edit-player[username]" value="{{ player.username }}">
+            {% if handler.errors.username %}<span class="help-block">{{ handler.errorMessages.username }}</span>{% endif %}
+          </div>
+          <div class="form-group{% if handler.errors.email %} has-error{% endif %}">
+            <label class="control-label" for="email">{{ lang('EMAIL') }}</label>
+            <input id="email" class="form-control" type="email" name="edit-player[email]" value="{{ player.email }}">
+            {% if handler.errors.email %}<span class="help-block">{{ handler.errorMessages.email }}</span>{% endif %}
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="money">{{ config.currencyName.plural|capitalize }}</label>
+            <input id="money" class="form-control" type="number" name="edit-player[money]" value="{{ player.money }}">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="rank">{{ lang('RANK') }}</label>
+            <select id="rank" class="form-control" name="edit-player[rank]">
+              {% for rank in ranks|sort %}
+              <option value="{{ rank.id }}"{% if player.rank.name == rank.name %} selected{% endif %}>{{ rank.name }}</option>
               {% endfor %}
-            </optgroup>
-            <optgroup>
-              {% for code, name in countries %}
-              <option value="{{ code }}"{% if player.country == code %} selected{% endif %}>{{ name }}</option>
-              {% endfor %}
-            </optgroup>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="city">{{ lang('CITY') }}</label>
-          <input id="city" class="form-control" type="text" name="edit-player[city]" value="{{ player.city }}">
-        </div>
-        <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
-      </form>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="genre">{{ lang('GENRE') }}</label>
+            <select id="genre" class="form-control" name="edit-player[genre]">
+              <option value="unspecified"{% if player.genre == 'unspecified' %} selected{% endif %}>{{ lang('UNSPECIFIED') }}</option>
+              <option value="female"{% if player.genre == 'female' %} selected{% endif %}>{{ lang('FEMALE') }}</option>
+              <option value="male"{% if player.genre == 'male' %} selected{% endif %}>{{ lang('MALE') }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="birthdate">{{ lang('BIRTHDATE') }}</label>
+            <input id="birthdate" class="form-control" type="date" name="edit-player[birthdate]" placeholder="{{ lang('BIRTHDATE_PLACEHOLDER') }}"{% if player.birthdate is not empty %} value="{{ player.birthdate|date('d-m-Y') }}"{% endif %} data-date="01-01-2000" data-date-format="dd-mm-yyyy">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="country">{{ lang('COUNTRY') }}</label>
+            <select id="country" class="form-control" name="edit-player[country]">
+              <optgroup>
+                {% for code, name in config.topCountries %}
+                <option value="{{ code }}"{% if player.country == code %} selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+              </optgroup>
+              <optgroup>
+                {% for code, name in countries %}
+                <option value="{{ code }}"{% if player.country == code %} selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="city">{{ lang('CITY') }}</label>
+            <input id="city" class="form-control" type="text" name="edit-player[city]" value="{{ player.city }}">
+          </div>
+          <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+        </form>
+      </div>
     </div> <!-- .col-md-6 -->
   </div> <!-- .row -->
 </div> <!-- .container -->

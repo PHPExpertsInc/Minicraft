@@ -7,20 +7,17 @@
     <section class="blog-main">
       {% if blog.articles is not empty %}
       {% for article in blog.articles|sort %}
-      <article class="blog-article">
+      <article class="blog-article box box-list">
         <div class="blog-article-header">
           <h2 class="blog-article-title"><a href="{{ url('article', article.id, article.slug) }}">{{ article.title }}</a></h2>
-          <p class="blog-article-meta">{{ lang('POSTED') }} <time datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time> {{ lang('BY')|lower }} <a href="{{ url('player', article.author.username|lower) }}" class="btn btn-default"><img src="//minotar.net/avatar/{{ article.author.minecraftUsername }}/32" width="16" class="author-avatar" alt="{{ article.author.username }}">{{ article.author.username }}</a></p>
+          <p class="blog-article-meta"><a href="{{ url('player', article.author.username|lower) }}" class="player-link"><img src="//minotar.net/avatar/{{ article.author.minecraftUsername }}/32" width="16" class="player-avatar" alt="{{ article.author.username }}">{{ article.author.username }}</a> &mdash; {{ lang('PUBLISHED') }} <time datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time></p>
           <img src="{{ article.image }}" width="940" class="blog-article-image img-responsive" alt="{{ article.name }}">
         </div>
         <div class="blog-article-content">
           {{ article.body|raw }}
         </div>
         <p class="see-comments"><a href="{{ url('article', article.id, article.slug) ~ '#disqus_thread' }}">{{ lang('SEE_COMMENTS') }}</a></p>
-      </article> <!-- /.blog-post -->
-      {% if not loop.last %}
-      <hr>
-      {% endif %}
+      </article> <!-- /.blog-article -->
       {% endfor %}
       {% else %}
       {{ lang('NO_ARTICLE') }}

@@ -50,6 +50,29 @@ class User {
     return $this->username;
   }
   
+  public function getAge() {
+    $birthdate = $this->getBirthdate();
+    
+    if (!empty($birthdate)) {
+      $now = time();
+      $yearDiff = date('Y', $now) - date('Y', $birthdate);
+      $monthDiff = date('m', $now) - date('m', $birthdate);
+      $dayDiff = date('d', $now) - date('d', $birthdate);
+      
+      if ($monthDiff < 0) {
+        $yearDiff--;
+      } elseif (($monthDiff == 0) and ($dayDiff < 0)) {
+        $yearDiff--;
+      }
+      
+      $age = intval($yearDiff);
+       
+      return $age;
+    } else {
+      return null;
+    }
+  }
+  
   public function getVotes() {
     // @todo Code this
     return 3;

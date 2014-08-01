@@ -8,7 +8,7 @@ if (!is_object($user)) {
 }
 
 die($store_twig->render('buy.twig', array(
-  'pageTitle' => $translator->getTranslation($config->getLang(), 'ADD_MONEY'),
+  'pageTitle' => $translator->getTranslation($config->getLang(), 'PURCHASE_MONEY'),
   'config' => $config,
   'user' => $user,
   'flash' => $flash

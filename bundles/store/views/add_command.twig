@@ -9,26 +9,28 @@
         <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
         <li class="active">{{ lang('ADD_COMMAND') }}</li>
       </ol>
-      <div class="alert alert-info">
-        <ul>
-          <li><a href="http://wiki.bukkit.org/CraftBukkit_commands">{{ lang('LIST_BUKKIT_COMMANDS') }}</a></li>
-          <li>{{ lang('REPLACE_USERNAME', '%player_minecraft_username%')|raw }}</li>
-          <li>{{ lang('REPLACE_IP', '%player_ip_address%')|raw }}</li>
-        </ul>
+      <div class="box box-orange">
+        <div class="alert alert-info">
+          <ul>
+            <li><a class="link-blue text-bold" href="http://wiki.bukkit.org/CraftBukkit_commands">{{ lang('LIST_BUKKIT_COMMANDS') }}</a></li>
+            <li>{{ lang('REPLACE_USERNAME', '%player_minecraft_username%')|raw }}</li>
+            <li>{{ lang('REPLACE_IP', '%player_ip_address%')|raw }}</li>
+          </ul>
+        </div>
+        <form role="form" method="post" action="{{ currentUri }}">
+          <div class="form-group">
+            <label for="command-command">{{ lang('CONSOLE_COMMAND') }}</label>
+            <input id="command-command" class="form-control" type="text" name="add-command[command]">
+          </div>
+          <div class="form-group">
+            <label for="command-description">{{ lang('DESCRIPTION') }}</label>
+            <input id="command-description" class="form-control" type="text" name="add-command[description]">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+          </div>
+        </form>
       </div>
-      <form role="form" method="post" action="{{ currentUri }}">
-        <div class="form-group">
-          <label for="command-command">{{ lang('CONSOLE_COMMAND') }}</label>
-          <input id="command-command" class="form-control" type="text" name="add-command[command]">
-        </div>
-        <div class="form-group">
-          <label for="command-description">{{ lang('DESCRIPTION') }}</label>
-          <input id="command-description" class="form-control" type="text" name="add-command[description]">
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_SAVE') }}</button>
-        </div>
-      </form>
     </div> <!-- .col-md-6 -->
   </div> <!-- .row -->
 </div> <!-- .container -->

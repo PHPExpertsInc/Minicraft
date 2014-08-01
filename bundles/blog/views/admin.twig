@@ -9,26 +9,29 @@
         <li class="active">{{ lang('ADMIN_BLOG') }}</li>
       </ol>
       {% if blog.articles is not empty %}
-      <div class="table-responsive">
-        <table class="table table-hover table-striped table-bordered">
-          <tr>
-            <th>{{ lang('TITLE') }}</th>
-            <th>{{ lang('AUTHOR') }}</th>
-            <th>{{ lang('PUBLICATION') }}</th>
-            <th>{{ lang('BTN_EDIT') }}</th>
-            <th>{{ lang('BTN_REMOVE') }}</th>
-          </tr>
-          {% for article in blog.articles|sort %}
-          <tr>
-            <td><a href="{{ url('article', article.id, article.slug) }}" class="fancy-link">{{ article.title }}</a></td>
-            <td>{{ article.author.username }}</td>
-            <td><time datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time></td>
-            <td><a href="{{ url('action', 'blog', 'edit-article') ~ '-' ~ article.id  }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
-            <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-article-' ~ article.id }}">{{ lang('BTN_REMOVE') }}</button></td>
-          </tr>
-          {% endfor %}
-        </table>
-      </div> <!-- .table-responsive -->
+      <div class="box box-blue">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-bordered">
+            <tr>
+              <th>{{ lang('TITLE') }}</th>
+              <th>{{ lang('AUTHOR') }}</th>
+              <th>{{ lang('PUBLICATION') }}</th>
+              <th>{{ lang('BTN_EDIT') }}</th>
+              <th>{{ lang('BTN_REMOVE') }}</th>
+            </tr>
+            {% for article in blog.articles|sort %}
+            <tr>
+              <td><a href="{{ url('article', article.id, article.slug) }}" class="fancy-link">{{ article.title }}</a></td>
+              <td>{{ article.author.username }}</td>
+              <td><time datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time></td>
+              <td><a href="{{ url('action', 'blog', 'edit-article') ~ '-' ~ article.id  }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
+              <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-article-' ~ article.id }}">{{ lang('BTN_REMOVE') }}</button></td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <a href="{{ url('action', 'blog', 'write') }}" class="btn btn-block btn-primary">{{ lang('BTN_WRITE_ARTICLE') }}</a>
+      </div>
       {% for article in blog.articles|sort %}
       <div id="{{ 'modal-article-' ~ article.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-article-' ~ article.id}}" aria-hidden="true">
         <div class="modal-dialog">
@@ -50,26 +53,26 @@
       </div> <!-- #modal -->
       {% endfor %}
       {% endif %}
-      <a href="{{ url('action', 'blog', 'write') }}" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_WRITE_ARTICLE') }}</a>
-      <hr>
       {% if categories is not empty %}
-      <div class="table-responsive">
-        <table class="table table-hover table-striped table-bordered">
-          <tr>
-            <th>{{ lang('NAME') }}</th>
-            <th>{{ lang('BTN_EDIT') }}</th>
-            <th>{{ lang('BTN_REMOVE') }}</th>
-          </tr>
-          {% for category in categories|sort %}
-          <tr>
-            <td>{{ category.name }}</td>
-            <td><a href="{{ url('action', 'blog', 'edit-article-category') ~ '-' ~ category.id  }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
-            <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-category-' ~ category.id }}">{{ lang('BTN_REMOVE') }}</button></td>
-          </tr>
-          {% endfor %}
-        </table>
-      </div> <!-- .table-responsive -->
-      <a href="{{ url('action', 'blog', 'create-article-category') }}" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_ADD_ARTICLE_CATEGORY') }}</a>
+      <div class="box box-orange">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-bordered">
+            <tr>
+              <th>{{ lang('NAME') }}</th>
+              <th>{{ lang('BTN_EDIT') }}</th>
+              <th>{{ lang('BTN_REMOVE') }}</th>
+            </tr>
+            {% for category in categories|sort %}
+            <tr>
+              <td>{{ category.name }}</td>
+              <td><a href="{{ url('action', 'blog', 'edit-article-category') ~ '-' ~ category.id  }}" class="btn btn-default">{{ lang('BTN_EDIT') }}</a></td>
+              <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-category-' ~ category.id }}">{{ lang('BTN_REMOVE') }}</button></td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+        <a href="{{ url('action', 'blog', 'create-article-category') }}" class="btn btn-block btn-primary">{{ lang('BTN_ADD_ARTICLE_CATEGORY') }}</a>
+      </div>
       {% for category in categories|sort %}
       <div id="{{ 'modal-category-' ~ category.id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-category-' ~ category.id}}" aria-hidden="true">
         <div class="modal-dialog">

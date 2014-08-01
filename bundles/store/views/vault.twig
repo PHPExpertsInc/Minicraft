@@ -1,19 +1,15 @@
 {% extends 'includes/store_layout.twig' %}
 {% block content %}
 <div class="container">
-  {% include 'includes/flash.twig' %}
   <div class="row">
     <div class="col-md-12">
-      <ol class="breadcrumb">
-        <li><a href="{{ url('store')  }}">{{ lang('STORE')  }}</a></li>
-        <li class="active">{{ lang('VAULT')  }}</li>
-      </ol>
-      <div class="alert alert-warning">{{ lang('ALERT_ENOUGH_SPACES')  }}</div>
+      <p><a class="btn btn-default" href="{{ url('store') }}">&larr; {{ lang('BACK_TO_STORE') }}</a></p>
+      {% include 'includes/flash.twig' %}
       {% if user.vaultItems is not empty %}
       <div class="row">
       {% for item in user.vaultItems %}
       <div class="col-sm-6 col-md-3">
-        <div class="thumbnail item">
+        <div class="thumbnail item box box-green">
           <img src="{{ item.icon  }}" class="img-responsive blur-fix" width="128" alt="{{ item.minecraftName  }}">
           <div class="caption">
             <h3 class="text-center">{{ item.quantity }}&nbsp;{{ item.minecraftName }}</h3>

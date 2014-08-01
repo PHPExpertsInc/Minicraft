@@ -52,45 +52,37 @@
     {% include 'includes/flash.twig' %}
     <div class="col-md-4 col-md-push-8">
       <section id="status" class="servers">
-        <h2>{{ lang('SERVER_STATUS') }}</h2>
-        <hr>
         {% if manager.servers is not empty %}
         {% for server in manager.servers|slice(0, 5) %}
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><a href="{{ url('server', server.id, server.slug) }}">{{ server.name }}</a></h3>
-          </div>
-          <div class="panel-body text-center">
-            <pre class="server-ip">{{ server.ip }}</pre>
-            {% if server.motd is not empty %}
-            <div class="alert alert-success server-status">{{ lang('ONLINE')|upper }}</div>
-            {% if server.infos.players is not empty %}
-            <div class="progress">
-              <div class="progress-bar" role="progressbar" aria-valuenow="{{ server.infos.players|length }}" aria-valuemin="0" aria-valuemax="{{ server.infos.maxPlayers }}" style="width: {{ (server.infos.players|length / server.infos.maxPlayers) * 100 }}%;">
-                <span class="sr-only">{{ lang('PLAYERS_ONLINE', server.infos.players|length) }}</span>
-              </div>
+        <div class="box box-list">
+          <p class="server-name">{{ server.name }}</p>
+          <pre class="server-ip">{{ server.ip }}</pre>
+          {% if server.motd is not empty %}
+          <div class="server-status server-online">{{ lang('ONLINE') }}</div>
+          {% if server.infos.players is not empty %}
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ server.infos.players|length }}" aria-valuemin="0" aria-valuemax="{{ server.infos.maxPlayers }}" style="width: {{ (server.infos.players|length / server.infos.maxPlayers) * 100 }}%;">
+              <span class="sr-only">{{ lang('PLAYERS_ONLINE', server.infos.players|length) }}</span>
             </div>
-            <p>{{ lang('PLAYERS_ONLINE', server.infos.players|length) }}</p>
-            {% for player in server.infos.players %}
-            <a href="{{ url('player', player.name) }}" title="{{ player.name }}"><img src="//minotar.net/avatar/{{ player.name }}/32" width="32" alt="{{ player.name }}"></a>
-            {% endfor %}
-            {% endif %}
-            {% else %}
-            <div class="alert alert-danger server-status">{{ lang('OFFLINE')|upper }}</div>
-            {% endif %}
           </div>
+          <p>{{ lang('PLAYERS_ONLINE', server.infos.players|length) }}</p>
+          {% for player in server.infos.players %}
+          <a href="{{ url('player', player.name) }}" title="{{ player.name }}"><img src="//minotar.net/avatar/{{ player.name }}/32" width="32" alt="{{ player.name }}"></a>
+          {% endfor %}
+          {% endif %}
+          {% else %}
+          <div class="server-status server-offline">{{ lang('OFFLINE') }}</div>
+          {% endif %}
         </div>
         {% endfor %}
         {% else %}
         <p>{{ lang('NO_SERVER') }}</p>
         {% endif %}
       </section>
-      <section id="vote" class="box">
-        <h2>{{ lang('VOTE_FOR', config.siteName) }}</h2>
-        <hr>
+      <section id="vote">
         {% for site in config.voteSites %}
-        <div class="vote-site">
-          <a href="{{ site.url }}"><img src="{{ site.logo }}" class="img-responsive" alt="{{ site.name }}"></a>
+        <div class="vote-site box box-list">
+          <a href="{{ url('out', site.url) }}" target="_blank"><img src="{{ site.logo }}" class="img-responsive" alt="{{ site.name }}"></a>
         </div>
         {% endfor %}
       </section>
@@ -99,16 +91,16 @@
       <section id="blog">
         {% if blog.articles is not empty %}
         {% for article in blog.articles|slice(0, 5) %}
-        <article class="blog-article box">
+        <article class="blog-article box box-list">
           <div class="blog-article-header">
             <h2 class="blog-article-title"><a href="{{ url('article', article.id, article.slug) }}">{{ article.title }}</a></h2>
-            <p class="blog-article-meta">{{ lang('POSTED') }} <time class="timeago" datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time> {{ lang('BY')|lower }} <a href="{{ url('player', article.author.username|lower) }}" class="btn btn-default"><img src="//minotar.net/avatar/{{ article.author.minecraftUsername }}/32" width="16" class="author-avatar" alt="{{ article.author.username }}">{{ article.author.username }}</a></p>
-            <img src="{{ article.image }}" width="940" class="blog-article-image img-responsive" alt="{{ article.name }}">
+            <p class="blog-article-meta"><a href="{{ url('player', article.author.username|lower) }}" class="player-link"><img src="//minotar.net/avatar/{{ article.author.minecraftUsername }}/32" width="16" class="player-avatar" alt="{{ article.author.username }}">{{ article.author.username }}</a> &mdash; {{ lang('PUBLISHED') }} <time datetime="{{ article.publicationDate|date('Y-m-d\\TH:i:sP') }}">{{ article.publicationDate|date('F j, Y') }}</time></p>
+            <p><img src="{{ article.image }}" width="940" class="blog-article-image img-responsive" alt="{{ article.name }}"></p>
           </div>
           <div class="blog-article-content">
             <p>{{ article.extract }}</p>
           </div>
-          <p><a href="{{ url('article', article.id, article.slug) }}" class="read-more">{{ lang('READ_MORE') }}</a></p>
+          <p class="read-more"><a href="{{ url('article', article.id, article.slug) }}">{{ lang('READ_MORE') }}</a></p>
         </article> <!-- /.blog-post -->
         {% endfor %}
         <a href="{{ url('blog') }}" class="btn btn-block btn-default">{{ lang('SEE_ALL_ARTICLES') }}</a>
@@ -125,7 +117,7 @@
 <script src="{{ url('assets', 'js/timeago.js') }}"></script>
 <script src="{{ url('assets', 'js/timeago-locales/jquery.timeago.' ~ config.language ~ '.js') }}"></script>
 <script src="{{ url('assets', 'js/timeago-locales/jquery.timeago.' ~ config.language ~ '-short.js') }}"></script>
-<script>jQuery(document).ready(function(){jQuery("time.timeago").timeago()})</script>
+<script>jQuery(document).ready(function(){jQuery("time").timeago()})</script>
 <script src="{{ url('assets', 'js/owl-carousel/owl.carousel.min.js') }}"></script>
 <script>$(document).ready(function(){$("#slider").owlCarousel({navigation:false,slideSpeed:300,paginationSpeed:400,autoPlay:true,singleItem:true})})</script>
 {% endblock %}

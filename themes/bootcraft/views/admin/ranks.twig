@@ -9,22 +9,26 @@
       </ol>
       {% include 'includes/flash.twig' %}
       {% if ranks is not empty %}
-      <table class="table table-hover table-striped table-bordered">
-        <tr>
-          <th>{{ lang('RANK_NAME') }}</th>
-          <th>{{ lang('RANK_FORCE') }}</th>
-          <th>{{ lang('EDIT') }}</th>
-          <th>{{ lang('REMOVE') }}</th>
-        </tr>
-        {% for rank in ranks %}
-        <tr>
-          <td>{{ rank.name }}</td>
-          <td>{{ rank.force }}</td>
-          <td><a href="{{ url('action', 'ranks', 'edit-rank') ~ '-' ~ rank.id }}" class="btn btn-default">{{ lang('EDIT') }}</a></td>
-          <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-' ~ rank.id }}">{{ lang('REMOVE') }}</button></td>
-        </tr>
-        {% endfor %}
-      </table>
+      <div class="box box-orange">
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-bordered">
+            <tr>
+              <th>{{ lang('RANK_NAME') }}</th>
+              <th>{{ lang('RANK_FORCE') }}</th>
+              <th>{{ lang('EDIT') }}</th>
+              <th>{{ lang('REMOVE') }}</th>
+            </tr>
+            {% for rank in ranks %}
+            <tr>
+              <td>{{ rank.name }}</td>
+              <td>{{ rank.force }}</td>
+              <td><a href="{{ url('action', 'ranks', 'edit-rank') ~ '-' ~ rank.id }}" class="btn btn-default">{{ lang('EDIT') }}</a></td>
+              <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-' ~ rank.id }}">{{ lang('REMOVE') }}</button></td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
       {% else %}
       <p>{{ lang('NO_RANK') }}</p>
       {% endif %}

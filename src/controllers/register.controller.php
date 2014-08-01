@@ -137,10 +137,10 @@ if (empty($_POST)) {
         }
         /* ============================== */
         if (!empty($_GET['from'])) {
-          header('Location: ' . $_GET['from']);
+          header('Location: ' . strtok($_GET['from'], '?'));
           die();
         } elseif (!empty($array['from'])) {
-          header('Location: ' . $array['from']);
+          header('Location: ' . strtok($array['from'], '?'));
           die();
         } else {
           Helpers::redirect($router, 'index');
@@ -156,10 +156,10 @@ if (empty($_POST)) {
   
   $error_handler->saveToSessions();
   if (!empty($_GET['from'])) {
-    header('Location: ' . $router->getController('register')->getUrl() . '?from=' . $_GET['from']);
+    header('Location: ' . $router->getController('register')->getUrl() . '?from=' . strtok($_GET['from'], '?'));
     die();
   } elseif (!empty($array['from'])) {
-    header('Location: ' . $router->getController('register')->getUrl() . '?from=' . $array['from']);
+    header('Location: ' . $router->getController('register')->getUrl() . '?from=' . strtok($array['from'], '?'));
     die();
   } else {
     Helpers::redirect($router, 'register');

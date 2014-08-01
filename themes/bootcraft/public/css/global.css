@@ -1,3 +1,8 @@
+/*
+Custom version of Bootstrap: 
+http://getbootstrap.com/customize/?id=8d1d487c0452934b2b08
+*/
+
 /* @group Fonts */
 
 @font-face {
@@ -12,6 +17,201 @@
   font-style: normal;
   font-weight: normal;
   src: local("Stonecraft"), url("../fonts/stonecraft.woff") format("woff");
+}
+
+/* @end */
+
+/* @group Reset */
+
+body {
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+}
+
+input,
+select,
+textarea,
+input:focus,
+select:focus,
+textarea:focus {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+input,
+textarea {
+  -webkit-appearance: none !important;
+}
+
+hr {
+  border-color: #4b5a76;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.btn {
+  font-weight: bold;
+}
+
+.btn-block {
+  margin-top: 20px;
+}
+
+.btn-primary:hover {
+  background-color: #0f80bb;
+}
+
+.breadcrumb a,
+.breadcrumb a:hover {
+  color: #4b5a76;
+}
+
+.modal-content {
+  border-radius: 3px;
+}
+
+.close {
+  color: #4b5a76 !important;
+}
+
+/* @end */
+
+/* @group General */
+
+a,
+a:hover {
+  color: #8b95a2;
+}
+
+a:hover {
+  text-decoration: none;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+a.link-grey {
+  color: #43536f;
+}
+
+a.link-blue {
+  color: #1186c4;
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.box {
+  min-height: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: #fff;
+  -webkit-box-shadow: 0 1px 1px #b7babc;
+  -moz-box-shadow: 0 1px 1px #b7babc;
+  box-shadow: 0 1px 1px #b7babc;
+}
+
+@media (min-width: 768px) {
+  .box {
+    padding: 30px;
+  }
+}
+
+.box-green {
+  border-top: 2px solid #84c366;
+}
+
+.box-blue {
+  border-top: 2px solid #1186c4;
+}
+
+.box-orange {
+  border-top: 2px solid #f9c369;
+}
+
+.box-list {
+  border-top-width: 2px;
+  border-top-style: solid;
+}
+
+.box-list {
+  border-top-color: #1186c4;
+}
+
+.box-list:first-child,
+.box-list:nth-child(4n) {
+  border-top-color: #84c366;
+}
+
+.box-list:nth-child(3n + 3) {
+  border-top-color: #f9c369;
+}
+
+.li-danger button {
+  border: none;
+  background: none;
+  color: #dc5b21 !important;
+  font-size: 20px;
+  padding: 3px;
+}
+
+@media (min-width: 992px) {
+  .li-danger:hover {
+    background-color: #f0f0f5;
+  }
+}
+
+@media (max-width: 991px) {
+  .li-danger button {
+    padding-left: 10px;
+  }
+}
+
+li.dropdown a {
+  font-size: 20px;
+}
+
+.mod-touch .btn-primary:hover {
+  background-color: #1186c4;
+}
+
+.mod-touch .btn-default:hover {
+  background-color: #f0f0f5;
+}
+
+.nav-pills > li:hover > a {
+  background-color: #f0f0f5;
+}
+
+.nav-pills > li > a:focus,
+.nav-pills > li > a:active {
+  color: #4b5a76;
+}
+
+/* @end */
+
+/* @group Navbar */
+
+.nav a,
+.navbar a {
+  border-bottom: none !important;
+}
+
+.navbar {
+  font-size: 20px;
+  border-top: 3px solid #84c366;
+  border-bottom: 5px solid #f0f0f5;
+}
+
+.navbar-brand {
+  font-size: 26px;
+  transition: font .3s ease-in-out;
+}
+
+.mod-no-touch .navbar-brand:hover {
+  font-size: 36px;
 }
 
 /* @end */
@@ -31,79 +231,32 @@ footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  padding: 20px 0;
-  border-top: 1px solid #e5e5e5;
-  background-color: #f9f9f9;
-  color: #999;
+  height: 150px;
+  padding-top: 30px;
+  font-size: 12px;
+  color: #8b95a2;
+  text-shadow: #fff 0 1px 0;
+  text-shadow: rgba(255, 255, 255, .8) 0 1px 0;
   text-align: center;
 }
 
-
-/* @end */
-
-/* @group General */
-
-body {
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  -webkit-font-smoothing: antialiased !important;
-  -moz-osx-font-smoothing: grayscale !important;
+footer a,
+footer a:hover,
+footer a:focus,
+footer a:active {
+  color: #4b5a76;
+  border-bottom: none;
 }
 
-input,
-select {
-  box-shadow: none !important;
-  outline: none !important;
-}
-
-input {
-  -webkit-appearance: none !important;
-}
-
-input:focus,
-select:focus {
-  box-shadow: none !important;
-  border-color: #52bad5 !important;
-}
-
-.box {
-  min-height: 20px;
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-#search-dropdown {
-	min-width: 300px;
-	padding: 15px;
-}
-
-a.fancy-link,
-a.fancy-link:hover,
-p a,
-p a:hover {
-  text-decoration: none;
-}
-
-a.fancy-link:hover,
-p a:hover {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-}
 
 /* @end */
 
 /* @group Blog */
 
-.blog-article {
-  padding-bottom: 4%;
-}
-
 .blog-article-title {
   margin-top: 0;
   font-size: 2em;
-  font-weight: 700;
-  color: #333;
+  font-weight: bold;
 }
 
 @media (min-width: 768px) {
@@ -113,28 +266,21 @@ p a:hover {
 }
 
 .blog-article-title a {
-  color: #333;
+  color: #4b5a76;
 }
 
-.blog-article-image {
-  margin-bottom: 6%;
+.blog-article-meta {
+  color: #8b95a2;
 }
 
 .blog-article-content {
   font-size: 1.2em;
   line-height: 1.5;
-  color: #555;
   font-family: "Noto Serif", Georgia, "Times New Roman", Times, serif;
 }
 
-.blog-article-meta {
-  margin-bottom: 2%;
-  color: #999;
-  font-size: 1.250em;
-}
-
 .read-more {
-  margin-top: 2%;
+  margin-top: 15px;
   font-size: 1.2em;
 }
 
@@ -144,10 +290,38 @@ p a:hover {
   margin-left: .5em;
 }
 
-.author-avatar {
+.player-avatar {
   border-radius: 2px;
   margin-top: -2px;
-  margin-right: 5px;
+}
+
+.player-link {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 3px;
+  background-color: #f5f5f9;
+  color: #4b5a76;
+  font-weight: bold;
+}
+
+.player-link:hover {
+  border-bottom: none;
+}
+
+.player-link > img {
+  margin-right: 8px;
+}
+
+.player-link:hover > img {
+  opacity: .6;
+}
+
+.mod-touch .player-link:hover {
+  color: #4b5a76;
+}
+
+.mod-touch .player-link:hover > img {
+  opacity: 1;
 }
 
 /* @end */
@@ -171,14 +345,48 @@ p a:hover {
 
 /* @end */
 
-/* @group Index */
+/* @group Servers */
 
-.server-status {
-  font-family: monospace;
+.server-name {
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
 }
 
 .server-ip {
-  font-size: 1.5em;
+  font-size: 1em;
+  text-align: center;
+}
+
+.server-status {
+  padding: 9.5px;
+  font-size: 1em;
+  font-weight: bold;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.server-online {
+  background-color: #84c366;
+}
+
+.server-offline {
+  background-color: #f9c369;
+}
+
+@media (min-width: 768px) {
+  .server-ip,
+  .server-status {
+    font-size: 1.3em;
+  }
+}
+
+@media (min-width: 480px) {
+  .server-name {
+    font-size: 2.5em;
+  }
 }
 
 /* @end */
@@ -186,15 +394,22 @@ p a:hover {
 /* @group Profile */
 
 .flag {
-  margin-right: 5px;
+  margin-right: 7px;
   vertical-align: text-top;
 }
 
 .fancy-username {
-  margin-top: 6%;
+  margin-top: 35px;
+  font-size: 2em;
   font-family: "Minecrafter", "Stonecraft", Arial;
-  font-size: 3em;
   text-shadow: 0px 1px 0px #ccc, 0px 2px 0px #ccc, 0px 3px 0px #ccc, 0px 4px 0px #ccc, 0px 5px 0px #ccc, 0px 6px 0px #ccc, 0px 7px 0px #ccc;
+  color: #333;
+}
+
+@media (min-width: 768px) {
+  .fancy-username {
+    font-size: 3em;
+  }
 }
 
 /* @end */
@@ -215,6 +430,83 @@ p a:hover {
   #slider {
     margin-bottom: 20px;
   }
+}
+
+/* @end */
+
+/* @group Touch Helpers */
+
+/* Reset */
+
+.visible-touch,
+.visible-no-touch,
+.visible-touch-inline,
+.visible-no-touch-inline,
+.visible-touch-inline-block,
+.visible-no-touch-inline-block,
+.visible-touch-block,
+.visible-no-touch-block {
+  display: none !important;
+}
+
+/* When touch is available */
+
+.mod-touch .visible-touch {
+  display: block !important;
+}
+.mod-touch table.visible-touch {
+  display: table;
+}
+.mod-touch tr.visible-touch {
+  display: table-row !important;
+}
+.mod-touch th.visible-touch,
+.mod-touch td.visible-touch {
+  display: table-cell !important;
+}
+
+.mod-touch .visible-touch-block {
+  display: block !important;
+}
+.mod-touch .visible-touch-inline {
+  display: inline !important;
+}
+.mod-touch .visible-touch-inline-block {
+  display: inline-block !important;
+}
+
+.mod-touch .hidden-touch {
+  display: none !important;
+}
+
+/* When touch is not available */
+
+.mod-no-touch .visible-no-touch {
+  display: block !important;
+}
+.mod-no-touch table.visible-no-touch {
+  display: table;
+}
+.mod-no-touch tr.visible-no-touch {
+  display: table-row !important;
+}
+.mod-no-touch th.visible-no-touch,
+.mod-no-touch td.visible-no-touch {
+  display: table-cell !important;
+}
+
+.mod-no-touch .visible-no-touch-block {
+  display: block !important;
+}
+.mod-no-touch .visible-no-touch-inline {
+  display: inline !important;
+}
+.mod-no-touch .visible-no-touch-inline-block {
+  display: inline-block !important;
+}
+
+.mod-no-touch .hidden-no-touch {
+  display: none !important;
 }
 
 /* @end */

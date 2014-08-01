@@ -14,67 +14,70 @@
         <li><a href="{{ url('manage', 'store') }}">{{ lang('ADMIN_STORE') }}</a></li>
         <li class="active">{{ lang('CREATE_PACK') }}</li>
       </ol>
-      <form role="form" method="post" action="{{ currentUri }}">
-        <div class="form-group">
-          <label for="pack-name">{{ lang('PACK_NAME') }}</label>
-          <input id="pack-name" class="form-control" type="text" name="add-pack[name]">
-        </div>
-        <div class="form-group">
-          <label for="pack-image">{{ lang('PACK_IMAGE') }}</label>
-          <input id="pack-image" class="form-control" type="url" name="add-pack[image]">
-        </div>
-        <div class="form-group">
-          <label for="pack-description">{{ lang('PACK_DESCRIPTION') }}</label>
-          <input id="pack-description" class="form-control" type="text" name="add-pack[description]">
-        </div>
-        <div class="form-group">
-          <label for="pack-price">{{ lang('PACK_PRICE') }}</label>
-          <input id="pack-price" class="form-control" type="number" name="add-pack[price]">
-        </div>
-        <div class="form-group">
-          <label for="pack-category">{{ lang('PACK_CATEGORY') }}</label>
-          <select id="pack-category" class="form-control" name="add-pack[category]">
-            {% for category in categories %}
-            <option value="{{ category.id }}">{{ category.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="pack-items">{{ lang('PACK_ITEMS') }}</label>
-          <select id="pack-items" class="form-control" name="items[]" multiple>
-            {% for item in items %}
-            <option value="{{ item.id }}">{{ item.minecraftName }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="pack-commands">{{ lang('PACK_COMMANDS') }}</label>
-          <select id="pack-commands" class="form-control" name="commands[]" multiple>
-            {% for com in commands %}
-            <option value="{{ com.id }}">{{ com.description }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="pack-ranks">{{ lang('PACK_RANKS') }}</label>
-          <select id="pack-ranks" class="form-control" name="ranks[]" multiple>
-            {% for rank in ranks %}
-            <option value="{{ rank.id }}">{{ rank.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="pack-server">{{ lang('SERVER') }}</label>
-          <select id="pack-server" class="form-control" name="add-pack[pack-server]">
-            {% for server in manager.servers %}
-            <option value="{{ server.id }}">{{ server.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_SAVE') }}</button>
-        </div>
-      </form>
+      <div class="box box-orange">
+        <form role="form" method="post" action="{{ currentUri }}">
+          <div class="form-group">
+            <label for="pack-name">{{ lang('PACK_NAME') }}</label>
+            <input id="pack-name" class="form-control" type="text" name="create-pack[name]">
+          </div>
+          <div class="form-group">
+            <label for="pack-image">{{ lang('PACK_IMAGE') }}</label>
+            <input id="pack-image" class="form-control" type="url" name="create-pack[image]">
+            <p class="help-block">{{ lang('IMAGE_RECOMMENDED_SIZE', 940, 500) }}</p>
+          </div>
+          <div class="form-group">
+            <label for="pack-description">{{ lang('PACK_DESCRIPTION') }}</label>
+            <input id="pack-description" class="form-control" type="text" name="create-pack[description]">
+          </div>
+          <div class="form-group">
+            <label for="pack-price">{{ lang('PACK_PRICE') }}</label>
+            <input id="pack-price" class="form-control" type="number" name="create-pack[price]">
+          </div>
+          <div class="form-group">
+            <label for="pack-category">{{ lang('PACK_CATEGORY') }}</label>
+            <select id="pack-category" class="form-control" name="create-pack[category]">
+              {% for category in categories %}
+              <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pack-items">{{ lang('PACK_ITEMS') }}</label>
+            <select id="pack-items" class="form-control" name="items[]" multiple>
+              {% for item in items %}
+              <option value="{{ item.id }}">{{ item.minecraftName }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pack-commands">{{ lang('PACK_COMMANDS') }}</label>
+            <select id="pack-commands" class="form-control" name="commands[]" multiple>
+              {% for com in commands %}
+              <option value="{{ com.id }}">{{ com.description }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pack-ranks">{{ lang('PACK_RANKS') }}</label>
+            <select id="pack-ranks" class="form-control" name="ranks[]" multiple>
+              {% for rank in ranks %}
+              <option value="{{ rank.id }}">{{ rank.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="pack-server">{{ lang('SERVER') }}</label>
+            <select id="pack-server" class="form-control" name="create-pack[pack-server]">
+              {% for server in manager.servers %}
+              <option value="{{ server.id }}">{{ server.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+          </div>
+        </form>
+      </div>
     </div> <!-- .col-md-6 -->
   </div> <!-- .row -->
 </div> <!-- .container -->

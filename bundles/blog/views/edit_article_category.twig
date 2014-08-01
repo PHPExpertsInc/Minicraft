@@ -15,16 +15,17 @@
         <li class="active">{{ lang('ADMIN_BLOG_EDIT_ARTICLE_CATEGORY') }}</li>
       </ol>
       {% if category is not empty %}
-      <hr>
-      <form role="form" method="post" action="{{ currentUri }}">
-        <div class="form-group">
-          <label for="name">{{ lang('TITLE') }}</label>
-          <input id="name" class="form-control" type="text" name="name" value="{{ category.name }}">
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_SAVE') }}</button>
-        </div>
-      </form>
+      <div class="box box-orange">
+        <form role="form" method="post" action="{{ currentUri }}">
+          <div class="form-group">
+            <label for="name">{{ lang('TITLE') }}</label>
+            <input id="name" class="form-control" type="text" name="name" value="{{ category.name }}">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
+          </div>
+        </form>
+      </div>
       {% else %}
       <p>{{ lang('NO_category') }}</p>
       {% endif %}

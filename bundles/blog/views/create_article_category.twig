@@ -14,15 +14,17 @@
         <li><a href="{{ url('manage', 'blog') }}">{{ lang('ADMIN_BLOG') }}</a></li>
         <li class="active">{{ lang('ADMIN_BLOG_CREATE_ARTICLE_CATEGORY') }}</li>
       </ol>
-      <form role="form" method="post" action="{{ currentUri }}" enctype="multipart/form-data">
-        <div class="form-group">
-          <label for="name">{{ lang('NAME') }}</label>
-          <input id="name" class="form-control" type="text" name="name">
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_CREATE') }}</button>
-        </div>
-      </form>
+      <div class="box box-orange">
+        <form role="form" method="post" action="{{ currentUri }}" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="name">{{ lang('NAME') }}</label>
+            <input id="name" class="form-control" type="text" name="name">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_CREATE') }}</button>
+          </div>
+        </form>
+      </div>
     </div>  <!-- .col-md-6 -->
   </div> <!-- .row -->
 </div> <!-- .container -->

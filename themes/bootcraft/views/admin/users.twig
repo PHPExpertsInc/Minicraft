@@ -8,32 +8,36 @@
         <li class="active">{{ lang('MANAGE_USERS') }}</li>
       </ol>
       {% include 'includes/flash.twig' %}
-      {% if users is not empty %}
-      <table class="table table-hover table-striped table-bordered">
-        <tr>
-          <th>{{ lang('USERNAME') }}</th>
-          <th>{{ lang('RANK') }}</th>
-          <th>{{ config.currencyName.plural|capitalize }}</th>
-          <th>{{ lang('EDIT') }}</th>
-          <th>{{ lang('CONFIRM_EMAIL') }}</th>
-          <th>{{ lang('RESET_PASSWORD') }}</th>
-          <th>{{ lang('BAN') }}</th>
-        </tr>
-        {% for player in users %}
-        <tr>
-          <td><a href="{{ url('player', player.username) }}">{{ player.username }}</a></td>
-          <td>{{ player.rank.name }}</td>
-          <td>{{ player.money }}</td>
-          <td><a href="{{ url('action', 'users', 'edit-user') ~ '-' ~ player.id }}" class="btn btn-default">{{ lang('EDIT') }}</a></td>
-          <td><button class="btn btn-default" data-toggle="modal" data-target="{{ '#modal-confirm-' ~ player.id }}">{{ lang('CONFIRM_EMAIL') }}</button></td>
-          <td><button class="btn btn-default" data-toggle="modal" data-target="{{ '#modal-reset-' ~ player.id }}">{{ lang('RESET_PASSWORD') }}</button></td>
-          <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-ban-' ~ player.id }}">{{ lang('BAN') }}</button></td>
-        </tr>
-        {% endfor %}
-      </table>
-      {% else %}
-      <p>{{ lang('NO_USER') }}</p>
-      {% endif %}
+      <div class="box box-orange">
+        {% if users is not empty %}
+        <div class="table-responsive">
+          <table class="table table-hover table-striped table-bordered">
+            <tr>
+              <th>{{ lang('USERNAME') }}</th>
+              <th>{{ lang('RANK') }}</th>
+              <th>{{ config.currencyName.plural|capitalize }}</th>
+              <th>{{ lang('EDIT') }}</th>
+              <th>{{ lang('CONFIRM_EMAIL') }}</th>
+              <th>{{ lang('RESET_PASSWORD') }}</th>
+              <th>{{ lang('BAN') }}</th>
+            </tr>
+            {% for player in users %}
+            <tr>
+              <td><a class="link-blue" href="{{ url('player', player.username) }}">{{ player.username }}</a></td>
+              <td>{{ player.rank.name }}</td>
+              <td>{{ player.money }}</td>
+              <td><a href="{{ url('action', 'users', 'edit-user') ~ '-' ~ player.id }}" class="btn btn-default">{{ lang('EDIT') }}</a></td>
+              <td><button class="btn btn-default" data-toggle="modal" data-target="{{ '#modal-confirm-' ~ player.id }}">{{ lang('CONFIRM_EMAIL') }}</button></td>
+              <td><button class="btn btn-default" data-toggle="modal" data-target="{{ '#modal-reset-' ~ player.id }}">{{ lang('RESET_PASSWORD') }}</button></td>
+              <td><button class="btn btn-danger" data-toggle="modal" data-target="{{ '#modal-ban-' ~ player.id }}">{{ lang('BAN') }}</button></td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+        {% else %}
+        <p>{{ lang('NO_USER') }}</p>
+        {% endif %}
+      </div>
       {% for player in users %}
       <div id="{{ 'modal-confirm-' ~ player.id }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ 'label-confirm-' ~ player.id }}" aria-hidden="true">
         <div class="modal-dialog">
@@ -87,11 +91,11 @@
                 <div class="form-group">
                   <label for="duration-type">{{ lang('DURATION_TYPE') }}</label>
                   <select id="duration-type" class="form-control" name="ban-user[duration-type]">
-                    <option value="60">Minutes</option>
-                    <option value="3600">Hours</option>
-                    <option value="86400" selected>Days</option>
-                    <option value="2629743">Months</option>
-                    <option value="31556926">Years</option>
+                    <option value="60">{{ lang('MINUTES') }}</option>
+                    <option value="3600">{{ lang('HOURS') }}</option>
+                    <option value="86400" selected>{{ lang('DAYS') }}</option>
+                    <option value="2629743">{{ lang('MONTHS') }}</option>
+                    <option value="31556926">{{ lang('YEARS') }}</option>
                   </select>
                 </div>
                 <div class="form-group">

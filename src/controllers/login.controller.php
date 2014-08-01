@@ -75,10 +75,10 @@ if (empty($_POST)) {
       Security::actionSucceeded('login');
       
       if (!empty($_GET['from'])) {
-        header('Location: ' . $_GET['from']);
+        header('Location: ' . strtok($_GET['from'], '?'));
         die();
       } elseif (!empty($array['from'])) {
-        header('Location: ' . $array['from']);
+        header('Location: ' . strtok($array['from'], '?'));
         die();
       } else {
         Helpers::redirect($router, 'index');
@@ -94,10 +94,10 @@ if (empty($_POST)) {
   
   $error_handler->saveToSessions();
   if (!empty($_GET['from'])) {
-    header('Location: ' . $router->getController('login')->getUrl() . '?from=' . $_GET['from']);
+    header('Location: ' . $router->getController('login')->getUrl() . '?from=' . strtok($_GET['from'], '?'));
     die();
   } elseif (!empty($array['from'])) {
-    header('Location: ' . $router->getController('login')->getUrl() . '?from=' . $array['from']);
+    header('Location: ' . $router->getController('login')->getUrl() . '?from=' . strtok($array['from'], '?'));
     die();
   } else {
     Helpers::redirect($router, 'login');

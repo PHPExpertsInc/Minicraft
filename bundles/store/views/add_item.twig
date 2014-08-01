@@ -15,52 +15,44 @@
         <li class="active">{{ lang('ADD_ITEM') }}</li>
       </ol>
       <form role="form" method="post" action="{{ currentUri }}">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{ lang('MINECRAFT_ITEM') }}</h3>
+        <h3>{{ lang('MINECRAFT_ITEM') }}</h3>
+        <div class="box box-list">
+          <div class="form-group">
+            <label for="item-minecraft">{{ lang('MINECRAFT_ITEM') }}</label>
+            <select id="item-minecraft" class="form-control" name="add-item[minecraft]">
+              {% for item in minecraftItems %}
+              <option value="{{ item.id }};{{ item.meta }};{{ item.name }}" data-id="{{ item.id }}" data-meta="{{ item.meta }}">{{ item.name }}</option>
+              {% endfor %}
+            </select>
           </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <label for="item-minecraft">{{ lang('MINECRAFT_ITEM') }}</label>
-              <select id="item-minecraft" class="form-control" name="add-item[minecraft]">
-                {% for item in minecraftItems %}
-                <option value="{{ item.id }};{{ item.meta }};{{ item.name }}" data-id="{{ item.id }}" data-meta="{{ item.meta }}">{{ item.name }}</option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="item-quantity">{{ lang('QUANTITY') }}</label>
-              <input id="item-quantity" class="form-control" type="number" name="add-item[quantity]">
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_SAVE') }}</button>
-            </div>
+          <div class="form-group">
+            <label for="item-quantity">{{ lang('QUANTITY') }}</label>
+            <input id="item-quantity" class="form-control" type="number" name="add-item[quantity]">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
           </div>
         </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">{{ lang('CUSTOM_ITEM') }}</h3>
+        <h3>{{ lang('CUSTOM_ITEM') }}</h3>
+        <div class="box box-list">
+          <div class="form-group">
+            <label for="item-id">{{ lang('ITEM_ID') }}</label>
+            <input id="item-id" class="form-control" type="number" name="add-item[id]">
           </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <label for="item-id">{{ lang('ITEM_ID') }}</label>
-              <input id="item-id" class="form-control" type="number" name="add-item[id]">
-            </div>
-            <div class="form-group">
-              <label for="item-meta">{{ lang('METADATA') }}</label>
-              <input id="item-meta" class="form-control" type="number" name="add-item[meta]">
-            </div>
-            <div class="form-group">
-              <label for="item-name">{{ lang('NAME') }}</label>
-              <input id="item-name" class="form-control" type="text" name="add-item[name]">
-            </div>
-            <div class="form-group">
-              <label for="item-icon">{{ lang('ICON_URL') }}</label>
-              <input id="item-icon" class="form-control" type="url" name="add-item[icon]">
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-block btn-lg btn-primary">{{ lang('BTN_SAVE') }}</button>
-            </div>
+          <div class="form-group">
+            <label for="item-meta">{{ lang('METADATA') }}</label>
+            <input id="item-meta" class="form-control" type="number" name="add-item[meta]">
+          </div>
+          <div class="form-group">
+            <label for="item-name">{{ lang('NAME') }}</label>
+            <input id="item-name" class="form-control" type="text" name="add-item[name]">
+          </div>
+          <div class="form-group">
+            <label for="item-icon">{{ lang('ICON_URL') }}</label>
+            <input id="item-icon" class="form-control" type="url" name="add-item[icon]">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-primary">{{ lang('BTN_SAVE') }}</button>
           </div>
         </div>
       </form>

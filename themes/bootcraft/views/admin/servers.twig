@@ -10,7 +10,7 @@
       {% include 'includes/flash.twig' %}  
       {% if manager is not empty %}
       {% for server in manager.servers %}
-      <div class="well">
+      <div class="box box-list">
         <h2>{{ server.name }}</h2>
         <p><code>{{ server.ip }}</code></p>
         <p><code>{{ server.version }}</code></p>
@@ -51,7 +51,6 @@
           </div> <!-- .modal-content -->
         </div> <!-- .modal-dialog -->
       </div> <!-- #modal -->
-      <hr>
       {% endfor %}
       {% else %}
       <p>{{ lang('NO_SERVER') }}</p>

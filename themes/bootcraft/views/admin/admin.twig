@@ -6,49 +6,53 @@
       {% include 'includes/flash.twig' %}
       {% if manager is not empty %}
       {% for server in manager.servers %}
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">{{ server.name  }}</h3>
-        </div>
-        <div class="panel-body">
-          <p><code>{{ server.ip  }}</code></p>
-          {% if server.motd is not empty %}
-          <p class="text-success">{{ lang('ONLINE') }}</p>
-          {% else %}
-          <p class="text-danger">{{ lang('OFFLINE') }}</p>
-          {% endif %}
-          {% if server.infos.players is not empty %}
-          <div class="progress">
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{ server.infos.players|length  }}" aria-valuemin="0" aria-valuemax="{{ server.infos.maxPlayers  }}" style="width: {{ (server.infos.players|length/server.infos.maxPlayers) * 100  }}%;">
-              <span class="sr-only">{{ lang('PLAYERS_ONLINE', server.infos.players|length) }}</span>
-            </div>
+      <div class="box box-blue">
+        <div class="row">
+          <div class="col-md-4">
+            <p><code>{{ server.ip  }}</code></p>
+            {% if server.motd is not empty %}
+            <p class="text-success">{{ lang('ONLINE') }}</p>
+            {% else %}
+            <p class="text-danger">{{ lang('OFFLINE') }}</p>
+            {% endif %}
+            {% if server.infos.players is empty %}
+            <p>{{ lang('NO_PLAYER_ONLINE') }}</p>
+            {% endif %}
           </div>
-        {% else %}
-        {{ lang('NO_PLAYER_ONLINE') }}
-        {% endif %}
-      </div>
-      <div class="panel-footer"><a href="{{ url('action', 'servers', 'edit-server-' ~ server.id) }}" class="btn btn-default">{{ lang('EDIT') }}</a></div>
+          <div class="col-md-8">
+            {% if server.infos.players is not empty %}
+            {% for player in server.infos.players|slice(0, 100) %}
+            <img class="username-tooltip" src="//minotar.net/avatar/{{ player.name }}/64" width="32" alt="{{ player.name }}" title="{{ player.name }}">
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
       </div>
       {% endfor %}
       {% else %}
       <p><a href="{{ url('action', 'servers', 'add') }}" class="btn btn-block btn-lg btn-primary">{{ lang('ADD_SERVER') }}</a></p>
       {% endif %}
-      <ul class="nav nav-pills nav-justified">
-        <li><a href="{{ url('manage', 'users') }}">{{ lang('MANAGE_USERS') }}</a></li>
-        <li><a href="{{ url('manage', 'ranks') }}">{{ lang('MANAGE_RANKS') }}</a></li>
-        <li><a href="{{ url('manage', 'theme') }}">{{ lang('MANAGE_THEME') }}</a></li>
-        <li><a href="{{ url('manage', 'servers') }}">{{ lang('MANAGE_SERVERS') }}</a></li>
-        <li><a href="{{ url('manage', 'votes') }}">{{ lang('MANAGE_VOTES') }}</a></li>
-      </ul>
-      <hr>
-      {% if config.bundles is not empty %}
-      <ul class="nav nav-pills nav-justified">
-        {% for bundle in config.bundles %}
-        <li><a href="{{ url('manage', bundle) }}">{{ lang('MANAGE_BUNDLE', bundle|capitalize) }}</a></li>
-        {% endfor %}
-      </ul>
-      {% endif %}
+      <div class="box">
+        <ul class="nav nav-pills nav-justified">
+          <li><a href="{{ url('manage', 'users') }}">{{ lang('MANAGE_USERS') }}</a></li>
+          <li><a href="{{ url('manage', 'ranks') }}">{{ lang('MANAGE_RANKS') }}</a></li>
+          <li><a href="{{ url('manage', 'theme') }}">{{ lang('MANAGE_THEME') }}</a></li>
+          <li><a href="{{ url('manage', 'servers') }}">{{ lang('MANAGE_SERVERS') }}</a></li>
+          <li><a href="{{ url('manage', 'votes') }}">{{ lang('MANAGE_VOTES') }}</a></li>
+        </ul>
+        {% if config.bundles is not empty %}
+        <ul class="nav nav-pills nav-justified">
+          {% for bundle in config.bundles %}
+          <li><a href="{{ url('manage', bundle) }}">{{ lang('MANAGE_BUNDLE', bundle|capitalize) }}</a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
     </div>  <!-- /.col-md-12 -->
   </div> <!-- /.row -->
 </div> <!-- /.container -->
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+<script>$('.username-tooltip').tooltip();</script>
 {% endblock %}

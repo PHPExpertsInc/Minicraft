@@ -14,43 +14,45 @@
         <li class="active">{{ lang('ADD_SERVER') }}</li>
       </ol>
       {% include 'includes/flash.twig' %}  
-      <form role="form" method="post" action="{{ currentUri }}">
-        <div class="form-group">
-          <label class="control-label" for="server-title">{{ lang('SERVER_NAME') }}</label>
-          <input id="server-name" class="form-control" type="text" name="add-server[name]">
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="server-ip">{{ lang('IP_OR_URL') }}</label>
-          <input id="server-ip" class="form-control" type="text" name="add-server[ip]">
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="server-description">{{ lang('SERVER_DESCRIPTION') }}</label>
-          <input id="server-description" class="form-control" type="text" name="add-server[description]">
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="server-type">{{ lang('SERVER_TYPE') }}</label>
-          <select id="server-type" class="form-control" name="add-server[type]">
-            {% for type in types %}
-            <option value="{{ type.id }}">{{ type.name }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="jsonapi-port">{{ lang('JSONAPI_PORT') }}</label>
-          <input id="jsonapi-port" class="form-control" type="text" name="add-server[jsonapi-port]">
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="jsonapi-username">{{ lang('JSONAPI_USERNAME') }}</label>
-          <input id="jsonapi-username" class="form-control" type="text" name="add-server[jsonapi-username]">
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="jsonapi-password">{{ lang('JSONAPI_PASSWORD') }}</label>
-          <input id="jsonapi-password" class="form-control" type="text" name="add-server[jsonapi-password]">
-        </div>
-        <div class="form-group">
-          <button type="submit" class="btn btn-default">{{ lang('BTN_SAVE') }}</button>
-        </div>
-      </form>
+      <div class="box box-blue">
+        <form role="form" method="post" action="{{ currentUri }}">
+          <div class="form-group">
+            <label class="control-label" for="server-title">{{ lang('SERVER_NAME') }}</label>
+            <input id="server-name" class="form-control" type="text" name="add-server[name]">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="server-ip">{{ lang('IP_OR_URL') }}</label>
+            <input id="server-ip" class="form-control" type="text" name="add-server[ip]">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="server-description">{{ lang('SERVER_DESCRIPTION') }}</label>
+            <input id="server-description" class="form-control" type="text" name="add-server[description]">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="server-type">{{ lang('SERVER_TYPE') }}</label>
+            <select id="server-type" class="form-control" name="add-server[type]">
+              {% for type in types %}
+              <option value="{{ type.id }}">{{ type.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="jsonapi-port">{{ lang('JSONAPI_PORT') }}</label>
+            <input id="jsonapi-port" class="form-control" type="text" name="add-server[jsonapi-port]">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="jsonapi-username">{{ lang('JSONAPI_USERNAME') }}</label>
+            <input id="jsonapi-username" class="form-control" type="text" name="add-server[jsonapi-username]">
+          </div>
+          <div class="form-group">
+            <label class="control-label" for="jsonapi-password">{{ lang('JSONAPI_PASSWORD') }}</label>
+            <input id="jsonapi-password" class="form-control" type="text" name="add-server[jsonapi-password]">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-default">{{ lang('BTN_SAVE') }}</button>
+          </div>
+        </form>
+      </div>
     </div> <!-- .col-md-6 -->
   </div> <!-- .row -->
 </div> <!-- .container -->
