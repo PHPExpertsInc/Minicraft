@@ -11,7 +11,8 @@ class StorePack {
   protected $items = array();
   protected $ranks = array();
   protected $commands = array();
-  protected $servers = array();
+  protected $server;
+  protected $server_id;
   
   public function __construct($infos) {
     if (!empty($infos)) {
@@ -23,8 +24,6 @@ class StorePack {
             $this->$method($value);
           }
         }
-        
-        $this->setCategory(new StoreCategory($infos));
       }
       
       if (!empty($infos['items'])) {
@@ -49,6 +48,10 @@ class StorePack {
       }
       
       $this->setCategory(new StoreCategory($infos));
+      //die(var_dump($infos['s_id']));
+      if (!empty($infos['s_id'])) {
+        $this->setServer(new Server($ticraft->call('getServerInfosFromId', array($infos['s_id']))));
+      }
     } else {
       Logger::log(__FILE__, 'Array empty for class constructor.');
     }
@@ -140,5 +143,21 @@ class StorePack {
   
   public function setCategory($category) {
     $this->category = $category;
+  }
+  
+  public function getServer() {
+    return $this->server;
+  }
+  
+  public function setServer($server) {
+    $this->server = $server;
+  }
+  
+  public function getServerId() {
+    return $this->server_id;
+  }
+  
+  public function setServerId($id) {
+    $this->server_id = $id;
   }
 }

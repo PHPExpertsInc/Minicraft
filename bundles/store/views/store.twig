@@ -16,10 +16,10 @@
     <div class="row">
     {% for pack in store.storePacks %}
     <div class="col-sm-6 col-md-4">
-      <div class="thumbnail item box box-list">
+      <div class="thumbnail item box box-blue">
         <img src="{{ pack.image }}" alt="{{ pack.name }}">
         <div class="caption clearfix">
-          <h3>{{pack.name}} <small><a href="{{ url('store_category', pack.category.id, pack.category.slug) }}">{{ pack.category.name }}</a></small></h3>
+          <h3>{{pack.name}} <small>{{ pack.server.name }}</small></h3>
           <h4 class="{% if user.money < pack.price %}text-danger{% else %}text-success{% endif %}">{{ pack.price ~ ' ' ~ (pack.price > 1 ? config.currencyName.plural : config.currencyName.singular) }}</h4>
           <p><button class="btn btn-default pull-left" data-toggle="modal" data-target="#modal-{{pack.id}}">{{ lang('BTN_MORE_INFOS') }}</button>{% if user.money >= pack.price %}&nbsp;<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#modal-{{pack.id}}">{{ lang('BTN_BUY') }}</button>{% endif %}</p>
         </div>
@@ -52,9 +52,9 @@
             </form>
           </div>
         </div>
+      </div>
     </div>
     {% endfor %}
-    </div>
     {% else %}
     {{ lang('NO_ITEM') }}
     {% endif %}

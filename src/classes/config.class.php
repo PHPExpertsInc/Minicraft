@@ -243,20 +243,21 @@ class Config {
     );
   }
   
+  // @todo Make this editable from the administration panel
   public function getCarouselItems() {
     return array(
       array(
-        'img' => '//placehold.it/1920x500/41444c/ffc873&text=Minicraft',
+        'img' => '//placehold.it/1920x600/41444c/ffc873&text=Minicraft',
         'headline' => 'Titre du slide 1',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
       ),
       array(
-        'img' => '//placehold.it/1920x500/e4dbbf/dc5b21&text=Ticraft',
+        'img' => '//placehold.it/1920x600/e4dbbf/dc5b21&text=Ticraft',
         'headline' => 'Titre du slide 1',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
       ),
       array(
-        'img' => '//placehold.it/1920x500/313646/e4dbbf',
+        'img' => '//placehold.it/1920x600/313646/e4dbbf',
         'headline' => 'Titre du slide 3',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
         'button' => array(
@@ -267,6 +268,7 @@ class Config {
     );
   }
   
+  // @todo Make this editable from the administration panel
   public function isActive($bundle) {
     $bundles = array(
       'blog',
@@ -288,6 +290,37 @@ class Config {
         'name' => 'Top Minecraft',
         'url' => 'http://www.top-minecraft.net/',
         'logo' => 'http://www.top-minecraft.net/css/img/logo.png'
+      )
+    );
+    
+    return $sites;
+  }
+  
+  // @todo Make this editable from the administration panel
+  public function getPartners() {
+    $sites = array(
+      array(
+        'name' => 'Partenaire Google',
+        'url' => 'https://www.google.fr/',
+        'logo' => 'https://www.google.fr/images/srpr/logo11w.png'
+      ),
+      array(
+        'name' => 'Partenaire Yahoo',
+        'url' => 'https://fr.yahoo.com/',
+        'logo' => 'http://shoalsworks.com/wp-content/uploads/2013/11/yahoo_logo1.png'
+      )
+    );
+    
+    return $sites;
+  }
+  
+  // @todo Make this editable from the administration panel
+  public function getAds() {
+    $sites = array(
+      array(
+        'name' => 'Publicité',
+        'url' => 'http://www.google.fr/',
+        'logo' => 'http://placehold.it/300x100&text=Publicité'
       )
     );
     
@@ -317,10 +350,12 @@ class Config {
     );
   }
   
+  // @todo Make this editable from the administration panel
   public function getMoneyAddedPerCode() {
     return 10;
   }
   
+  // @todo Make this editable from the administration panel
   public function getStarpassInfos() {
     return array(
       'idd' => 236446,

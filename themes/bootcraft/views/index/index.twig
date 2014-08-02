@@ -13,7 +13,7 @@
 {% endblock %}
 {% block content %}
 {% if config.carouselItems is not empty %}
-<div id="slider" class="owl-carousel owl-theme">
+<div id="slider" class="owl-carousel owl-theme hidden-xs">
   {% for item in config.carouselItems %}
   <div class="item">
     <img src="{{ item.img }}" alt="{{ item.headline }}">
@@ -54,7 +54,7 @@
       <section id="status" class="servers">
         {% if manager.servers is not empty %}
         {% for server in manager.servers|slice(0, 5) %}
-        <div class="box box-list">
+        <div class="box box-orange">
           <p class="server-name">{{ server.name }}</p>
           <pre class="server-ip">{{ server.ip }}</pre>
           {% if server.motd is not empty %}
@@ -80,11 +80,25 @@
         {% endif %}
       </section>
       <section id="vote">
-        {% for site in config.voteSites %}
-        <div class="vote-site box box-list">
+        <div class="vote-site box box-blue">
+          {% for site in config.voteSites %}
           <a href="{{ url('out', site.url) }}" target="_blank"><img src="{{ site.logo }}" class="img-responsive" alt="{{ site.name }}"></a>
+          {% endfor %}
+        </div>
+      </section>
+      <section id="ads">
+        {% for ad in config.ads %}
+        <div class="ad-site box box-green">
+          <a href="{{ ad.url }}" target="_blank"><img src="{{ ad.logo }}" class="img-responsive" alt="{{ ad.name }}"></a>
         </div>
         {% endfor %}
+      </section>
+      <section id="partners">
+        <div class="partner-site box box-orange">
+          {% for partner in config.partners %}
+          <a href="{{ partner.url }}" target="_blank"><img src="{{ partner.logo }}" class="img-responsive" alt="{{ partner.name }}"></a>
+          {% endfor %}
+        </div>
       </section>
     </div> <!-- .col-md-4 -->
     <div class="col-md-8 col-md-pull-4">
@@ -119,5 +133,5 @@
 <script src="{{ url('assets', 'js/timeago-locales/jquery.timeago.' ~ config.language ~ '-short.js') }}"></script>
 <script>jQuery(document).ready(function(){jQuery("time").timeago()})</script>
 <script src="{{ url('assets', 'js/owl-carousel/owl.carousel.min.js') }}"></script>
-<script>$(document).ready(function(){$("#slider").owlCarousel({navigation:false,slideSpeed:300,paginationSpeed:400,autoPlay:true,singleItem:true})})</script>
+<script>$(document).ready(function(){$("#slider").owlCarousel({navigation:false,pagination:false,slideSpeed:300,paginationSpeed:400,autoPlay:true,singleItem:true})})</script>
 {% endblock %}

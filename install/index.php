@@ -6,6 +6,7 @@ if (!empty($_POST['username']) and !empty($_POST['key'])) {
   
   try {
     $db = new PDO('sqlite:../app/config/database/minicraft.db');
+    //$db = new PDO('mysql:host=DB_HOST;dbname=DB_NAME', 'DB_USERNAME', 'DB_PASSWORD');
     $db->exec('CREATE TABLE "Config" ("username" TEXT PRIMARY KEY, "api_key" TEXT, "session_expires" INTEGER, "cookie_expires" INTEGER)');
     $db->exec('CREATE TABLE "Bruteforce" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "action" TEXT, "ip" INTEGER, "attempts" INTEGER, "expires" INTEGER)');
     $db->exec('CREATE TABLE "Sessions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT, "user_id" INTEGER, "session_id" TEXT, "date_added" INTEGER, "date_expires" INTEGER)');

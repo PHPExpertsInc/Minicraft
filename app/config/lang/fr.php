@@ -42,7 +42,7 @@ $lang = array_merge($lang, array(
   'GENERAL_INFOS' => 'Informations générales',
   'BIRTHDATE_PLACEHOLDER' => 'jj-mm-aaaa',
   'RESET_YOUR_PASSWORD' => 'Réinitialiser votre mot de passe',
-  'IMAGE_RECOMMENDED_SIZE' => 'Taille recommandée : %m1% x %m2%'
+  'IMAGE_RECOMMENDED_SIZE' => 'Taille recommandée : %m1% x %m2%',
 ));
 
 // Buttons
@@ -79,6 +79,31 @@ $lang = array_merge($lang, array(
   'URL_PLAYER' => 'joueur',
   'URL_ARTICLE' => 'article',
   'URL_OUT' => 'lien'
+));
+
+// Alerts
+$lang = array_merge($lang, array(
+  'USERNAME_EMPTY' => 'Vous n\'avez pas entré de nom d\'utilisateur',
+  'PASSWORD_EMPTY' => 'Vous n\'avez pas entré de mot de passe',
+  'EMAIL_EMPTY' => 'Vous n\'avez pas entré d\'adresse email',
+  'NO_ACCOUNT_MATCHING' => 'Aucun compte ne correspond',
+  'CONFIRM_EMAIL_EDIT_USERNAME' => 'Vous devez confirmer votre adresse email pour modifier votre nom d\'utilisateur',
+  'CONFIRM_EMAIL_EDIT_PASSWORD' => 'Vous devez confirmer votre adresse email pour modifier votre mot de passe',
+  'RESEND_CONFIRMATION_EMAIL' => 'Renvoyer l\'email de confirmation',
+  'PASSWORD_TOO_SHORT' => 'Le mot de passe est trop court (%m1% caractères minimum)',
+  'USERNAME_TOO_SHORT' => 'Le nom d\'utilisateur est trop court (%m1% caractères minimum)',
+  'PASSWORD_TOO_LONG' => 'Le mot de passe est trop long (%m1% caractères maximum)',
+  'USERNAME_TOO_SHORT' => 'Le mot de passe est trop long (%m1% caractères maximum)',
+  'EMAIL_INCORRECT' => 'L\'adresse email est incorrect',
+  'USER_UNKNOWN' => 'Joueur inconnu',
+  'PASSWORD_INCORRECT' => 'Mot de passe incorrect',
+  'ADD_MONEY' => 'Créditer le compte',
+  'ERROR_STARPASS' => 'Code Starpass incorrect',
+  '' => '',
+  '' => '',
+  '' => '',
+  '' => '',
+  '' => ''
 ));
 
 // Email

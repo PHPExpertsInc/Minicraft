@@ -224,7 +224,7 @@ html {
 }
 
 body {
-  margin-bottom: 150px;
+  margin-bottom: 170px;
 }
 
 footer {
@@ -282,12 +282,6 @@ footer a:active {
 .read-more {
   margin-top: 15px;
   font-size: 1.2em;
-}
-
-.read-more:after {
-  display: inline-block;
-  content: "\2192";
-  margin-left: .5em;
 }
 
 .player-avatar {
@@ -417,7 +411,7 @@ footer a:active {
 /* @group Slider */
 
 #slider {
-  margin-top: -20px;
+  margin-top: -22px;
 }
 
 #slider .item img{
@@ -507,6 +501,30 @@ footer a:active {
 
 .mod-no-touch .hidden-no-touch {
   display: none !important;
+}
+
+/* @end */
+
+/* @group Temp */
+
+.box {
+  border-top-width: 3px;
+  -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
+}
+
+footer {
+  -webkit-box-shadow: 0 -10px 10px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 0 -10px 10px rgba(0, 0, 0, .5);
+  box-shadow: 0 -10px 10px rgba(0, 0, 0, .5);
+  background-color: #fff;
+}
+
+#slider {
+  -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
 }
 
 /* @end */
