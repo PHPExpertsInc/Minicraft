@@ -211,6 +211,63 @@ $twig->addFunction($twig_lang_function);
 /* ============================== */
 
 /* ============================== */
+// Creates the Twig chat() function
+$twig_chat_function = new Twig_SimpleFunction('chat', function($line) {
+  $patterns = array(
+    '#§0(.+)§r#',
+    '#§1(.+)§r#',
+    '#§2(.+)§r#',
+    '#§3(.+)§r#',
+    '#§4(.+)§r#',
+    '#§5(.+)§r#',
+    '#§6(.+)§r#',
+    '#§7(.+)§r#',
+    '#§8(.+)§r#',
+    '#§9(.+)§r#',
+    '#§a(.+)§r#',
+    '#§b(.+)§r#',
+    '#§c(.+)§r#',
+    '#§d(.+)§r#',
+    '#§e(.+)§r#',
+    '#§f(.+)§r#',
+    '#§l(.+)§r#',
+    '#§m(.+)§r#',
+    '#§n(.+)§r#',
+    '#§o(.+)§r#'
+  );
+  
+  $replacements = array(
+    '<span style="color: #000000;">$1</span>',
+    '<span style="color: #0000aa;">$1</span>',
+    '<span style="color: #00aa00;">$1</span>',
+    '<span style="color: #00aaaa;">$1</span>',
+    '<span style="color: #aa0000;">$1</span>',
+    '<span style="color: #aa00aa;">$1</span>',
+    '<span style="color: #0000aa;">$1</span>',
+    '<span style="color: #ffaa00;">$1</span>',
+    '<span style="color: #aaaaaa;">$1</span>',
+    '<span style="color: #555555;">$1</span>',
+    '<span style="color: #5555ff;">$1</span>',
+    '<span style="color: #55ff55;">$1</span>',
+    '<span style="color: #55ffff;">$1</span>',
+    '<span style="color: #ff5555;">$1</span>',
+    '<span style="color: #ff55ff;">$1</span>',
+    '<span style="color: #ffff55;">$1</span>',
+    '<span style="color: #ffffff;">$1</span>',
+    '<strong>$1</strong>',
+    '<s>$1</s>',
+    '<u>$1</u>',
+    '<em>$1</em>'
+  );
+  
+  return preg_replace($patterns, $replacements, $line);
+});
+
+// Adds the lang() function to Twig
+$twig->addFunction($twig_chat_function);
+/* ============================== */
+
+/* ============================== */
 session_start();
 // Validates the session
 $user = Security::validateSession($ticraft);

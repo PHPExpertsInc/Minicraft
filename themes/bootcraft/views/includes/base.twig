@@ -14,13 +14,6 @@
   {% block fonts %}
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ url('assets', 'css/bootstrap.min.css') }}">
-  {# Some CSS styles need to access the Twig URL function and must be placed in the HTML files #}
-  <style>
-    body {
-      background-image: url('{{ url('assets', 'img/alternate_backgrounds/brick.png') }}');
-      background-size: 256px;
-    }
-  </style>
   {% endblock %}{# end fonts block #}
   {% block stylesheets %}
   <link rel="stylesheet" href="{{ url('assets', 'css/global.css') }}">

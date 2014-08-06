@@ -1,0 +1,16 @@
+{% extends 'includes/store_layout.twig' %}
+{% block content %}
+<div class="container">
+  {% include 'includes/flash.twig' %}
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <div class="box box-orange">
+        <div class="table-responsive">
+          <iframe width="550" height="480" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" src="https://payment.allopass.com/buy/buy.apu?ids={{ config.allopassInfos.ids }}&idd={{ config.allopassInfos.idd }}"></iframe>
+          <noscript>{{ lang('ACTIVATE_JAVASCRIPT_TO_BUY') }}</noscript>
+        </div>
+      </div>
+    </div> <!-- .col-md-8 -->
+  </div> <!-- .row -->
+</div> <!-- .container -->
+{% endblock %}

@@ -78,7 +78,7 @@ $lang = array_merge($lang, array(
   'URL_PROFILE' => 'profil',
   'URL_PLAYER' => 'joueur',
   'URL_ARTICLE' => 'article',
-  'URL_OUT' => 'lien'
+  'URL_OUT' => 'vote'
 ));
 
 // Alerts

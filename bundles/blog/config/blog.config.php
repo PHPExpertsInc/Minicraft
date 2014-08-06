@@ -32,6 +32,13 @@ if (!empty($action)) {
         $title    = trim($array['title']);
         $body     = trim(stripslashes($array['body']));
         $category = intval($array['category']);
+          
+          if ($success) {
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'SUCCESS_CHANGE_ARTICLE_TITLE'), 'success');
+          } else {
+            $flash->addFlash($translator->getTranslation($config->getLang(), 'FAIL_CHANGE_ARTICLE_TITLE'), 'warning');
+          }
+        }
         
         if (!empty($title) and $title != $article->getTitle()) {
           $success = $ticraft->call('updateArticleTitle', array(

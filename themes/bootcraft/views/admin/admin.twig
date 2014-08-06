@@ -27,6 +27,28 @@
             {% endif %}
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-12">
+            {% if server.console is not empty %}
+            <pre class="pre-scrollable scroll-bottom">
+              {% for console in server.console %}
+              {{ console.line|trim }}
+              {% endfor %}
+            </pre>
+            {% endif %}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            {% if server.chat is not empty %}
+            <pre class="pre-scrollable scroll-bottom" style="color: #fff;">
+              {% for chat in server.chat %}
+              <p>[{{ chat.time|date('H:i:s') }}]: {{ chat(chat.line)|raw }}</p>
+              {% endfor %}
+            </pre>
+            {% endif %}
+          </div>
+        </div>
       </div>
       {% endfor %}
       {% else %}
@@ -54,5 +76,6 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script>$('.username-tooltip').tooltip();</script>
+<script>$(".username-tooltip").tooltip();</script>
+<script>$(".scroll-bottom").prop({ scrollTop: $(".scroll-bottom").prop("scrollHeight") });</script>
 {% endblock %}

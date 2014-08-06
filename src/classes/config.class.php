@@ -247,17 +247,17 @@ class Config {
   public function getCarouselItems() {
     return array(
       array(
-        'img' => '//placehold.it/1920x600/41444c/ffc873&text=Minicraft',
+        'img' => '/themes/bootcraft/public/img/slider/1.jpg',
         'headline' => 'Titre du slide 1',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
       ),
       array(
-        'img' => '//placehold.it/1920x600/e4dbbf/dc5b21&text=Ticraft',
+        'img' => '/themes/bootcraft/public/img/slider/2.jpg',
         'headline' => 'Titre du slide 1',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
       ),
       array(
-        'img' => '//placehold.it/1920x600/313646/e4dbbf',
+        'img' => '/themes/bootcraft/public/img/slider/3.jpg',
         'headline' => 'Titre du slide 3',
         'text' => 'Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.',
         'button' => array(
@@ -360,6 +360,15 @@ class Config {
     return array(
       'idd' => 236446,
       'idp' => 147650
+    );
+  }
+  
+  // @todo Make this editable from the administration panel
+  public function getAllopassInfos() {
+    return array(
+      'ids' => 316262,
+      'idd' => 1373678,
+      'full' => '316262/1373678/5932368'
     );
   }
   

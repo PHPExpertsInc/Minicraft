@@ -91,6 +91,26 @@ class Server {
     return false;
   }
   
+  public function getConsole($lines = 200) {
+    $json = $this->jsonapi->call('streams.console.latest', array($lines));
+    if ($json[0]['result'] == 'success') {
+      return $json[0]['success'];
+    } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
+      return false;
+    }
+  }
+  
+  public function getChat($lines = 200) {
+    $json = $this->jsonapi->call('streams.formatted_chat.latest', array($lines));
+    if ($json[0]['result'] == 'success') {
+      return $json[0]['success'];
+    } else {
+      Logger::log(__FILE__, $json[0]['error']['message']);
+      return false;
+    }
+  }
+  
   public function getVersion() {
     $infos = $this->getInfos();
     preg_match('#\(MC: (.+)\)#', $infos['version'], $matches);

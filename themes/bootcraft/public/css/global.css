@@ -91,6 +91,10 @@ a:hover {
   border-bottom-style: solid;
 }
 
+p a {
+  border-bottom: none;
+}
+
 a.link-grey {
   color: #43536f;
 }
@@ -276,7 +280,7 @@ footer a:active {
 .blog-article-content {
   font-size: 1.2em;
   line-height: 1.5;
-  font-family: "Noto Serif", Georgia, "Times New Roman", Times, serif;
+  /* font-family: "Noto Serif", Georgia, "Times New Roman", Times, serif; */
 }
 
 .read-more {
@@ -420,6 +424,10 @@ footer a:active {
   height: auto;
 }
 
+.owl-theme .owl-controls .owl-page span{
+	background: #fff !important;
+}
+
 @media (min-width: 992px) {
   #slider {
     margin-bottom: 20px;
@@ -507,6 +515,19 @@ footer a:active {
 
 /* @group Temp */
 
+body {
+  background-image: url('//demo.minicraft.io/themes/bootcraft/public/img/alternate_backgrounds/brick.png');
+  background-size: 256px;
+  margin-bottom: 200px;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+  body {
+    background-size: 128px;
+  }
+}
+
 .box {
   border-top-width: 3px;
   -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
@@ -518,13 +539,8 @@ footer {
   -webkit-box-shadow: 0 -10px 10px rgba(0, 0, 0, .5);
   -moz-box-shadow: 0 -10px 10px rgba(0, 0, 0, .5);
   box-shadow: 0 -10px 10px rgba(0, 0, 0, .5);
+  border-top: 3px solid #84c366;
   background-color: #fff;
-}
-
-#slider {
-  -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
-  -moz-box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
-  box-shadow: 0 10px 10px rgba(0, 0, 0, .5);
 }
 
 /* @end */

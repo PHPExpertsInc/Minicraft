@@ -1,8 +1,17 @@
 <?php
 
-if (empty($_POST) or !is_object($user)) {
-  header('Location: ' . URL);
+if (!is_object($user)) {
+  $flash = new Flash;
+  $flash->addFlash($translator->getTranslation($config->getLang(), 'SIGN_IN_TO_BUY'), 'info');
+  Helpers::redirect($router, 'store');
   die();
+} elseif (empty($_POST)) {
+  die($store_twig->render('starpass.twig', array(
+    'pageTitle' => $translator->getTranslation($config->getLang(), 'PURCHASE_MONEY'),
+    'config' => $config,
+    'user' => $user,
+    'flash' => $flash
+  )));
 } else {
   $ident = $idp = $ids = $idd = $codes = $code1 = $code2 = $code3 = $code4 = $code5 = $datas = '';
   
@@ -58,7 +67,7 @@ if (empty($_POST) or !is_object($user)) {
   if (substr($tab[0], 0, 3) != 'OUI') {
     $flash->addFlash($translator->getTranslation($config->getLanguage(), 'ERROR_STARPASS'), 'warning');
   } else {
-    $success = $ticraft->call('userPurchasedMoneyWithStarpass', array(
+    $success = $ticraft->call('userPurchasedMoney', array(
       $user->getId(),
       $config->getMoneyAddedPerCode(),
       $ident,
@@ -66,13 +75,17 @@ if (empty($_POST) or !is_object($user)) {
       $data
     ));
     
+    $sum = $config->getMoneyAddedPerCode();
+    $temp = $config->getCurrencyName();
+    $currency = $sum > 1 ? $temp['plural'] : $temp['singular'];
+    
     if ($success) {
-      $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_BUY_MONEY'), 'success');
+      $flash->addFlash($translator->getTranslation($config->getLanguage(), 'SUCCESS_BUY_MONEY', array($sum, $currency)), 'success');
     } else {
-      $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_BUY_MONEY'), 'success');
+      $flash->addFlash($translator->getTranslation($config->getLanguage(), 'FAIL_BUY_MONEY'), 'warning');
     }
   }
   
-  header('Location:' . $router->getController('store')->getUrl());
+  Helpers::redirect($router, 'store');
   die();
 }

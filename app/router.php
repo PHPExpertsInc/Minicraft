@@ -13,6 +13,11 @@
 
 $uri = $_SERVER['REQUEST_URI'];
 
+if ($uri == '/forum/') {
+  header('Location: ' . URL . '/forum/');
+  die();
+}
+
 foreach ($router->getControllers() as $controller) {
   if (preg_match($controller->getRegex(), $uri)) {
     if (file_exists(BUNDLES . $controller->getBundle() . '/controllers/' . $controller->getName() . '.controller.php')) {
