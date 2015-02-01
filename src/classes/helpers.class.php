@@ -15,25 +15,60 @@ class Helpers {
       return htmlentities($str, ENT_QUOTES);
     }
   }
-  
-  // http://stackoverflow.com/a/3349792
-  public static function removeDirectory($path) {
-    if (is_dir($path)) {
-      if (substr($path, strlen($pth) - 1, 1) != '/') {
-        $dirPath .= '/';
-      }
-      $files = glob($path . '*', GLOB_MARK);
-      foreach ($files as $file) {
-        if (is_dir($file)) {
-          self::removeDirectory($file);
-        } else {
-          unlink($file);
+
+  /**
+   * Removes a directory (and its contents) recursively.
+   *
+   * Part of the utilphp Project <https://github.com/brandonwamboldt/utilphp/>
+   *
+   * @param  string $dir              The directory to be deleted recursively
+   * @param  bool   $traverseSymlinks Delete contents of symlinks recursively
+   * @return bool
+   * @throws \RuntimeException
+   */
+  public static function removeDirectory($dir, $traverseSymlinks = false) {
+    if (!file_exists($dir)) {
+      return true;
+    } elseif (!is_dir($dir)) {
+      throw new \RuntimeException('Given path is not a directory');
+    }
+
+    if (!is_link($dir) || $traverseSymlinks) {
+      foreach (scandir($dir) as $file) {
+        if ($file === '.' || $file === '..') {
+          continue;
+        }
+
+        $currentPath = $dir . '/' . $file;
+
+        if (is_dir($currentPath)) {
+          self::rmdir($currentPath, $traverseSymlinks);
+        } elseif (!unlink($currentPath)) {
+          // @codeCoverageIgnoreStart
+          throw new \RuntimeException('Unable to delete ' . $currentPath);
+          // @codeCoverageIgnoreEnd
         }
       }
-      $result = rmdir($path);
+
+      return true;
     }
-    
-    return $result;
+
+    // Windows treats removing directory symlinks identically to removing directories.
+    if (is_link($dir) && !defined('PHP_WINDOWS_VERSION_MAJOR')) {
+      if (!unlink($dir)) {
+        // @codeCoverageIgnoreStart
+        throw new \RuntimeException('Unable to delete ' . $dir);
+        // @codeCoverageIgnoreEnd
+      }
+    } else {
+      if (!rmdir($dir)) {
+        // @codeCoverageIgnoreStart
+        throw new \RuntimeException('Unable to delete ' . $dir);
+        // @codeCoverageIgnoreEnd
+      }
+    }
+
+    return true;
   }
   
   public static function camelCase($str) {
